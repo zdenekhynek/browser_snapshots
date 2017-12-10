@@ -1,1 +1,1 @@
-# browser-snapshots
+# Browser Snapshots
