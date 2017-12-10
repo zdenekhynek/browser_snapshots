@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1308e699df9d4148fc7a00f3d2ae9fd4944866fe0863b0e48fd06f9ff2380800"
+            "sha256": "cf364d603966857cd128557bc679634e0e6754c0ee8fe7d80af6b38d5e2dc745"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -32,6 +32,13 @@
                 "sha256:9614851d4a7ff8cbd32b73c6076441f377c45a5bbff7e771798fb02c43c31f47"
             ],
             "version": "==2.0"
+        },
+        "djangorestframework": {
+            "hashes": [
+                "sha256:79268055755125caaebface3acbe13150bbc3a83b78e9bf1a1abfde7ab0c5231",
+                "sha256:067960e5e9e5586d3b2d53a1d626c4800dc33cd8309487d404fc63355674556f"
+            ],
+            "version": "==3.7.3"
         },
         "pytz": {
             "hashes": [
