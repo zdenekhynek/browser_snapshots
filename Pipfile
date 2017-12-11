@@ -9,3 +9,5 @@ verify_ssl = true
 django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+django-extra-fields = "*"
+pillow = "*"

@@ -4,8 +4,9 @@ from django.db import models
 class Snapshot(models.Model):
     """This class represents the snaphost model."""
     url = models.CharField(max_length=255, blank=False)
+    title = models.CharField(max_length=1000, blank=False)
     source_code = models.TextField()
-    image_url = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to='uploads', max_length=254, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
