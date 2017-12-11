@@ -13,3 +13,9 @@ class Snapshot(models.Model):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return "{}".format(self.url)
+
+class Session(models.Model):
+    """This class represents the session model."""
+    created_at = models.DateTimeField(auto_now_add=True)
+    ended_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
