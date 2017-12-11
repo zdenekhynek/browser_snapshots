@@ -4,20 +4,19 @@ agents
   - name
   - email
 
-impressions
-  - fk_agent_id
-  - fk_video_id
-  - video_url
-  - video_title
-
 sessions
   - start
   - end
   - agent_id
   - lat, lng
 
+impressions
+  - fk_agent_id
+  - fk_video_id
+  - video_url
+  - video_title
 
-*videos
+videos
   - title
   - author
   - total_plays
