@@ -20,7 +20,7 @@ class ViewTestCase(TestCase):
                               'source_code': 'Source code',
                               'image': image}
         self.response = self.client.post(
-            reverse('create'),
+            reverse('create_snapshots'),
             self.snaphost_data,
             format="json")
 
@@ -32,7 +32,7 @@ class ViewTestCase(TestCase):
         """Test the api can get a given snapshot."""
         snapshot = Snapshot.objects.get()
         response = self.client.get(
-            reverse('details',
+            reverse('details_snapshots',
                     kwargs={'pk': snapshot.id}), format="json")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -43,7 +43,7 @@ class ViewTestCase(TestCase):
         snapshot = Snapshot.objects.get()
         change_snapshot = {'url': 'Url'}
         res = self.client.patch(
-            reverse('details', kwargs={'pk': snapshot.id}),
+            reverse('details_snapshots', kwargs={'pk': snapshot.id}),
             change_snapshot, format='json'
         )
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -52,7 +52,7 @@ class ViewTestCase(TestCase):
         """Test the api can delete a snapshot."""
         snapshot = Snapshot.objects.get()
         response = self.client.delete(
-            reverse('details', kwargs={'pk': snapshot.id}),
+            reverse('details_snapshots', kwargs={'pk': snapshot.id}),
             format='json',
             follow=True)
 
