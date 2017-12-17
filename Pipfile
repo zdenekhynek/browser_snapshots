@@ -1,0 +1,20 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+
+[packages]
+
+django = "*"
+djangorestframework = "*"
+django-cors-headers = "*"
+django-extra-fields = "*"
+pillow = "*"
+python-dateutil = "*"
+pytest-django = "*"
+
+
+[dev-packages]
+
+pytest-django = "*"
