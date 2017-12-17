@@ -11,3 +11,9 @@ djangorestframework = "*"
 django-cors-headers = "*"
 django-extra-fields = "*"
 pillow = "*"
+python-dateutil = "*"
+
+
+[dev-packages]
+
+pytest = "*"

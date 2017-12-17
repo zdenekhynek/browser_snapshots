@@ -3,7 +3,11 @@ import os
 import sys
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "browser_snapshots.settings")
+    APP_ENV = os.environ.get('APP_ENV', 'development')
+    SETTINGS_MODULE = '.'.join(['browser_snapshots', 'settings', APP_ENV])
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', SETTINGS_MODULE)
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
