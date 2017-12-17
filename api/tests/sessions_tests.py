@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -12,7 +13,12 @@ class ViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create(username='nerd')
+
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
+
+        self.client.force_authenticate(user=user)
         self.snaphost_data = {'agent': 0}
         self.response = self.client.post(
             reverse('create_session'),
@@ -29,9 +35,6 @@ class ViewTestCase(TestCase):
         response = self.client.get(
             reverse('details_session',
                     kwargs={'pk': session.id}), format="json")
-
-        print('response!!!')
-        print(response.content)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, session)
