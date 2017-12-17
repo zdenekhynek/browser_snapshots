@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f64f739b06fe59fcf09d7dabc159e32b0e1fe0a4244b92044d6b45dcd9dc9b91"
+            "sha256": "6b4459effe4f6465a52762627c1b54186393071d0a6cd01c4db395af7e559286"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -32,6 +32,14 @@
                 "sha256:c78f53e32d7cf36d8597c8a2c7e3c0ad210f97b9509e152e4c37fa80869f823c"
             ],
             "version": "==17.3.0"
+        },
+        "beautifulsoup4": {
+            "hashes": [
+                "sha256:7015e76bf32f1f574636c4288399a6de66ce08fb7b2457f628a8d70c0fbabb11",
+                "sha256:11a9a27b7d3bddc6d86f59fb76afb70e921a25ac2d6cc55b40d072bd68435a76",
+                "sha256:808b6ac932dccb0a4126558f7dfdcf41710dd44a4ef497a0bb59a77f9f078e89"
+            ],
+            "version": "==4.6.0"
         },
         "django": {
             "hashes": [

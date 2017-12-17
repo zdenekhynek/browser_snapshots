@@ -13,6 +13,7 @@ django-extra-fields = "*"
 pillow = "*"
 python-dateutil = "*"
 pytest-django = "*"
+"beautifulsoup4" = "*"
 
 
 [dev-packages]
