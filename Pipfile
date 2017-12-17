@@ -12,8 +12,9 @@ django-cors-headers = "*"
 django-extra-fields = "*"
 pillow = "*"
 python-dateutil = "*"
+pytest-django = "*"
 
 
 [dev-packages]
 
-pytest = "*"
+pytest-django = "*"
