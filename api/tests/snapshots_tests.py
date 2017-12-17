@@ -1,6 +1,7 @@
 import base64
 
 from django.test import TestCase
+from django.contrib.auth.models import User
 
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -14,7 +15,11 @@ class ViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
+        user = User.objects.create(username='nerd')
+
         self.client = APIClient()
+        self.client.force_authenticate(user=user)
+
         image = base64.b64encode(b'')   # mock base64 image
         self.snaphost_data = {'agent': 0, 'url': 'Url',
                               'source_code': 'Source code',
