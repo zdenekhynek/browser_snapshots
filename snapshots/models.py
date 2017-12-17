@@ -13,6 +13,10 @@ class Session(models.Model):
     lng = models.DecimalField(max_digits=9, decimal_places=6,
                               blank=True, null=True)
 
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "{}".format(self.start.strftime("%Y-%m-%dT%H:%M:%S"))
+
 
 class Snapshot(models.Model):
     """This class represents the snaphost model."""
