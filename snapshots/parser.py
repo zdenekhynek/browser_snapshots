@@ -20,5 +20,14 @@ def get_first_match_text(markup, elTagName, elClassName):
 
 
 def get_youtube_title(markup):
-    title = get_first_match_text(markup, 'h1', 'title')
+    # try multiple ways of getting a title
+    params = [('span', 'watch-title'), ('h1', 'title')]
+
+    for param in params:
+        title = get_first_match_text(markup, param[0], param[1])
+
+        if title:
+            # not empty string, found the match
+            break
+
     return title

@@ -29,6 +29,10 @@ class ParserTestCase(TestCase):
         self.assertEqual(results, 'Head')
 
     def test_get_youtube_title(self):
-        markup = '<html><h1 class="title">title</h1></html>'
+        markup = '<html><span class="watch-title">title</span></html>'
         results = get_youtube_title(markup)
         self.assertEqual(results, 'title')
+
+        markup = '<html><h1 class="title extra-call">title2</h1></html>'
+        results = get_youtube_title(markup)
+        self.assertEqual(results, 'title2')
