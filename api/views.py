@@ -3,7 +3,6 @@ from rest_framework import permissions
 
 from snapshots.serializers import SnapshotSerializer, SessionSerializer
 from snapshots.models import Snapshot, Session
-from snapshots.parser import get_youtube_title
 
 
 class CreateSnapshotView(generics.ListCreateAPIView):
@@ -14,8 +13,7 @@ class CreateSnapshotView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         """Save the post data when creating a new snaphost."""
-        title = get_youtube_title(self.request.source_code)
-        serializer.save(owner=self.request.user, title=title)
+        serializer.save(owner=self.request.user)
 
 
 class DetailsSnapshotView(generics.RetrieveUpdateDestroyAPIView):

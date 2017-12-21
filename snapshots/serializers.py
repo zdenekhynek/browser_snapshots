@@ -14,8 +14,8 @@ class SnapshotSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class to map serializer's fields with the model fields."""
         model = Snapshot
-        fields = ('id', 'owner', 'agent', 'session', 'url', 'source_code',
-                  'image', 'created_at', 'updated_at')
+        fields = ('id', 'owner', 'agent', 'session', 'url', 'title',
+                  'source_code', 'image', 'created_at', 'updated_at')
         read_only_fields = ('created_at', 'updated_at')
 
 
