@@ -15,6 +15,7 @@ python-dateutil = "*"
 pytest-django = "*"
 "beautifulsoup4" = "*"
 gunicorn = "*"
+dj-database-url = "*"
 
 
 [dev-packages]
