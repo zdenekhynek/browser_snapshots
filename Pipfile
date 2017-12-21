@@ -14,6 +14,7 @@ pillow = "*"
 python-dateutil = "*"
 pytest-django = "*"
 "beautifulsoup4" = "*"
+gunicorn = "*"
 
 
 [dev-packages]
