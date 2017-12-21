@@ -16,6 +16,7 @@ pytest-django = "*"
 "beautifulsoup4" = "*"
 gunicorn = "*"
 dj-database-url = "*"
+"psycopg2" = "*"
 
 
 [dev-packages]
