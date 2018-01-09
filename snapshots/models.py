@@ -42,7 +42,7 @@ class Snapshot(models.Model):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return "{}".format(self.url)
+        return "{}".format(self.title)
 
 
 @receiver(post_save, sender=User)
