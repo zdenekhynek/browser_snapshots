@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
+from django.utils.safestring import mark_safe
 from rest_framework.authtoken.models import Token
 
 from agents.models import Agent
@@ -39,6 +40,11 @@ class Snapshot(models.Model):
     image = models.ImageField(upload_to='uploads', max_length=254, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def image_tag(self):
+        return mark_safe('<img src="/%s" style="max-width:800px;height:auto;" />' % self.image)
+
+    image_tag.short_description = 'Image'
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
