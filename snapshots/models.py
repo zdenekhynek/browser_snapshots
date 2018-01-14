@@ -41,11 +41,6 @@ class Snapshot(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def image_tag(self):
-        return mark_safe('<img src="/%s" style="max-width:800px;height:auto;" />' % self.image)
-
-    image_tag.short_description = 'Image'
-
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return "{}".format(self.title)
