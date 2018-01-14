@@ -135,5 +135,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/uploads/'
+
+DATA_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+MEDIA_ROOT = os.path.join(DATA_DIR, 'uploads')
+STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 
 CORS_ORIGIN_ALLOW_ALL = True
