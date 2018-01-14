@@ -8,6 +8,8 @@ class SnapshotAdmin(admin.ModelAdmin):
               'source_code', 'image_tag', 'created_at', 'updated_at')
     readonly_fields = ('image_tag', 'created_at', 'updated_at')
 
+    list_filter = ('agent', 'owner')
+
 
 # Register your models here.
 admin.site.register(Session)
