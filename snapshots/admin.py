@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
@@ -6,7 +7,8 @@ from snapshots.models import Snapshot, Session
 
 class SnapshotAdmin(admin.ModelAdmin):
     def image_tag(self, obj):
-        return mark_safe('<img src="/%s" style="max-width:800px;height:auto;" />' % obj.image)
+        image_url = obj.image
+        return mark_safe('<img src="/%s" style="max-width:800px;height:auto;" />' % image_url)
 
     image_tag.short_description = 'Image'
 
@@ -19,7 +21,9 @@ class SnapshotAdmin(admin.ModelAdmin):
 
 class SnaphostInline(admin.StackedInline):
     def thumbnail_tag(self, obj):
-        return mark_safe('<img src="/%s" style="max-width:300px;height:auto;" />' % obj.image)
+        image_url = obj.image
+        final_image_url = settings.MEDIA_URL + str(image_url)
+        return mark_safe('<img src="/%s" style="max-width:300px;height:auto;" />' % final_image_url)
 
     thumbnail_tag.short_description = 'Image'
 

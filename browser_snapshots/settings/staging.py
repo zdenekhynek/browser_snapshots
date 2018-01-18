@@ -49,6 +49,7 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=94608000',
 }
 
+#   Setup S3 bucket
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', '')
 AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME', '')
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
@@ -57,9 +58,14 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
 # Tell django-storages the domain to use to refer to static files.
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
-# you run `collectstatic`).
+# the sub-directories of media and static files
 STATICFILES_LOCATION = 'static'
-STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 MEDIAFILES_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+# a custom storage file, so we can easily put static and media in one bucket
+STATICFILES_STORAGE = 'myproject.custom_storages.StaticStorage'
+DEFAULT_FILE_STORAGE = 'myproject.custom_storages.MediaStorage'
+
+# the regular Django file settings but with the custom S3 URLs
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
