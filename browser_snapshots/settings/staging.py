@@ -63,8 +63,8 @@ STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 
 # a custom storage file, so we can easily put static and media in one bucket
-STATICFILES_STORAGE = 'browser_snapshots.custom_storages.StaticStorage'
-DEFAULT_FILE_STORAGE = 'browser_snapshots.custom_storages.MediaStorage'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 # the regular Django file settings but with the custom S3 URLs
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
