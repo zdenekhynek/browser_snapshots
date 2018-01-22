@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'storages',
     'api',
     'snapshots',
     'agents',
@@ -135,10 +136,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/uploads/'
+MEDIA_URL = '/media/'
 
 DATA_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-MEDIA_ROOT = os.path.join(DATA_DIR, 'uploads')
+MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 
 CORS_ORIGIN_ALLOW_ALL = True

@@ -7,3 +7,4 @@ db.sqlite3
 .cache
 __pycache__
 uploads
+static
