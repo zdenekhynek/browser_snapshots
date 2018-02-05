@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from django.urls import reverse
 
 from snapshots.models import Snapshot, Session
 
@@ -8,7 +9,7 @@ from snapshots.models import Snapshot, Session
 class SnapshotAdmin(admin.ModelAdmin):
     def image_tag(self, obj):
         image_url = obj.image.url
-        return mark_safe('<img src="/%s" style="max-width:800px;height:auto;" />' % image_url)
+        return mark_safe('<img src="%s" style="max-width:800px;height:auto;" />' % image_url)
 
     image_tag.short_description = 'Image'
 
@@ -26,9 +27,15 @@ class SnaphostInline(admin.StackedInline):
 
     thumbnail_tag.short_description = 'Image'
 
+    def link_tag(self, obj):
+        link = reverse('admin:snapshots_snapshot_change', args=[obj.id])
+        return mark_safe('<a href="%s">Snapshot detail</a>' % link)
+
+    link_tag.short_description = 'Link'
+
     model = Snapshot
-    fields = ('url', 'title', 'thumbnail_tag', 'created_at')
-    readonly_fields = ('created_at', 'thumbnail_tag')
+    fields = ('url', 'title', 'thumbnail_tag', 'link_tag', 'created_at')
+    readonly_fields = ('created_at', 'thumbnail_tag', 'link_tag')
 
 
 class SessionAdmin(admin.ModelAdmin):
