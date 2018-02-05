@@ -19,9 +19,13 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url('admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^', include('api.urls'))
 ]
+
+# update administration headers
+# https://stackoverflow.com/questions/4938491/django-admin-change-header-django-administration-text
+admin.site.site_header = 'Browser extension admin'
 
 # https://timmyomahony.com/blog/static-vs-media-and-root-vs-path-in-django/
 if settings.DEBUG is True:
