@@ -22,7 +22,9 @@ class Session(models.Model):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return "{}".format(self.start.strftime("%Y-%m-%dT%H:%M:%S"))
+        time_stamp = self.start.strftime("%Y-%m-%dT%H:%M:%S")
+        agent = self.agent
+        return "%s - %s" % (time_stamp, agent)
 
 
 class Snapshot(models.Model):
