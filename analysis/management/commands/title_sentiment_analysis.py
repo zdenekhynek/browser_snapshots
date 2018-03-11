@@ -21,7 +21,8 @@ class Command(BaseCommand):
             self.style.SUCCESS('Stop training classifier')
         )
 
-        for snapshot in snapshots:
+        # use iterator to avoid huge memory consumption on heroku
+        for snapshot in snapshots.iterator():
             title = snapshot.title
             s, _ = Sentiment.objects.get_or_create(snapshot=snapshot)
             s.sentiment = sentiment_classifier.classify([title])[0]
