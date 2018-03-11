@@ -8,8 +8,22 @@ from analysis.sentiment import SentimentClassifier
 class Command(BaseCommand):
     help = 'Do sentiment analysis on titles'
 
+    def add_arguments(self, parser):
+        parser.add_argument('--limit', type=int)
+        parser.add_argument('--offset', type=int)
+
     def handle(self, *args, **options):
-        snapshots = Snapshot.objects.all()
+        limit = options['limit']
+        offset = options['offset']
+
+        if limit and offset:
+            snapshots = Snapshot.objects.all()[offset:offset+limit]
+        elif limit:
+            snapshots = Snapshot.objects.all()[:limit]
+        elif offset:
+            snapshots = Snapshot.objects.all()[offset:]
+        else:
+            snapshots = Snapshot.objects.all()
 
         self.stdout.write(
             self.style.SUCCESS('Start training classifier')
