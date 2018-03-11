@@ -69,3 +69,5 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 # the regular Django file settings but with the custom S3 URLs
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
+DEBUG = False
