@@ -1,0 +1,10 @@
+###
+# osx files
+###
+.DS_Store
+
+db.sqlite3
+.cache
+__pycache__
+uploads
+static
