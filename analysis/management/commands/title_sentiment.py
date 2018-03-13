@@ -12,10 +12,8 @@ class Command(BaseCommand):
         parser.add_argument('--limit', type=int)
         parser.add_argument('--offset', type=int)
 
-    def handle(self, *args, **options):
-        limit = options['limit']
-        offset = options['offset']
 
+    def get_snapshots(self, limit=False, offset=False):
         if limit and offset:
             snapshots = Snapshot.objects.all()[offset:offset+limit]
         elif limit:
@@ -24,6 +22,15 @@ class Command(BaseCommand):
             snapshots = Snapshot.objects.all()[offset:]
         else:
             snapshots = Snapshot.objects.all()
+
+        return snapshots
+
+
+    def handle(self, *args, **options):
+        limit = options['limit']
+        offset = options['offset']
+
+        snapshots = self.get_snapshots(limit, offset)
 
         self.stdout.write(
             self.style.SUCCESS('Start training classifier')

@@ -6,11 +6,11 @@ verify_ssl = true
 
 [packages]
 
-Django = "*"
+django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 django-extra-fields = "*"
-Pillow = "*"
+pillow = "*"
 python-dateutil = "*"
 pytest-django = "*"
 "beautifulsoup4" = "*"
@@ -22,6 +22,9 @@ django-storages = "*"
 "boto3" = "*"
 "bs4" = "*"
 nltk = "*"
+requests = "*"
+watson-developer-cloud = "*"
+python-dotenv = "*"
 
 
 [dev-packages]

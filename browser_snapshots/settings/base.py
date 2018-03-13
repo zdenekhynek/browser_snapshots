@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+from pathlib import Path  # python3 only
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
+env_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path=env_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -147,3 +152,6 @@ STATIC_ROOT = os.path.join(DATA_DIR, 'static')
 CORS_ORIGIN_ALLOW_ALL = True
 
 NLTK_DATA_DIR = os.path.join(DATA_DIR, 'nltk_data')
+
+WATSON_USERNAME = os.environ.get('WATSON_USERNAME', '')
+WATSON_PASSWORD = os.environ.get('WATSON_PASSWORD', '')
