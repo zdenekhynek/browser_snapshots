@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'api',
     'analysis',
     'snapshots',
+    'scenarios',
     'agents',
     'youtube',
 ]
