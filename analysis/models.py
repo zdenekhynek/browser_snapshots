@@ -6,8 +6,9 @@ class Sentiment(models.Model):
     """This class represents the sentiment model."""
     snapshot = models.ForeignKey(Snapshot, on_delete=models.CASCADE)
     title = models.CharField(max_length=1000, blank=False)
-    sentiment = models.CharField(max_length=255, blank=True)
-    watson_raw_tone = models.CharField(max_length=10000, blank=True)
+    description = models.TextField(max_length=10009, blank=True, null=True)
+    sentiment = models.CharField(max_length=255, blank=True, null=True)
+    watson_raw_tone = models.CharField(max_length=10000, blank=True, null=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""

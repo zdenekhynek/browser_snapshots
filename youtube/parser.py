@@ -43,6 +43,16 @@ def get_video_title(html):
     return title
 
 
+def get_video_description(html):
+    title = ''
+    title_els = html.select('#description')
+
+    if len(title_els) > 0:
+        title = title_els[0].get_text()
+
+    return title
+
+
 def parse_thumbnail(thumbnail):
     title = ''
     title_els = thumbnail.select('#video-title')
@@ -175,6 +185,10 @@ def parse_snapshot(snapshot):
     snapshot.video = amend_video(code, url, title)
 
     # get video meta
+
+    snapshot.description = get_video_description(html)
+    print('description')
+    print(snapshot.description)
 
     # get likes
     (likes, dislikes) = parse_likes_dislikes(html)

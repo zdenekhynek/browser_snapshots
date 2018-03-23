@@ -6,6 +6,7 @@ class Video(models.Model):
     code = models.CharField(max_length=255, blank=False)
     url = models.CharField(max_length=255, blank=False)
     title = models.CharField(max_length=1000, blank=False)
+    description = models.TextField(max_length=10000, blank=True, null=True)
 
     likes = models.IntegerField(blank=True, null=True)
     dislikes = models.IntegerField(blank=True, null=True)
