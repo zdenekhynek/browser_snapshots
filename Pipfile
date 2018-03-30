@@ -6,11 +6,11 @@ verify_ssl = true
 
 [packages]
 
-django = "*"
+Django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 django-extra-fields = "*"
-pillow = "*"
+Pillow = "*"
 python-dateutil = "*"
 pytest-django = "*"
 "beautifulsoup4" = "*"
