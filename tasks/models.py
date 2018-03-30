@@ -2,6 +2,7 @@ from django.db import models
 
 from agents.models import Agent
 from snapshots.models import Session
+from scenarios.models import Scenario
 
 
 class TaskType(models.Model):
@@ -27,6 +28,8 @@ class Task(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE, blank=True,
       null=True)
+    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE,
+      blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

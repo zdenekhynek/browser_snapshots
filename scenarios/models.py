@@ -19,8 +19,9 @@ class Scenario(models.Model):
 
 
 class ScenarioConfig(models.Model):
-    """This class represents the scenario type model."""
-    scenario = models.ForeignKey(Scenario, on_delete=models.CASCADE)
+    """This class represents the scenario config model."""
+    scenario = models.ForeignKey(Scenario, related_name="config",
+                                 on_delete=models.CASCADE)
     key = models.CharField(max_length=255, blank=False)
     value = models.CharField(max_length=255, blank=False)
 
