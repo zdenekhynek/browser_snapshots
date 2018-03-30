@@ -3,8 +3,10 @@ from rest_framework import permissions
 
 from snapshots.serializers import SnapshotSerializer, SessionSerializer
 from snapshots.models import Snapshot, Session
+from scenarios.models import Scenario
 from agents.models import Agent
 from agents.serializers import AgentSerializer
+from scenarios.serializers import ScenarioSerializer
 
 
 class CreateSnapshotView(generics.ListCreateAPIView):
@@ -45,6 +47,17 @@ class CreateAgentsView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
     queryset = Agent.objects.all()
     serializer_class = AgentSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new agent."""
+        serializer.save(owner=self.request.user)
+
+
+class CreateScenariosView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Scenario.objects.all()
+    serializer_class = ScenarioSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
