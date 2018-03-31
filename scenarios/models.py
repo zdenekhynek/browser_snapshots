@@ -15,7 +15,7 @@ class Scenario(models.Model):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return "%s - %s - %s" % (self.type, self.config)
+        return "%s" % (self.type,)
 
 
 class ScenarioConfig(models.Model):

@@ -56,9 +56,23 @@ class CreateAgentsView(generics.ListCreateAPIView):
 
 class CreateTasksView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
-    queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+
+        # filter by status
+        status = self.request.query_params.get('status', None)
+        if status is not None:
+            queryset = queryset.filter(status=status)
+
+        # filter by agent
+        agent = self.request.query_params.get('agent', None)
+        if agent is not None:
+            queryset = queryset.filter(agent=agent)
+
+        return queryset
 
     def perform_create(self, serializer):
         """Save the post data when creating a new agent."""
