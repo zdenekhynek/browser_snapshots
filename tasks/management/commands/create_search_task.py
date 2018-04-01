@@ -21,7 +21,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--agent',
             dest='agent',
-            default=1,
+            default=0,
             help='Which agent'
         )
 

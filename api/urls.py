@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import CreateSnapshotView, DetailsSnapshotView, CreateSessionView, DetailsSessionView, CreateAgentsView, CreateTasksView
+from .views import CreateSnapshotView, DetailsSnapshotView, CreateSessionView, DetailsSessionView, CreateAgentsView, CreateTasksView, DetailsTasksView
 
 urlpatterns = {
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -10,6 +10,8 @@ urlpatterns = {
         name='create_agents'),
     url(r'^tasks/$', CreateTasksView.as_view(),
         name='create_tasks'),
+    url(r'^tasks/(?P<pk>[0-9]+)/$',
+        DetailsTasksView.as_view(), name='details_tasks'),
     url(r'^snapshots/$', CreateSnapshotView.as_view(),
         name='create_snapshots'),
     url(r'^snapshots/(?P<pk>[0-9]+)/$',

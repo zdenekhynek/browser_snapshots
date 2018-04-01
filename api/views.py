@@ -77,3 +77,9 @@ class CreateTasksView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         """Save the post data when creating a new agent."""
         serializer.save(owner=self.request.user)
+
+
+class DetailsTasksView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
