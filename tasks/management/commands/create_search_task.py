@@ -25,6 +25,14 @@ class Command(BaseCommand):
             help='Which agent'
         )
 
+        parser.add_argument(
+            '--no-out',
+            dest='no_out',
+            action='store_true',
+            help='Should return message'
+        )
+
+
     def handle(self, *args, **options):
         # get type by id
         type_id = options['type']
@@ -51,13 +59,18 @@ class Command(BaseCommand):
                                                        key='keyword',
                                                        value=options['keyword'])
 
-        Task.objects.create(type=type,
+        task = Task.objects.create(type=type,
                             status=status,
                             agent=agent,
                             scenario=scenario)
 
-        self.stdout.write(
-            self.style.SUCCESS(
-                'Successfully create task'
+        if options['no_out']:
+            # called from code, not command line
+            # return newly created task
+            return str(task.id)
+        else:
+            self.stdout.write(
+                self.style.SUCCESS(
+                    'Successfully create task'
+                )
             )
-        )

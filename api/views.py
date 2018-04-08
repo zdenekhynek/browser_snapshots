@@ -5,8 +5,10 @@ from snapshots.serializers import SnapshotSerializer, SessionSerializer
 from snapshots.models import Snapshot, Session
 from tasks.models import Task
 from agents.models import Agent
+from races.models import Race
 from agents.serializers import AgentSerializer
 from tasks.serializers import TaskSerializer
+from races.serializers import RaceSerializer
 
 
 class CreateSnapshotView(generics.ListCreateAPIView):
@@ -75,11 +77,25 @@ class CreateTasksView(generics.ListCreateAPIView):
         return queryset
 
     def perform_create(self, serializer):
-        """Save the post data when creating a new agent."""
-        serializer.save(owner=self.request.user)
+        """Save the post data when creating a new task."""
+        serializer.save()
 
 
 class DetailsTasksView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+
+class CreateRacesView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Race.objects.all()
+    serializer_class = RaceSerializer
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new race."""
+        data = self.request.data
+        keyword = data.get('keyword')
+        agents = self.request.POST.getlist('agent')
+
+        serializer.save(keyword=keyword, agents=agents)

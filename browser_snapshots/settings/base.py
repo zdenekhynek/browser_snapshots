@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'tasks',
     'agents',
     'youtube',
+    'races',
+    'trainings',
 ]
 
 MIDDLEWARE = [

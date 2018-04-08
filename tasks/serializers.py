@@ -12,4 +12,4 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class to map serializer's fields with the model fields."""
         model = Task
-        fields = ('id', 'status', 'agent', 'scenario')
+        fields = ('id', 'status', 'agent', 'session', 'scenario')
