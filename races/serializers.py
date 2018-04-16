@@ -14,6 +14,11 @@ class RaceSerializer(serializers.ModelSerializer):
         model = Race
         fields = ('id',)
 
+
+    def get(self, validated_data):
+        return 'asd'
+
+
     def create(self, validated_data):
         keyword = validated_data['keyword']
         agents = validated_data['agents']
@@ -22,7 +27,7 @@ class RaceSerializer(serializers.ModelSerializer):
         # within
 
         # remove key which belongs to relate model
-        validated_data.pop('keyword')
+        # validated_data.pop('keyword')
         validated_data.pop('agents')
 
         race = Race.objects.create(**validated_data)
@@ -30,7 +35,11 @@ class RaceSerializer(serializers.ModelSerializer):
         # create related models for each agent
         for agent_id in agents:
           # create related agents
-          agent = Agent.objects.get(pk=agent_id)
+          try:
+            agent = Agent.objects.get(pk=agent_id)
+          except:
+            raise CommandError('Agent with id "%s" does not exist' % agent_id)
+
           RaceAgent.objects.create(race=race, agent=agent)
 
           # create related task with a custom command

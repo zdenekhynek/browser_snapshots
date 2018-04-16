@@ -1,11 +1,13 @@
 from rest_framework import generics
 from rest_framework import permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from snapshots.serializers import SnapshotSerializer, SessionSerializer
 from snapshots.models import Snapshot, Session
 from tasks.models import Task
 from agents.models import Agent
-from races.models import Race
+from races.models import Race, RaceTask
 from agents.serializers import AgentSerializer
 from tasks.serializers import TaskSerializer
 from races.serializers import RaceSerializer
@@ -99,3 +101,36 @@ class CreateRacesView(generics.ListCreateAPIView):
         agents = self.request.POST.getlist('agent')
 
         serializer.save(keyword=keyword, agents=agents)
+
+class DetailsRacesView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+    queryset = Race.objects.all()
+    serializer_class = RaceSerializer
+
+
+class RaceView(APIView):
+    """Get race with all that is necessary"""
+
+    def get(self, request, pk, format=None):
+        """
+        Return a list of all users.
+        """
+        race = Race.objects.get(pk=pk)
+
+        # get all tasks
+        race_tasks = RaceTask.objects.filter(race=race)
+
+        snapshots_data = []
+        for race_task in race_tasks:
+            task = Task.objects.get(pk=race_task.task_id)
+            try:
+                # get all snapshot titles
+                snapshots = Snapshot.objects.filter(session=task.session)
+                for snapshot in snapshots:
+                    snapshot_object = {'title': snapshot.title, 'agent_id':
+                        snapshot.agent_id }
+                    snapshots_data.append(snapshot_object)
+            except:
+                print('No snapshots yet')
+
+        return Response({'id': race.id, 'tasks': snapshots_data})

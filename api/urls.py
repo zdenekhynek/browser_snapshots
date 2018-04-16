@@ -9,7 +9,9 @@ from .views import (CreateSnapshotView,
                     CreateAgentsView,
                     CreateTasksView,
                     DetailsTasksView,
-                    CreateRacesView)
+                    CreateRacesView,
+                    DetailsRacesView,
+                    RaceView)
 
 urlpatterns = {
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -17,6 +19,10 @@ urlpatterns = {
         name='create_agents'),
     url(r'^races/$', CreateRacesView.as_view(),
         name='create_race'),
+    url(r'^races/(?P<pk>[0-9]+)/$',
+        DetailsRacesView.as_view(), name='details_races'),
+    url(r'^races/(?P<pk>[0-9]+)/detail$',
+        RaceView.as_view(), name='detail_race'),
     url(r'^tasks/$', CreateTasksView.as_view(),
         name='create_tasks'),
     url(r'^tasks/(?P<pk>[0-9]+)/$',
