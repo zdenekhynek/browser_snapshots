@@ -7,8 +7,8 @@ class Agent(models.Model):
                               related_name='agents',
                               on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=False, null=True)
-    email = models.CharField(max_length=255, blank=True, null=True)
-    password = models.CharField(max_length=255, blank=True, null=True)
+    gmail = models.CharField(max_length=255, blank=True, null=True)
+    gmail_password = models.CharField(max_length=255, blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
 
     def __str__(self):

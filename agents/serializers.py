@@ -10,4 +10,4 @@ class AgentSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class to map serializer's fields with the model fields."""
         model = Agent
-        fields = ('id', 'name', 'email')
+        fields = ('id', 'name', 'gmail')
