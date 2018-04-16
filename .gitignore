@@ -9,3 +9,6 @@ __pycache__
 uploads
 
 .env
+
+node_modules
+webpack-stats.json

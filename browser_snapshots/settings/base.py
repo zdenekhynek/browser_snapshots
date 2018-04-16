@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'storages',
+    'webpack_loader',
     'api',
     'analysis',
     'snapshots',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'youtube',
     'races',
     'trainings',
+    'viz',
 ]
 
 MIDDLEWARE = [
@@ -159,3 +161,10 @@ NLTK_DATA_DIR = os.path.join(DATA_DIR, 'nltk_data')
 
 WATSON_USERNAME = os.environ.get('WATSON_USERNAME', '')
 WATSON_PASSWORD = os.environ.get('WATSON_PASSWORD', '')
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': DEBUG,
+        'STATS_FILE': os.path.join(DATA_DIR, 'webpack-stats.json'),
+    }
+}
