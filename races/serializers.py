@@ -14,11 +14,6 @@ class RaceSerializer(serializers.ModelSerializer):
         model = Race
         fields = ('id',)
 
-
-    def get(self, validated_data):
-        return 'asd'
-
-
     def create(self, validated_data):
         keyword = validated_data['keyword']
         agents = validated_data['agents']

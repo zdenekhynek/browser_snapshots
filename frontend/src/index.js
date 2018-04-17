@@ -1,13 +1,23 @@
-console.log('index.js');
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
-const title = 'My Minimal React Webpack Babel Setup';
+import App from './core/app';
+import makeStore from './core/store';
+import { checkRace } from './races/action_creators';
+
+const store = makeStore();
 
 ReactDOM.render(
-  <div>{title}</div>,
+  <Provider store={store}>
+    <div>
+      <App />
+    </div>
+  </Provider>
+  ,
   document.getElementById('app')
 );
+
+store.dispatch(checkRace());
 
 module.hot.accept();

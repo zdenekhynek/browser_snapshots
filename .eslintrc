@@ -1,0 +1,12 @@
+{
+  "extends": ["airbnb-standard"],
+  "rules": {
+      // disallow trailing commas in object literals
+      "comma-dangle": [2, "always-multiline"],
+
+      // require or disallow a space before function opening parenthesis (fixable)
+      "space-before-function-paren": [2, "never"],
+
+      "arrow-parens": ["error", "always"]
+  }
+}

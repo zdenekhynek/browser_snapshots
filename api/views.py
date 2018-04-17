@@ -76,6 +76,11 @@ class CreateTasksView(generics.ListCreateAPIView):
         if agent is not None:
             queryset = queryset.filter(agent=agent)
 
+        # filter by type
+        type = self.request.query_params.get('type', None)
+        if type is not None:
+            queryset = queryset.filter(type=type)
+
         return queryset
 
     def perform_create(self, serializer):
@@ -98,7 +103,13 @@ class CreateRacesView(generics.ListCreateAPIView):
         """Save the post data when creating a new race."""
         data = self.request.data
         keyword = data.get('keyword')
-        agents = self.request.POST.getlist('agent')
+
+        agents = []
+        if len(self.request.POST.getlist('agent')):
+            agents = self.request.POST.getlist('agent')
+        elif 'agents' in data:
+            # try
+            agents = data.get('agents')
 
         serializer.save(keyword=keyword, agents=agents)
 
