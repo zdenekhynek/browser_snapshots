@@ -70,4 +70,11 @@ DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
-DEBUG = False
+DEBUG = True
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(DATA_DIR, 'webpack-stats-staging.json'),
+    }
+}
