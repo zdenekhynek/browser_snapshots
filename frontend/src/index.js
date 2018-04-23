@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import App from './core/app';
 import makeStore from './core/store';
-import { checkRace } from './races/action_creators';
+import { getRaces } from './races/action_creators';
 
 const store = makeStore();
 
@@ -18,6 +18,7 @@ ReactDOM.render(
   document.getElementById('app')
 );
 
-store.dispatch(checkRace());
+//  fetch all available races
+store.dispatch(getRaces());
 
 module.hot.accept();

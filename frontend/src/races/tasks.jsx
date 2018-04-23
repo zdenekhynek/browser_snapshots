@@ -9,7 +9,7 @@ export function renderAgentTasks(tasks, agent) {
       <ul>
         {tasks.map((task) => {
           return (
-            <ol>{task.get('title')}</ol>
+            <ol key={task.get('title')}>{task.get('title')}</ol>
           );
         })}
       </ul>
@@ -19,7 +19,7 @@ export function renderAgentTasks(tasks, agent) {
 
 const Tasks = ({ tasks }) => {
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: 'flex' }}>
       {tasks.map(renderAgentTasks)}
     </div>
   );

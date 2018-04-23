@@ -12,7 +12,7 @@ export function createRace(keyword, agents) {
 }
 
 //  http://127.0.0.1:8000/races/26/detail
-export function checkRace(raceId) {
+export function updateRace(raceId) {
   const endpointUrl = 'races/';
 
   const method = 'GET';
@@ -22,4 +22,14 @@ export function checkRace(raceId) {
 
   const completeUrl = `${url}detail`;
   return daoFetch(completeUrl, options);
+}
+
+export function getRace(keyword, agents) {
+  const endpointUrl = 'races/';
+
+  const method = 'GET';
+  const options = { method };
+
+  const url = formatUrl(endpointUrl);
+  return daoFetch(url, options);
 }

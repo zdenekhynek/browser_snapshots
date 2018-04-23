@@ -33,34 +33,76 @@ export function createRace(keyword, agents) {
   };
 }
 
-export const REQUEST_CHECK_RACE = 'REQUEST_CHECK_RACE';
-export const RECEIVE_CHECK_RACE = 'RECEIVE_CHECK_RACE';
+export const REQUEST_UPDATE_RACE = 'REQUEST_UPDATE_RACE';
+export const RECEIVE_UPDATE_RACE = 'RECEIVE_UPDATE_RACE';
 
-export function requestCheckRace() {
+export function requestUpdateRace() {
   return {
-    type: REQUEST_CHECK_RACE,
+    type: REQUEST_UPDATE_RACE,
   };
 }
 
-export function receiveCheckRace(response) {
+export function receiveUpdateRace(raceId, response) {
   return {
-    type: RECEIVE_CHECK_RACE,
+    type: RECEIVE_UPDATE_RACE,
+    raceId,
     response,
   };
 }
 
-export function checkRace() {
+export function updateRace(raceId) {
   return (dispatch, getState) => {
-    const { races } = getState();
-
-    dispatch(requestCheckRace());
-    dao.checkRace(races.get('raceId'))
+    dispatch(requestUpdateRace());
+    dao.updateRace(raceId)
       .then((response) => {
-        dispatch(receiveCheckRace(response || {}));
+        dispatch(receiveUpdateRace(raceId, response || {}));
       })
       .catch((error) => {
         console.error(error); //  eslint-disable-line no-console
         return Promise.reject({ error });
       });
+  };
+}
+
+export const REQUEST_RACES = 'REQUEST_RACES';
+export const RECEIVE_RACES = 'RECEIVE_RACES';
+
+export function requestRaces() {
+  return {
+    type: REQUEST_RACES,
+  };
+}
+
+export function receiveRaces(response) {
+  return {
+    type: RECEIVE_RACES,
+    response,
+  };
+}
+
+export function getRaces() {
+  return (dispatch, getState) => {
+    dispatch(requestRaces());
+    dao.getRace()
+      .then((response) => {
+        dispatch(receiveRaces(response));
+      })
+      .catch((error) => {
+        console.error(error); //  eslint-disable-line no-console
+        return Promise.reject({ error });
+      });
+  };
+}
+
+export const CHANGE_ACTIVE_RACE = 'CHANGE_ACTIVE_RACE';
+
+export function changeActiveRace(raceId) {
+  return (dispatch, getState) => {
+    dispatch(updateRace(raceId));
+
+    dispatch({
+      type: CHANGE_ACTIVE_RACE,
+      raceId,
+    });
   };
 }

@@ -75,6 +75,7 @@ class Form extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
+        <h2>New race</h2>
         <input
           type="text"
           value={this.state.value}
