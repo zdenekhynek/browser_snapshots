@@ -26,13 +26,13 @@ class Selector extends Component {
   }
 
   render() {
-    const { races } = this.props;
+    const { races, selectedId } = this.props;
 
     const blankOption = Map({ id: '---select race or create new one---' });
     const options = races.unshift(blankOption);
 
     return (
-      <select onChange={this.onChange}>
+      <select value={selectedId} onChange={this.onChange}>
         {options.map(Selector.renderOption)}
       </select>
     );
@@ -41,11 +41,13 @@ class Selector extends Component {
 
 Selector.propTypes = {
   races: PropTypes.object,
+  selectedId: PropTypes.number,
   onChange: PropTypes.func,
 };
 
 Selector.defaultProps = {
   races: List(),
+  selectedId: 0,
   onChange: noop,
 };
 

@@ -16,7 +16,11 @@ export function App(props) {
   return (
     <div>
       <Form agents={agents} onSubmit={props.createRace} />
-      <Selector races={races} onChange={props.changeActiveRace} />
+      <Selector
+        races={races}
+        selectedId={activeRace.get('id')}
+        onChange={props.changeActiveRace}
+      />
       <div>
         <Tasks tasks={activeRace.get('tasks', List())} />
       </div>
@@ -25,7 +29,6 @@ export function App(props) {
 }
 
 //  <span>{races.get('status')}</span>
-//  <Tasks tasks={races.get('tasks')} />
 
 export function mapStateToProps({ agents, races }) {
   const activeRace = races.find((r) => r.get('isActive', false), null, Map());

@@ -2,13 +2,13 @@ const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 
 const config = {
-  baseUrl: 'http://localhost:8081/',
+  baseUrl: 'http://localhost:8080/',
 };
 
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    './frontend/src/index.js'
+    './frontend/src/index.js',
   ],
   output: {
     path: __dirname + '/frontend/dist',
@@ -27,15 +27,15 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
-      }
-    ]
+        use: ['babel-loader'],
+      },
+    ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
   },
   devServer: {
     contentBase: './frontend/dist',
-    hot: true
-  }
+    hot: true,
+  },
 };

@@ -20,11 +20,11 @@ export function receiveCreateRace(response) {
 
 export function createRace(keyword, agents) {
   return (dispatch, getState) => {
-    dispatch(requestCreateRace(keyword));
+    dispatch(requestCreateRace());
     dao.createRace(keyword, agents)
       .then((response) => {
         dispatch(receiveCreateRace(response || {}));
-        startService(dispatch);
+        startService(dispatch, response.id);
       })
       .catch((error) => {
         console.error(error); //  eslint-disable-line no-console

@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS, List, Map } from 'immutable';
 
 import {
   RECEIVE_CREATE_RACE,
@@ -15,10 +15,14 @@ export function getInitialState() {
   return List();
 }
 
-export function reduceCreateRace(state, response) {
-  return state
-    .set('raceId', response.id)
-    .set('status', IN_PROGRESS_STATUS);
+export function reduceCreateRace(state, raceId) {
+  const newRace = Map({
+    id: raceId,
+    isActive: false,
+    tasks: List(),
+  });
+
+  return state.push(newRace);
 }
 
 export function reduceUpdateRace(state, raceId, tasks) {
@@ -51,7 +55,6 @@ export function changeActiveRace(state, raceId) {
   console.log(state);
 
   return state.map((r) => {
-    console.log('r', r, raceId);
     return r.set('isActive', r.get('id') === raceId);
   });
 }
@@ -59,7 +62,9 @@ export function changeActiveRace(state, raceId) {
 export default function(state = getInitialState(), action) {
   switch (action.type) {
     case RECEIVE_CREATE_RACE:
-      return reduceCreateRace(state, action.response);
+      const raceId = action.response.id;
+      const newRaces = reduceCreateRace(state, raceId);
+      return changeActiveRace(newRaces, raceId);
     case RECEIVE_UPDATE_RACE:
       return reduceUpdateRace(state, action.raceId, action.response.tasks);
     case RECEIVE_RACES:

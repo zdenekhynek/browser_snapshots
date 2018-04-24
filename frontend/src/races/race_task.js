@@ -1,23 +1,25 @@
-import { checkRace } from './action_creators';
+import { updateRace } from './action_creators';
 
-export const CHECK_INTERVAL = 1000;
+export const UPDATE_INTERVAL = 1000;
 
 let serviceInterval;
 let dispatch;
+let raceId;
 
-export function check() {
-  dispatch(checkRace());
+export function update() {
+  dispatch(updateRace(raceId));
 }
 
 export function stopService() {
   clearInterval(serviceInterval);
 }
 
-export function startService(dispatchRef) {
+export function startService(dispatchRef, raceIdRef) {
   dispatch = dispatchRef;
+  raceId = raceIdRef;
 
   //  just in case the old is still running
   stopService();
 
-  serviceInterval = setInterval(check, CHECK_INTERVAL);
+  serviceInterval = setInterval(update, UPDATE_INTERVAL);
 }

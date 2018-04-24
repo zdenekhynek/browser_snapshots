@@ -7,9 +7,9 @@ export function renderAgentTasks(tasks, agent) {
     <div key={agent}>
       Agent: {agent}
       <ul>
-        {tasks.map((task) => {
+        {tasks.map((task, i) => {
           return (
-            <ol key={task.get('title')}>{task.get('title')}</ol>
+            <ol key={i}>{task.get('title')}</ol>
           );
         })}
       </ul>
@@ -20,6 +20,7 @@ export function renderAgentTasks(tasks, agent) {
 const Tasks = ({ tasks }) => {
   return (
     <div style={{ display: 'flex' }}>
+      <h3>Race videos</h3>
       {tasks.map(renderAgentTasks)}
     </div>
   );
