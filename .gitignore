@@ -15,3 +15,5 @@ webpack-stats.json
 webpack-stats-production.json
 dist
 .tmp_dist
+
+static
