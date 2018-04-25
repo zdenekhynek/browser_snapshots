@@ -95,14 +95,35 @@ def extract_number(string):
     return numbers
 
 
+def parse_video_views(html):
+    views_els = html.select(
+        'yt-view-count-renderer .view-count'
+    )
+
+    views = None
+
+    if len(views_els) > 0:
+        numbers = extract_number(views_els[0].get_text())
+        if len(numbers) > 0:
+            views = numbers[0]
+
+    return views
+
+
 def parse_likes_number(html):
     els = html.select('yt-formatted-string')
 
     if len(els) > 0:
         el = els[0]
-        likes_string = el['aria-label']
-        likes_int = extract_number(likes_string)
-        return likes_int
+
+        try:
+            likes_string = el['aria-label']
+            likes_int = extract_number(likes_string)
+            return likes_int
+        except KeyError:
+            # TODO - figure out why some videos don't have likes/dislikes
+            # numbers
+            pass
 
     return
 
@@ -118,11 +139,11 @@ def parse_likes_dislikes(html):
 
     if len(like_dislike_buttons) > 0:
         likes_nums = parse_likes_number(like_dislike_buttons[0])
-        if len(likes_nums) > 0:
+        if likes_nums and len(likes_nums) > 0:
             likes = likes_nums[0]
 
         dislikes_nums = parse_likes_number(like_dislike_buttons[1])
-        if len(dislikes_nums) > 0:
+        if dislikes_nums and len(dislikes_nums) > 0:
             dislikes = dislikes_nums[0]
 
     return (likes, dislikes)
@@ -190,6 +211,12 @@ def parse_snapshot(snapshot):
     print('description')
     print(snapshot.description)
 
+    # get views
+    views = parse_video_views(html)
+    snapshot.video.views = views
+    print('views')
+    print(views)
+
     # get likes
     (likes, dislikes) = parse_likes_dislikes(html)
     print('likes, dislikes')
@@ -205,11 +232,11 @@ def parse_snapshot(snapshot):
 
     # get next up video
     print('parsing next up videos')
-    snapshot.next_up_video = parse_next_up_video(html)
+    # snapshot.next_up_video = parse_next_up_video(html)
 
     # get related videos
     print('parsing related videos')
-    snapshot.related_videos.set(parse_related_videos(html))
+    # snapshot.related_videos.set(parse_related_videos(html))
 
     snapshot.video.save()
 

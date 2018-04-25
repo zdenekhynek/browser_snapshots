@@ -1,8 +1,9 @@
+const path = require('path');
 const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 
 const config = {
-  baseUrl: 'http://localhost:8080/',
+  baseUrl: 'https://browser-extension-uploads.s3.amazonaws.com/static/dist/',
 };
 
 module.exports = {
@@ -11,15 +12,15 @@ module.exports = {
     './frontend/src/index.js',
   ],
   output: {
-    path: __dirname + '/frontend/dist',
-    publicPath: config.baseUrl,
+    path: path.resolve(__dirname, 'dist'), // eslint-disable-line
+    publicPath: `static${config.baseUrl}`,
     filename: 'bundle.js',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new BundleTracker({ filename: './webpack-stats.json' }),
+    new BundleTracker({ filename: './webpack-stats-production.json' }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('http://127.0.0.1:8000/'),
+      API_URL: JSON.stringify('https://browser-snapshots.herokuapp.com/'),
     }),
   ],
   module: {
@@ -55,9 +56,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
-  },
-  devServer: {
-    contentBase: './frontend/dist',
-    hot: true,
   },
 };

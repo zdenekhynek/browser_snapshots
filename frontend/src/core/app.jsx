@@ -10,11 +10,13 @@ import { createRace, changeActiveRace } from '../races/action_creators';
 
 import noop from '../utils/noop';
 
+import classes from './app.css';
+
 export function App(props) {
   const { agents, races, activeRace } = props;
 
   return (
-    <div>
+    <div className={classes.app}>
       <Form agents={agents} onSubmit={props.createRace} />
       <Selector
         races={races}

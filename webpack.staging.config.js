@@ -29,6 +29,28 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              localIdentName: '[path][name]---[local]---[hash:base64:5]',
+              modules: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                require('postcss-import'),
+                require('postcss-simple-vars'),
+              ],
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {

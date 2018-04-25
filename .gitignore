@@ -12,3 +12,6 @@ uploads
 
 node_modules
 webpack-stats.json
+webpack-stats-production.json
+dist
+.tmp_dist

@@ -11,6 +11,7 @@ from races.models import Race, RaceTask
 from agents.serializers import AgentSerializer
 from tasks.serializers import TaskSerializer
 from races.serializers import RaceSerializer
+from youtube.parser import parse_snapshot
 
 
 class CreateSnapshotView(generics.ListCreateAPIView):
@@ -21,7 +22,11 @@ class CreateSnapshotView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         """Save the post data when creating a new snaphost."""
-        serializer.save(owner=self.request.user)
+        snapshot = serializer.save(owner=self.request.user)
+
+        # parse the snaphost video straight away so that
+        # the video stats are immediately available (e.g. for race)
+        parse_snapshot(snapshot)
 
 
 class DetailsSnapshotView(generics.RetrieveUpdateDestroyAPIView):
@@ -136,10 +141,17 @@ class RaceView(APIView):
             task = Task.objects.get(pk=race_task.task_id)
             try:
                 # get all snapshot titles
-                snapshots = Snapshot.objects.filter(session=task.session)
+                snapshots = Snapshot.objects.select_related().filter(session=task.session)
                 for snapshot in snapshots:
-                    snapshot_object = {'title': snapshot.title, 'agent_id':
-                        snapshot.agent_id }
+                    snapshot_object = {
+                        'title': snapshot.title,
+                        'url': snapshot.url,
+                        'agent_id': snapshot.agent_id,
+                        'views': snapshot.video.views,
+                        'likes': snapshot.video.likes,
+                        'dislikes': snapshot.video.dislikes,
+                        'length': snapshot.video.length
+                    }
                     snapshots_data.append(snapshot_object)
             except:
                 print('No snapshots yet')
