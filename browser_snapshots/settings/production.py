@@ -6,11 +6,16 @@ ALLOWED_HOSTS = [
     'sn7257truedatyoutub-production.eu-west-1.elasticbeanstalk.com'
 ]
 
-# Update database configuration with $DATABASE_URL.
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('RDS_DB_NAME', ''),
+        'USER': os.environ.get('RDS_USERNAME', ''),
+        'PASSWORD': os.environ.get('RDS_PASSWORD', ''),
+        'HOST': os.environ.get('RDS_HOSTNAME', ''),
+        'PORT': os.environ.get('RDS_PORT', ''),
+    }
+}
 
 # Make sure static assets work on heroku
 # https://devcenter.heroku.com/articles/django-assets

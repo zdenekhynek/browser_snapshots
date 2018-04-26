@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 
 const config = {
-  baseUrl: 'https://browser-extension-uploads.s3.amazonaws.com/static/dist/',
+  baseUrl: 'http://sn7257truedatyoutub-production.eu-west-1.elasticbeanstalk.com/',
 };
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new BundleTracker({ filename: './webpack-stats-production.json' }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('https://browser-snapshots.herokuapp.com/'),
+      API_URL: JSON.stringify('http://sn7257truedatyoutub-production.eu-west-1.elasticbeanstalk.com/'),
     }),
   ],
   module: {
