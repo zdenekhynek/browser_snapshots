@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
@@ -6,6 +7,7 @@ import { Map, List } from 'immutable';
 import Form from '../races/form';
 import Selector from '../races/selector';
 import Tasks from '../races/tasks';
+import Chart from '../races/chart';
 import { createRace, changeActiveRace } from '../races/action_creators';
 
 import noop from '../utils/noop';
@@ -16,17 +18,20 @@ export function App(props) {
   const { agents, races, activeRace } = props;
 
   return (
-    <div className={classes.app}>
-      <Form agents={agents} onSubmit={props.createRace} />
-      <Selector
-        races={races}
-        selectedId={activeRace.get('id')}
-        onChange={props.changeActiveRace}
-      />
-      <div>
-        <Tasks tasks={activeRace.get('tasks', List())} />
+    <Router>
+      <div className={classes.app}>
+        <Form agents={agents} onSubmit={props.createRace} />
+        <Selector
+          races={races}
+          selectedId={activeRace.get('id')}
+          onChange={props.changeActiveRace}
+        />
+        <div>
+          <Route exact path="/viz/tasks" component={Tasks} />
+          <Route exact path="/viz/chart" component={Chart} />
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

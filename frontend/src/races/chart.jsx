@@ -40,10 +40,11 @@ export function renderAgentTasks(tasks, agent) {
   );
 }
 
-const Tasks = ({ tasks }) => {
+const Chart = ({ tasks }) => {
+  console.log('tasks', tasks);
   return (
     <div className={classes.tasks}>
-      <h3>Race tasks</h3>
+      <h3>Race chart</h3>
       <div className={classes.lists}>
         {tasks.map(renderAgentTasks)}
       </div>
@@ -60,12 +61,12 @@ export function mapStateToProps({ agents, races }) {
   };
 }
 
-Tasks.propTypes = {
+Chart.propTypes = {
   tasks: PropTypes.object,
 };
 
-Tasks.defaultProps = {
+Chart.defaultProps = {
   tasks: List(),
 };
 
-export default connect(mapStateToProps)(Tasks);
+export default connect(mapStateToProps)(Chart);
