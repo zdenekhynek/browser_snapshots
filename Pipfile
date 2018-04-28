@@ -26,6 +26,7 @@ requests = "*"
 watson-developer-cloud = "*"
 python-dotenv = "*"
 django-webpack-loader = "*"
+newrelic = "*"
 
 
 [dev-packages]

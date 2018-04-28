@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b56c7176c101124f7f1f4cec93f366d40fd1b30ca7d010b9153342bf1787b513"
+            "sha256": "ec365178a06e5adfb6fe5d7abc10cbd3f1955a97f1fc36b2f838c3081347c0bc"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -9,9 +9,9 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "17.2.0",
+            "platform_release": "17.5.0",
             "platform_system": "Darwin",
-            "platform_version": "Darwin Kernel Version 17.2.0: Fri Sep 29 18:27:05 PDT 2017; root:xnu-4570.20.62~3/RELEASE_X86_64",
+            "platform_version": "Darwin Kernel Version 17.5.0: Fri Apr 13 19:32:32 PDT 2018; root:xnu-4570.51.2~1/RELEASE_X86_64",
             "python_full_version": "3.6.1",
             "python_version": "3.6",
             "sys_platform": "darwin"
@@ -64,17 +64,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:3cdf1f2c132c4bbfd3bfaaf9b936f5a66c0916fefbd1110ad1362dad8fb87796",
-                "sha256:30879b3292f3e7766cf086e6e7595f751ffe1cf8fdba5a5fcd848571a4cff455"
+                "sha256:413065f58f90c1a55c6aa43f023e95a12cf3b9032f958e78ededba86f040e8c3",
+                "sha256:30239a3c16da19c0a0886e7904195fb1a191dafc5773ad1656b7896577241cb5"
             ],
-            "version": "==1.7.8"
+            "version": "==1.7.10"
         },
         "botocore": {
             "hashes": [
-                "sha256:c29c040a979ff598a9635977d4e2f683a0b5dc920246df9e02374741e04163a9",
-                "sha256:fa2c9c1fb5872959cdcdf6e7a697dca5eb729698409c717a92d328a10bffbfbb"
+                "sha256:3de8758600e692d5e31d74fb183c57409eb677b21e15608fcc1c059be47988e3",
+                "sha256:10d4880253210ad35cb1b3c3134d8698c2c2d10f15a2cf6a7be3f91b486866ff"
             ],
-            "version": "==1.10.8"
+            "version": "==1.10.10"
         },
         "bs4": {
             "hashes": [
@@ -256,6 +256,12 @@
                 "sha256:c9ce7eccdcb901a2c75d326ea134e0886abfbea5f93e91cc95de9507c0816c44"
             ],
             "version": "==4.1.0"
+        },
+        "newrelic": {
+            "hashes": [
+                "sha256:2d1cf00e105f423c5c5fa9ce3f6179773683e6ee52fb64016441abd225b43bf3"
+            ],
+            "version": "==3.2.0.91"
         },
         "nltk": {
             "hashes": [
