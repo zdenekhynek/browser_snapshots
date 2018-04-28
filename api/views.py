@@ -143,16 +143,20 @@ class RaceView(APIView):
                 # get all snapshot titles
                 snapshots = Snapshot.objects.select_related().filter(session=task.session)
                 for snapshot in snapshots:
-                    snapshot_object = {
-                        'title': snapshot.title,
-                        'url': snapshot.url,
-                        'agent_id': snapshot.agent_id,
-                        'views': snapshot.video.views,
-                        'likes': snapshot.video.likes,
-                        'dislikes': snapshot.video.dislikes,
-                        'length': snapshot.video.length
-                    }
-                    snapshots_data.append(snapshot_object)
+
+                    try:
+                        snapshot_object = {
+                            'title': snapshot.title,
+                            'url': snapshot.url,
+                            'agent_id': snapshot.agent_id,
+                            'views': snapshot.video.views,
+                            'likes': snapshot.video.likes,
+                            'dislikes': snapshot.video.dislikes,
+                            'length': snapshot.video.length
+                        }
+                        snapshots_data.append(snapshot_object)
+                    except:
+                        print('No video for the snapshot')
             except:
                 print('No snapshots yet')
 

@@ -12,7 +12,7 @@ class Race(models.Model):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return "%s" % (id,)
+        return "%s" % (self.id,)
 
 
 class RaceAgent(models.Model):
