@@ -144,19 +144,21 @@ class RaceView(APIView):
                 snapshots = Snapshot.objects.select_related().filter(session=task.session)
                 for snapshot in snapshots:
 
-                    try:
-                        snapshot_object = {
-                            'title': snapshot.title,
-                            'url': snapshot.url,
-                            'agent_id': snapshot.agent_id,
-                            'views': snapshot.video.views,
-                            'likes': snapshot.video.likes,
-                            'dislikes': snapshot.video.dislikes,
-                            'length': snapshot.video.length
-                        }
-                        snapshots_data.append(snapshot_object)
-                    except:
-                        print('No video for the snapshot')
+                    # append only snapshots with a video
+                    if snapshot.url.find('youtube.com/watch?') > -1:
+                        try:
+                            snapshot_object = {
+                                'title': snapshot.title,
+                                'url': snapshot.url,
+                                'agent_id': snapshot.agent_id,
+                                'views': snapshot.video.views,
+                                'likes': snapshot.video.likes,
+                                'dislikes': snapshot.video.dislikes,
+                                'length': snapshot.video.length
+                            }
+                            snapshots_data.append(snapshot_object)
+                        except:
+                            print('No video for the snapshot')
             except:
                 print('No snapshots yet')
 
