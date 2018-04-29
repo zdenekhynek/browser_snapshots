@@ -47,7 +47,8 @@ class Snapshot(models.Model):
     url = models.CharField(max_length=255, blank=False)
     title = models.CharField(max_length=1000, blank=False)
     source_code = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='uploads', max_length=254, blank=True)
+    image = models.ImageField(upload_to='uploads', max_length=254, blank=True,
+                              null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

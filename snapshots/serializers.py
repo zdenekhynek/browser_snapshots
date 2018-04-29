@@ -8,7 +8,7 @@ from .models import Snapshot, Session
 
 class SnapshotSerializer(serializers.ModelSerializer):
     """Serializer to map the Model instance into JSON format."""
-    image = Base64ImageField()
+    image = Base64ImageField(required=False)
     owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
