@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+from browser_snapshots.utils import get_git_version
 
 from pathlib import Path  # python3 only
 
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'races',
     'trainings',
     'viz',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +135,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     )
+}
+
+RAVEN_CONFIG = {
+    'dsn': os.environ.get('SENTRY_DNS', ''),  # noqa
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': get_git_version(BASE_DIR), # noqa
 }
 
 # Internationalization
