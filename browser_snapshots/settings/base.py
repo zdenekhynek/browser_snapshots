@@ -75,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django_sentry_400_middleware.Sentry400CatchMiddleware',
 ]
 
 ROOT_URLCONF = 'browser_snapshots.urls'

@@ -28,6 +28,7 @@ python-dotenv = "*"
 django-webpack-loader = "*"
 newrelic = "*"
 raven = "*"
+"django-sentry-400-middleware" = "*"
 
 
 [dev-packages]

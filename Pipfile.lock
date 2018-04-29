@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0b3662ca4781ab62ffff4e1600fa5062500f81d64dd6b7c7d783df24e1311301"
+            "sha256": "7a86d427beb3433d0baa49e3c0f3cb7f8780644c95ff4d1e0f82e4c003bd033c"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -184,6 +184,12 @@
                 "sha256:16936a574a2bc83d6496dc4af9f821d007190ade72cde0f993b5e8cfb1fc594d"
             ],
             "version": "==1.0.0"
+        },
+        "django-sentry-400-middleware": {
+            "hashes": [
+                "sha256:bc97e83c5672b964b790877c746d2c9387101a4c7d4e8a20f9675932bbce246b"
+            ],
+            "version": "==0.3.0"
         },
         "django-storages": {
             "hashes": [
