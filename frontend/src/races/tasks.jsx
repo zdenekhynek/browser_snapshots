@@ -6,6 +6,17 @@ import { connect } from 'react-redux';
 
 import classes from './tasks.css';
 
+export function getIdFromUrl(url) {
+  let videoId = url.split('v=')[1];
+  const ampersandPosition = videoId.indexOf('&');
+
+  if (ampersandPosition !== -1) {
+    videoId = videoId.substring(0, ampersandPosition);
+  }
+
+  return videoId;
+}
+
 export function renderAgentTasks(tasks, agent) {
   const formatter = format(',');
   const ratioFormatter = format('.3f');
@@ -22,18 +33,30 @@ export function renderAgentTasks(tasks, agent) {
             const total = likes + dislikes;
             const ratio = likes / total;
 
+            const url = task.get('url');
+            const videoId = getIdFromUrl(url);
+            const ytUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+
             return (
-              <ol key={i} className={classes.task}>
-                <a href={task.get('url')} target="_blank">
-                  {task.get('title')}
-                </a>
-                <div className={classes.metric}>
-                  <span>Views: {formatter(views)} </span>
-                  <span>Likes: {formatter(likes)} </span>
-                  <span>Dislikes: {formatter(dislikes)}</span>
-                  <span>Ratio: {ratioFormatter(ratio)}</span>
+              <a
+                key={i}
+                className={classes.task}
+                href={task.get('url')}
+                target="_blank"
+              >
+                <div>
+                  <img src={ytUrl} className={classes.thumbnail} alt="" />
                 </div>
-              </ol>
+                <div>
+                  <h3>{task.get('title')}</h3>
+                  <div className={classes.metric}>
+                    <span>Views: {formatter(views)} </span>
+                    <span>Likes: {formatter(likes)} </span>
+                    <span>Dislikes: {formatter(dislikes)}</span>
+                    <span>Ratio: {ratioFormatter(ratio)}</span>
+                  </div>
+                </div>
+              </a>
             );
           })
         }
@@ -45,7 +68,6 @@ export function renderAgentTasks(tasks, agent) {
 const Tasks = ({ agents, tasks }) => {
   return (
     <div className={classes.tasks}>
-      <h3>Race tasks</h3>
       <div className={classes.lists}>
         {
           tasks.map((t, i) => {

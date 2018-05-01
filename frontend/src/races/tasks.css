@@ -5,12 +5,27 @@
 }
 
 .task {
+  display: flex;
   padding: 10px 20px;
   border-bottom: 1px solid black;
+  font-size: 12px;
+  color: rgb(10, 10, 10) !important;
+  text-decoration: none !important;
+}
+
+.task > div {
+  padding: 10px 10px;
+}
+
+.task a {
+  color: inherit;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .metric {
   margin-top: 5px;
+  color: rgba(17, 17, 17, 0.6);
 }
 
 .metric > span {
@@ -22,3 +37,10 @@
   margin-right: 25px;
   padding: 0;
 }
+
+.thumbnail {
+  display: block;
+  width: 168px;
+  height: auto;
+}
+
