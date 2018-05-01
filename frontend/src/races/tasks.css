@@ -16,3 +16,9 @@
 .metric > span {
   margin-right: 5px;
 }
+
+.lists ul {
+  margin: 0;
+  margin-right: 25px;
+  padding: 0;
+}

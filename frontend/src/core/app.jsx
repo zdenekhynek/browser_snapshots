@@ -7,7 +7,9 @@ import { Map, List } from 'immutable';
 import Form from '../races/form';
 import Selector from '../races/selector';
 import Tasks from '../races/tasks';
-import Chart from '../races/chart';
+
+//  import Chart from '../races/chart';
+
 import { createRace, changeActiveRace } from '../races/action_creators';
 
 import noop from '../utils/noop';
@@ -27,15 +29,12 @@ export function App(props) {
           onChange={props.changeActiveRace}
         />
         <div>
-          <Chart />
           <Tasks />
         </div>
       </div>
     </Router>
   );
 }
-
-//  <span>{races.get('status')}</span>
 
 export function mapStateToProps({ agents, races }) {
   const activeRace = races.find((r) => r.get('isActive', false), null, Map());

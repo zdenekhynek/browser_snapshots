@@ -7,10 +7,14 @@ import noop from '../utils/noop';
 class Selector extends Component {
   static renderOption(race) {
     const raceId = race.get('id');
+    const raceKeyword = race.get('keyword');
+
+    const label = (raceId > -1) ?
+      `Videos about ${raceKeyword}` : race.get('label');
 
     return (
       <option key={raceId} value={raceId}>
-        {raceId}
+        {label}
       </option>
     );
   }
@@ -28,7 +32,10 @@ class Selector extends Component {
   render() {
     const { races, selectedId } = this.props;
 
-    const blankOption = Map({ id: '---select race or create new one---' });
+    const blankOption = Map({
+      id: -1,
+      label: '---select race or create new one---',
+    });
     const options = races.unshift(blankOption);
 
     return (

@@ -129,7 +129,7 @@ class RaceView(APIView):
 
     def get(self, request, pk, format=None):
         """
-        Return a list of all users.
+        Return a list of all races.
         """
         race = Race.objects.get(pk=pk)
 
