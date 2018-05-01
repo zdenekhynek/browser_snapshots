@@ -29,9 +29,6 @@ export function reduceUpdateRace(state, raceId, tasks) {
   const list = fromJS(tasks);
   const grouped = list.groupBy((t) => t.get('agent_id'));
 
-  console.log('reduceUpdateRace', state, raceId, tasks);
-  console.log('grouped', grouped);
-
   return state.map((r) => {
     if (r.get('id') === raceId) {
       return r.set('tasks', grouped);
@@ -51,9 +48,6 @@ export function reduceRaces(response) {
 }
 
 export function changeActiveRace(state, raceId) {
-  console.log('state changeActiveRace', raceId);
-  console.log(state);
-
   return state.map((r) => {
     return r.set('isActive', r.get('id') === raceId);
   });

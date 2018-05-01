@@ -27,8 +27,8 @@ export function App(props) {
           onChange={props.changeActiveRace}
         />
         <div>
-          <Route exact path="/viz/tasks" component={Tasks} />
-          <Route exact path="/viz/chart" component={Chart} />
+          <Chart />
+          <Tasks />
         </div>
       </div>
     </Router>
@@ -39,9 +39,6 @@ export function App(props) {
 
 export function mapStateToProps({ agents, races }) {
   const activeRace = races.find((r) => r.get('isActive', false), null, Map());
-
-  console.log('mapStateToProps', races);
-  console.log('activeRace', activeRace);
 
   return {
     agents: agents.get('available'),
