@@ -11,12 +11,16 @@ class Selector extends Component {
     const raceId = race.get('id');
     const raceKeyword = race.get('keyword');
 
+    const date = new Date(race.get('created_at'));
+    const raceDate = (raceId > -1) ?
+      `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}` : '';
+
     const label = (raceId > -1) ?
       `Videos about ${raceKeyword}` : race.get('label');
 
     return (
       <option key={raceId} value={raceId}>
-        {label}
+        {label} - {raceDate}
       </option>
     );
   }
@@ -34,11 +38,13 @@ class Selector extends Component {
   render() {
     const { races, selectedId } = this.props;
 
+    console.log('races', races);
+
     const blankOption = Map({
       id: -1,
       label: '---select search or create new one below---',
     });
-    const options = races.unshift(blankOption);
+    const options = races.reverse().unshift(blankOption);
 
     return (
       <div className={classes.section}>
