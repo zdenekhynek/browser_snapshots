@@ -4,6 +4,8 @@ import { Map, List } from 'immutable';
 
 import noop from '../utils/noop';
 
+import classes from './selector.css';
+
 class Selector extends Component {
   static renderOption(race) {
     const raceId = race.get('id');
@@ -34,14 +36,20 @@ class Selector extends Component {
 
     const blankOption = Map({
       id: -1,
-      label: '---select race or create new one---',
+      label: '---select search or create new one below---',
     });
     const options = races.unshift(blankOption);
 
     return (
-      <select value={selectedId} onChange={this.onChange}>
-        {options.map(Selector.renderOption)}
-      </select>
+      <div className={classes.section}>
+        <select
+          className={classes.selector}
+          value={selectedId}
+          onChange={this.onChange}
+        >
+          {options.map(Selector.renderOption)}
+        </select>
+      </div>
     );
   }
 }

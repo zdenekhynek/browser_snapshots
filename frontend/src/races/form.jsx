@@ -4,6 +4,8 @@ import { List, Map } from 'immutable';
 
 import noop from '../utils/noop';
 
+import classes from './form.css';
+
 class Form extends Component {
   static renderAgentDropdownOption(agent) {
     return (
@@ -57,14 +59,20 @@ class Form extends Component {
 
   renderAgentDropdown(agent, agents, i) {
     return (
-      <div key={i}>
+      <div  key={i}>
         <select
+          className={classes.agents}
           value={agent.get('id')}
           onChange={(evt) => this.onAgentChange(evt, i)}
         >
           {agents.map(Form.renderAgentDropdownOption)}
         </select>
-        <button onClick={(evt) => this.onRemoveRacer(evt, i)}>X</button>
+        <button
+          className={classes.removeBtn}
+          onClick={(evt) => this.onRemoveRacer(evt, i)}
+        >
+          x
+        </button>
       </div>
     );
   }
@@ -74,20 +82,31 @@ class Form extends Component {
     const { agents } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <h2>New race</h2>
-        <input
-          type="text"
-          value={this.state.value}
-          onChange={this.onKeywordChange}
-        />
+      <form className={classes.form} onSubmit={this.onSubmit}>
+        <h2>New search</h2>
 
-        <div>
-          {currentAgents.map((a, i) => this.renderAgentDropdown(a, agents, i))}
-          <button onClick={this.onAddRacer}>Add racer</button>
+        <div className={classes.section}>
+          <div className={classes.agentsList}>
+            {currentAgents.map((a, i) => this.renderAgentDropdown(a, agents, i))}
+          </div>
+          <button
+            className={classes.addBtn}
+            onClick={this.onAddRacer}
+          >
+            + Add profile
+          </button>
         </div>
 
-        <button>Search</button>
+        <div className={classes.section}>
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.onKeywordChange}
+            placeholder="Type in keyword"
+          />
+          <button className={classes.searchBtn}>Search</button>
+        </div>
+
       </form>
     );
   }

@@ -22,12 +22,14 @@ export function App(props) {
   return (
     <Router>
       <div className={classes.app}>
-        <Form agents={agents} onSubmit={props.createRace} />
         <Selector
           races={races}
           selectedId={activeRace.get('id')}
           onChange={props.changeActiveRace}
         />
+
+        <Form agents={agents} onSubmit={props.createRace} />
+
         <div>
           <Tasks />
         </div>
