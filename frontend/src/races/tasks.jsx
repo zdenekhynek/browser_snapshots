@@ -17,7 +17,7 @@ export function getIdFromUrl(url) {
   return videoId;
 }
 
-export function renderAgentTasks(tasks, agent) {
+export function renderAgentTasks(tasks, agent, index) {
   const formatter = format(',');
   const ratioFormatter = format('.3f');
 
@@ -35,7 +35,7 @@ export function renderAgentTasks(tasks, agent) {
 
             const url = task.get('url');
             const videoId = getIdFromUrl(url);
-            const ytUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+            const ytUrl = `https://img.youtube.com/vi/${videoId}/${index}.jpg`;
 
             return (
               <a
@@ -65,19 +65,47 @@ export function renderAgentTasks(tasks, agent) {
   );
 }
 
-const Tasks = ({ agents, tasks }) => {
-  return (
-    <div className={classes.tasks}>
-      <div className={classes.lists}>
-        {
-          tasks.map((t, i) => {
-            return renderAgentTasks(t, agents.get(i));
-          })
-        }
+export class Tasks extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      index: 0,
+    };
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      let { index } = this.state;
+      if (index < 2) {
+        index += 1;
+      } else {
+        index = 0;
+      }
+
+      this.setState({ index });
+    }, 3000);
+  }
+
+  render() {
+    const { agents, tasks } = this.props;
+    const { index } = this.state;
+
+    console.log('index', index);
+
+    return (
+      <div className={classes.tasks}>
+        <div className={classes.lists}>
+          {
+            tasks.map((t, i) => {
+              return renderAgentTasks(t, agents.get(i), index);
+            })
+          }
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export function mapStateToProps({ agents, races }) {
   const activeRace = races.find((r) => r.get('isActive', false), null, Map());
