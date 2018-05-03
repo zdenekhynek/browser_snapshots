@@ -20,6 +20,7 @@ export function getIdFromUrl(url) {
 export function renderAgentTasks(tasks, agent, index) {
   const formatter = format(',');
   const ratioFormatter = format('.3f');
+  const randomIndex = Math.round(Math.random() * 2);
 
   return (
     <div key={agent.get('id')}>
@@ -35,7 +36,7 @@ export function renderAgentTasks(tasks, agent, index) {
 
             const url = task.get('url');
             const videoId = getIdFromUrl(url);
-            const ytUrl = `https://img.youtube.com/vi/${videoId}/${index}.jpg`;
+            const ytUrl = `https://img.youtube.com/vi/${videoId}/${randomIndex}.jpg`;
 
             return (
               <a
@@ -84,7 +85,7 @@ export class Tasks extends React.Component {
       }
 
       this.setState({ index });
-    }, 3000);
+    }, Math.random() * (5000 - 3000) + 3000 );
   }
 
   render() {
