@@ -6,9 +6,24 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Images</title>
   </head>
-  <body>
+
+  <style>
+
+    body {
+      margin: 0;
+    }
+
+    img {
+      width:168px;
+      height:auto;
+      float: left;
+    }
+
+  </style>
+
+  <body style="margin:0">
     {% for s in snapshots %}
-      <img style="width:168px;height:auto;" src="{{ s }}" />
+      <img src="{{ s }}" />
     {% endfor %}
   </body>
 </html>
