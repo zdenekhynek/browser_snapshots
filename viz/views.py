@@ -39,8 +39,8 @@ def index(request):
     return render(request, 'viz/index.html', context)
 
 
-def images(request):
-    snapshots = Snapshot.objects.all().values_list('url')
+def images(request, agent_id = 0):
+    snapshots = Snapshot.objects.filter(agent=agent_id).values_list('url')
     ids = [getIdFromUrl(s[0]) for s in snapshots]
     imgs = [getYoutubeThumbnail(id) for id in ids]
     context = { 'snapshots': imgs }
