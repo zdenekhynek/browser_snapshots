@@ -42,7 +42,13 @@ def index(request):
 def images(request, agent_id = 0):
     snapshots = Snapshot.objects.filter(agent=agent_id).values_list('url')
     ids = [getIdFromUrl(s[0]) for s in snapshots]
-    imgs = [getYoutubeThumbnail(id) for id in ids]
-    context = { 'snapshots': imgs }
+
+    # construct img urls, only if id actually exists
+    imgs = [getYoutubeThumbnail(id) for id in ids if id]
+
+    # only unique values
+    imgs_set = set(imgs)
+
+    context = { 'snapshots': imgs_set }
     return render(request, 'viz/images.html', context)
 
