@@ -212,6 +212,8 @@ class Chart extends Component {
   renderAgents() {
     const { agents } = this.props;
 
+    console.log('agents', agents);
+
     return (
       <ul className={classes.agents}>
         {agents.map(this.renderAgent)}
@@ -258,7 +260,8 @@ export function mapStateToProps({ agents, races }) {
   });
 
   raceAgents = raceAgents.map((a, i) => {
-    return a.set('totals', totals.get(i));
+    console.log('a', a);
+    return a.set('totals', totals.get(a.get('id')));
   });
 
   return {

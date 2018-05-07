@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 
 from agents.models import Agent
 from agents.serializers import AgentSerializer
-from snapshots.models import Snapshot
+from snapshots.models import Session, Snapshot
 
 
 def getIdFromUrl(url):
@@ -61,4 +61,18 @@ def titles(request, agent_id = 0):
 
     context = { 'snapshots': titles_set }
     return render(request, 'viz/titles.html', context)
+
+def sessions(request, agent_id = 0):
+    sessions = Session.objects.filter(agent=agent_id).select_related()
+
+    print('sessions.snapshost')
+    print(sessions.snapshot)
+
+    titles = {s[0] for s in snapshots}
+
+    # only unique values
+    titles_set = set(titles)
+
+    context = { 'snapshots': titles_set }
+    return render(request, 'viz/sessions.html', context)
 
