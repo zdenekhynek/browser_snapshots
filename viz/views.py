@@ -52,3 +52,13 @@ def images(request, agent_id = 0):
     context = { 'snapshots': imgs_set }
     return render(request, 'viz/images.html', context)
 
+def titles(request, agent_id = 0):
+    snapshots = Snapshot.objects.filter(agent=agent_id).values_list('title')
+    titles = {s[0] for s in snapshots}
+
+    # only unique values
+    titles_set = set(titles)
+
+    context = { 'snapshots': titles_set }
+    return render(request, 'viz/titles.html', context)
+
