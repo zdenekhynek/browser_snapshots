@@ -95,7 +95,6 @@ export function mapStateToProps({ agents, races }) {
 
 
   const totals = flattenedTasks.map((t) => {
-    console.log('t', t);
     const total = new Map({
       views: sum(t, 'views'),
       likes: sum(t, 'likes'),
