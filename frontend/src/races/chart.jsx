@@ -21,6 +21,8 @@ export const COLORS = [
   '#2D882D',
 ];
 
+export const MARGIN = { top: 20, right: 20, bottom: 30, left: 40 };
+
 class Chart extends Component {
   constructor(props) {
     super(props);
@@ -40,15 +42,16 @@ class Chart extends Component {
     const { tasks } = this.props;
 
     const data = tasks.reduce((acc, t, i) => {
-      const newT = t.map((d) => d.set('index', i));
+      const newT = t.map((d) => {
+        return d.set('index', i);
+      });
       acc.push(newT.toJS());
       return acc;
     }, []);
     console.log('data', data);
 
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
-    const width = 960 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    const width = 960 - MARGIN.left - MARGIN.right;
+    const height = 350 - MARGIN.top - MARGIN.bottom;
 
     // setup x
     const xValue = (d, i) => i;
@@ -57,7 +60,7 @@ class Chart extends Component {
     const xAxis = axisBottom().scale(xScale);
 
     // setup y
-    const yValue = (d) => d.likes / d.dislikes;
+    const yValue = (d) => d.ratio;
     const yScale = scaleLinear().range([height, 0]); // value -> display
     const yMap = (d) => yScale(yValue(d));
     const yAxis = axisLeft().scale(yScale);
@@ -68,8 +71,7 @@ class Chart extends Component {
 
     let colorIndex = -1;
     const colorMap = (d) => {
-      console.log('d', d, d.index);
-      if (d.index) {
+      if (typeof d.index !== 'undefined') {
         return COLORS[d.index];
       }
 
@@ -99,7 +101,13 @@ class Chart extends Component {
     });
 
     xScale.domain([-1, max(dataLens) + 1]);
-    yScale.domain([min(flattenedData, yValue) - 1, max(flattenedData, yValue) + 1]);
+    yScale.domain([
+      //  just hardcode when using custom ration
+      0,
+      1
+      //  min(flattenedData, yValue),
+      //  max(flattenedData, yValue),
+    ]);
     sizeScale.domain([min(flattenedData, sizeValue) - 1, max(flattenedData, sizeValue) + 1]);
 
     // x-axis
@@ -167,7 +175,7 @@ class Chart extends Component {
               <li>Views: ${formatter(d.views)}</li>
               <li>Likes: ${formatter(d.likes)}</li>
               <li>Dislikes: ${formatter(d.dislikes)}</li>
-              <li>Ratio: ${ratioFormatter(d.likes / d.dislikes)}</li>
+              <li>Ratio: ${ratioFormatter(d.ratio)}</li>
             </ul>
           `;
 
@@ -191,93 +199,30 @@ class Chart extends Component {
     dots.exit().remove();
   }
 
-  renderAgent(agent, i) {
-    const totals = agent.get('totals');
-
-    const backgroundColor = COLORS[i];
-    const style = { backgroundColor };
-
-    return (
-      <li className={classes.agent} style={style}>
-        <h3>{agent.get('name')}: {agent.get('gmail')}</h3>
-        <ul>
-          <li>Views: {formatter(totals.get('views'))}</li>
-          <li>Likes: {formatter(totals.get('likes'))}</li>
-          <li>Dislikes: {formatter(totals.get('dislikes'))}</li>
-        </ul>
-      </li>
-    );
-  }
-
-  renderAgents() {
-    const { agents } = this.props;
-
-    console.log('agents', agents);
-
-    return (
-      <ul className={classes.agents}>
-        {agents.map(this.renderAgent)}
-      </ul>
-    );
-  }
-
   render() {
+    const transformString = `translate(${MARGIN.top}px,${MARGIN.left}px)`;
+    const style = { transform: transformString };
+
     return (
       <div className={classes.chart}>
-        <h3>Race chart</h3>
-        <div className={classes.viz}>
-          <div className={classes.canvas}>
-            <svg className={classes.svg} ref={(el) => this.svg = el} />
-            <div className={classes.tooltip} ref={(el) => this.tooltip = el} />
-          </div>
-          {this.renderAgents()}
-        </div>
+        <svg className={classes.svg}>
+            <g
+              ref={(el) => this.svg = el}
+              style={style}
+            />
+        </svg>
+        <div className={classes.tooltip} ref={(el) => this.tooltip = el} />
       </div>
     );
   }
 }
 
-export function sum(collection, key) {
-  return collection.reduce((sum, x) => sum + x.get(key), 0);
-}
-
-export function mapStateToProps({ agents, races }) {
-  const activeRace = races.find((r) => r.get('isActive', false), null, Map());
-  const tasks = activeRace.get('tasks', List());
-  const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();
-
-  let raceAgents = agents.get('available').filter((a) => {
-    return agentsIds.includes(a.get('id'));
-  });
-
-  const totals = tasks.map((t) => {
-    const total = new Map({
-      views: sum(t, 'views'),
-      likes: sum(t, 'likes'),
-      dislikes: sum(t, 'dislikes'),
-    });
-    return total;
-  });
-
-  raceAgents = raceAgents.map((a, i) => {
-    console.log('a', a);
-    return a.set('totals', totals.get(a.get('id')));
-  });
-
-  return {
-    agents: raceAgents,
-    tasks,
-  };
-}
-
 Chart.propTypes = {
-  agents: PropTypes.object,
   tasks: PropTypes.object,
 };
 
 Chart.defaultProps = {
-  agents: List(),
   tasks: List(),
 };
 
-export default connect(mapStateToProps)(Chart);
+export default Chart;

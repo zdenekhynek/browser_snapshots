@@ -1,10 +1,4 @@
-.chart {}
-
-.viz {
-  display: flex;
-}
-
-.canvas {
+.chart {
   width: 960px;
   height: 500px;
 }
@@ -37,21 +31,4 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-}
-
-.agents,
-.agents ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.agents li {
-  margin-bottom: 5px;
-}
-
-.agent {
-  min-width: 300px;
-  padding: 10px 20px;
-  color: white;
 }

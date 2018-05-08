@@ -8,7 +8,7 @@ import Form from '../races/form';
 import Selector from '../races/selector';
 import Tasks from '../races/tasks';
 
-import Chart from '../races/chart';
+import RaceChart from '../races/race_chart';
 
 import { createRace, changeActiveRace } from '../races/action_creators';
 
@@ -31,7 +31,7 @@ export function App(props) {
         <Form agents={agents} onSubmit={props.createRace} />
 
         <div>
-          <Chart />
+          <RaceChart />
           <Tasks />
         </div>
       </div>
