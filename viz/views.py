@@ -29,6 +29,9 @@ def getIdFromUrl(url):
 def getYoutubeThumbnail(id):
     return 'https://img.youtube.com/vi/%s/0.jpg' % (id)
 
+def updateThumbWithImage(thumb):
+    thumb.update({ 'img': getYoutubeThumbnail(thumb['id']) })
+    return thumb
 
 def index(request):
     user = User.objects.get(pk=1)
@@ -40,16 +43,17 @@ def index(request):
 
 
 def images(request, agent_id = 0):
-    snapshots = Snapshot.objects.filter(agent=agent_id).values_list('url')
-    ids = [getIdFromUrl(s[0]) for s in snapshots]
+    snapshots = Snapshot.objects.filter(agent=agent_id).values_list('url', 'title')
+
+    thumbs = [{ 'id': getIdFromUrl(s[0]), 'url': s[0], 'title': s[1] } for s in snapshots]
 
     # construct img urls, only if id actually exists
-    imgs = [getYoutubeThumbnail(id) for id in ids if id]
+    thumbs = [updateThumbWithImage(thumb) for thumb in thumbs if thumb['id']]
 
     # only unique values
-    imgs_set = set(imgs)
+    thumbs = list({v['id']:v for v in thumbs}.values())
 
-    context = { 'snapshots': imgs_set }
+    context = { 'snapshots': thumbs }
     return render(request, 'viz/images.html', context)
 
 def titles(request, agent_id = 0):
