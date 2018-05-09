@@ -48,7 +48,6 @@ class Chart extends Component {
       acc.push(newT.toJS());
       return acc;
     }, []);
-    console.log('data', data);
 
     const width = 960 - MARGIN.left - MARGIN.right;
     const height = 350 - MARGIN.top - MARGIN.bottom;
@@ -60,7 +59,10 @@ class Chart extends Component {
     const xAxis = axisBottom().scale(xScale);
 
     // setup y
-    const yValue = (d) => d.ratio;
+    const yValue = (d) => {
+      console.log('d', d, (d.ratio && !Number.isNaN(d.ratio)) ? d.ratio : 0);
+      return (d.ratio && !Number.isNaN(d.ratio)) ? d.ratio : 0;
+    };
     const yScale = scaleLinear().range([height, 0]); // value -> display
     const yMap = (d) => yScale(yValue(d));
     const yAxis = axisLeft().scale(yScale);
@@ -81,10 +83,10 @@ class Chart extends Component {
 
     // add the graph canvas to the body of the webpage
     // var svg = d3.select(this.svg).append("svg")
-        // .attr("width", width + margin.left + margin.right)
-        // .attr("height", height + margin.top + margin.bottom)
-        // .append("g")
-        //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // .attr("width", width + margin.left + margin.right)
+    // .attr("height", height + margin.top + margin.bottom)
+    // .append("g")
+    //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // add the tooltip area to the webpage
     const tooltip =
@@ -104,7 +106,7 @@ class Chart extends Component {
     yScale.domain([
       //  just hardcode when using custom ration
       0,
-      1
+      1,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);
@@ -206,10 +208,10 @@ class Chart extends Component {
     return (
       <div className={classes.chart}>
         <svg className={classes.svg}>
-            <g
-              ref={(el) => this.svg = el}
-              style={style}
-            />
+          <g
+            ref={(el) => this.svg = el}
+            style={style}
+          />
         </svg>
         <div className={classes.tooltip} ref={(el) => this.tooltip = el} />
       </div>

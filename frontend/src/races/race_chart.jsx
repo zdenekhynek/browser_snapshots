@@ -76,7 +76,7 @@ class RaceChart extends Component {
 
 export function sum(collection, key) {
   return collection.reduce((sum, x) => {
-    if (!isNaN(x.get(key))) {
+    if (!Number.isNaN(x.get(key))) {
       return sum + x.get(key);
     } else {
       return sum;
