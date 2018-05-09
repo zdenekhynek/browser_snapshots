@@ -1,4 +1,6 @@
-.race_chart {}
+.raceChart {
+  margin: 20px;
+}
 
 .viz {
   display: flex;

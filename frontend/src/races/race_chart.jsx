@@ -63,8 +63,8 @@ class RaceChart extends Component {
     const { tasks } = this.props;
 
     return (
-      <div className={classes.chart}>
-        <h3>Race chart</h3>
+      <div className={classes.raceChart}>
+        <h3>Metrics</h3>
         <div className={classes.viz}>
           <Chart tasks={tasks} />
           {this.renderAgents()}
@@ -97,7 +97,10 @@ export function mapStateToProps({ agents, races }) {
   //  convert from id based orderedmap to normal list
   const flattenedTasks = tasks.reduce((acc, t) => {
     const newT = t.map((d) => d.set('ratio', calculateRatio(d)));
-    return acc.push(newT);
+
+    //  want the oldest first
+    const reversedTasks = newT.reverse();
+    return acc.push(reversedTasks);
   }, List());
 
   const totals = flattenedTasks.map((t) => {
