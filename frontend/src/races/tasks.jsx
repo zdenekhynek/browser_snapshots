@@ -76,16 +76,17 @@ export class Tasks extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
-      let { index } = this.state;
-      if (index < 2) {
-        index += 1;
-      } else {
-        index = 0;
-      }
+    //  DISABLED THUMBNAIL ROTATION
+    // setInterval(() => {
+    //   let { index } = this.state;
+    //   if (index < 2) {
+    //     index += 1;
+    //   } else {
+    //     index = 0;
+    //   }
 
-      this.setState({ index });
-    }, Math.random() * (5000 - 3000) + 3000 );
+    //   this.setState({ index });
+    // }, Math.random() * (5000 - 3000) + 3000 );
   }
 
   render() {

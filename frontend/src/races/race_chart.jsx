@@ -37,7 +37,7 @@ class RaceChart extends Component {
     const style = { backgroundColor };
 
     return (
-      <li className={classes.agent} style={style}>
+      <li key={agent.get('name')} className={classes.agent} style={style}>
         <h3>{agent.get('name')}: {agent.get('gmail')}</h3>
         <ul>
           <li>Views: {formatter(totals.get('views'))}</li>
@@ -75,7 +75,14 @@ class RaceChart extends Component {
 }
 
 export function sum(collection, key) {
-  return collection.reduce((sum, x) => sum + x.get(key), 0);
+  return collection.reduce((sum, x) => {
+    if (!isNaN(x.get(key))) {
+      return sum + x.get(key);
+    } else {
+      return sum;
+    }
+
+  }, 0);
 }
 
 export function mapStateToProps({ agents, races }) {
@@ -92,7 +99,6 @@ export function mapStateToProps({ agents, races }) {
     const newT = t.map((d) => d.set('ratio', calculateRatio(d)));
     return acc.push(newT);
   }, List());
-
 
   const totals = flattenedTasks.map((t) => {
     const total = new Map({
