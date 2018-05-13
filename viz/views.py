@@ -42,7 +42,7 @@ def index(request):
     return render(request, 'viz/index.html', context)
 
 
-def images(request, agent_id = 0):
+def thumbs(request, agent_id = 0):
     snapshots = Snapshot.objects.filter(agent=agent_id).values_list('url', 'title')
 
     thumbs = [{ 'id': getIdFromUrl(s[0]), 'url': s[0], 'title': s[1] } for s in snapshots]
@@ -52,6 +52,15 @@ def images(request, agent_id = 0):
 
     # only unique values
     thumbs = list({v['id']:v for v in thumbs}.values())
+
+    context = { 'snapshots': thumbs }
+    return render(request, 'viz/thumbs.html', context)
+
+
+def images(request, agent_id = 0):
+    snapshots = Snapshot.objects.filter(agent=agent_id).values_list('url', 'image')
+
+    thumbs = [{ 'url': s[0], 'image': s[1] } for s in snapshots]
 
     context = { 'snapshots': thumbs }
     return render(request, 'viz/images.html', context)

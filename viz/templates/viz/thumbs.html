@@ -18,8 +18,8 @@
       position: relative;
       display: inline-block;
       float: left;
-      width: 400px;
-      height: auto;
+      width: 80px;
+      height: 60px;
       color: white;
       background-color: black;
     }
@@ -55,9 +55,9 @@
   <body style="margin:0">
     {% for s in snapshots %}
       <a href={{s.url}} target="_blank" class="thumb">
-        <img class="image" src="https://browser-extension-uploads.s3.amazonaws.com/media/{{ s.image }}" />
+        <div class="description">{{ s.title }}</div>
+        <img class="image" src="{{ s.img }}" />
       </a>
     {% endfor %}
-    <div>Days of content: {{ length }}</div>
   </body>
 </html>
