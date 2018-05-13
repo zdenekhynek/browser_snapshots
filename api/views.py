@@ -131,35 +131,34 @@ class RaceView(APIView):
         """
         Return a list of all races.
         """
-        race = Race.objects.get(pk=pk)
+        # get all sessions which correspond to a given task
+        sessions = RaceTask.objects.filter(race_id=pk).values('task__session_id')
 
-        # get all tasks
-        race_tasks = RaceTask.objects.filter(race=race)
+        session_ids = [session['task__session_id'] for session in sessions]
 
         snapshots_data = []
-        for race_task in race_tasks:
-            task = Task.objects.get(pk=race_task.task_id)
-            try:
-                # get all snapshot titles
-                snapshots = Snapshot.objects.select_related().filter(session=task.session)
-                for snapshot in snapshots:
+        try:
+            # get all snapshot titles
+            # https://stackoverflow.com/questions/5380529/django-model-foreign-key-queryset-selecting-related-fields
+            snapshots = Snapshot.objects.filter(session_id__in=session_ids).values('title', 'url', 'agent_id', 'video__views', 'video__likes', 'video__dislikes', 'video__length')
+            for snapshot in snapshots:
 
-                    # append only snapshots with a video
-                    if snapshot.url.find('youtube.com/watch?') > -1:
-                        try:
-                            snapshot_object = {
-                                'title': snapshot.title,
-                                'url': snapshot.url,
-                                'agent_id': snapshot.agent_id,
-                                'views': snapshot.video.views,
-                                'likes': snapshot.video.likes,
-                                'dislikes': snapshot.video.dislikes,
-                                'length': snapshot.video.length
-                            }
-                            snapshots_data.append(snapshot_object)
-                        except:
-                            print('No video for the snapshot')
-            except:
-                print('No snapshots yet')
+                # append only snapshots with a video
+                if snapshot['url'].find('youtube.com/watch?') > -1:
+                    try:
+                        snapshot_object = {
+                            'title': snapshot['title'],
+                            'url': snapshot['url'],
+                            'agent_id': snapshot['agent_id'],
+                            'views': snapshot['video__views'],
+                            'likes': snapshot['video__likes'],
+                            'dislikes': snapshot['video__dislikes'],
+                            'length': snapshot['video__length']
+                        }
+                        snapshots_data.append(snapshot_object)
+                    except:
+                        print('No video for the snapshot')
+        except:
+            print('No snapshots yet')
 
-        return Response({'id': race.id, 'tasks': snapshots_data})
+        return Response({'id': pk, 'tasks': snapshots_data})
