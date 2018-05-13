@@ -34,7 +34,7 @@ export function addMetrics(tasks) {
     const tObj = t.toJS();
     return t
       .set('temperature', getWeightedTemperature(tObj))
-      .set('getEngagementRatio', getEngagementRatio(tObj));
+      .set('engagementRatio', getEngagementRatio(tObj));
   });
 }
 

@@ -60,7 +60,7 @@ class Chart extends Component {
 
     // setup y
     const yValue = (d) => {
-      return (d.ratio && !Number.isNaN(d.ratio)) ? d.ratio : 0;
+      return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
     };
     const yScale = scaleLinear().range([height, 0]); // value -> display
     const yMap = (d) => yScale(yValue(d));
@@ -105,7 +105,7 @@ class Chart extends Component {
     yScale.domain([
       //  just hardcode when using custom ration
       0,
-      1,
+      100,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);
@@ -170,6 +170,7 @@ class Chart extends Component {
         .attr('class', classes.dot)
 
         .on('mouseover', (d) => {
+          console.log('d', d);
           const htmlString = `
             <ul>
               <li>Title: ${d.title}</li>
@@ -177,6 +178,8 @@ class Chart extends Component {
               <li>Likes: ${formatter(d.likes)}</li>
               <li>Dislikes: ${formatter(d.dislikes)}</li>
               <li>Ratio: ${ratioFormatter(d.ratio)}</li>
+              <li>Temperature: ${formatter(d.temperature)}</li>
+              <li>Engagment ratio: ${formatter(d.engagementRatio)}</li>
             </ul>
           `;
 
