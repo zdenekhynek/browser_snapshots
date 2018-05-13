@@ -60,7 +60,6 @@ class Chart extends Component {
 
     // setup y
     const yValue = (d) => {
-      console.log('d', d, (d.ratio && !Number.isNaN(d.ratio)) ? d.ratio : 0);
       return (d.ratio && !Number.isNaN(d.ratio)) ? d.ratio : 0;
     };
     const yScale = scaleLinear().range([height, 0]); // value -> display

@@ -6,6 +6,10 @@ import {
   RECEIVE_RACES,
   CHANGE_ACTIVE_RACE,
 } from './action_creators';
+import {
+  getWeightedTemperature,
+  getEngagementRatio
+} from './utils';
 
 export const WAITING_STATUS = 'WAITING_STATUS';
 export const IN_PROGRESS_STATUS = 'IN_PROGRESS_STATUS';
@@ -25,13 +29,22 @@ export function reduceCreateRace(state, raceId) {
   return state.push(newRace);
 }
 
+export function addMetrics(tasks) {
+  return tasks.map((t) => {
+    const tObj = t.toJS();
+    return t
+      .set('temperature', getWeightedTemperature(tObj))
+      .set('getEngagementRatio', getEngagementRatio(tObj));
+  });
+}
+
 export function reduceUpdateRace(state, raceId, tasks) {
   const list = fromJS(tasks);
   const grouped = list.groupBy((t) => t.get('agent_id'));
 
   return state.map((r) => {
     if (r.get('id') === raceId) {
-      return r.set('tasks', grouped);
+      return r.set('tasks', grouped.map((group) => addMetrics(group)));
     }
 
     //  return original copy

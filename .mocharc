@@ -1,0 +1,2 @@
+--require babel-core/register
+--require ./frontend/src/utils/test_setup.js

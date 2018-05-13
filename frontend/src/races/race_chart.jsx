@@ -117,6 +117,8 @@ export function mapStateToProps({ agents, races }) {
     return a.set('totals', totals.get(i));
   });
 
+  console.log('flattenedTasks', flattenedTasks);
+
   return {
     agents: raceAgents,
     tasks: flattenedTasks,
