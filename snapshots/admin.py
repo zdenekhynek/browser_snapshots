@@ -101,6 +101,7 @@ class SessionAdmin(admin.ModelAdmin):
     ]
 
     list_display = ['start', 'agent', 'owner', 'comments']
+    list_filter = ['agent']
 
     # def get_name(self, obj):
     #     return obj.author.name
