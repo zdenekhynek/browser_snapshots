@@ -8,7 +8,7 @@ import {
 } from './action_creators';
 import {
   getWeightedTemperature,
-  getEngagementRatio
+  getEngagementRatio,
 } from './utils';
 
 export const WAITING_STATUS = 'WAITING_STATUS';

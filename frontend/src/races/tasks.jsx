@@ -4,18 +4,9 @@ import { List, Map } from 'immutable';
 import { format } from 'd3-format';
 import { connect } from 'react-redux';
 
+import { getVideoThumbnail } from './utils';
+
 import classes from './tasks.css';
-
-export function getIdFromUrl(url) {
-  let videoId = url.split('v=')[1];
-  const ampersandPosition = videoId.indexOf('&');
-
-  if (ampersandPosition !== -1) {
-    videoId = videoId.substring(0, ampersandPosition);
-  }
-
-  return videoId;
-}
 
 export function renderAgentTasks(tasks, agent, index) {
   const formatter = format(',');
@@ -35,8 +26,7 @@ export function renderAgentTasks(tasks, agent, index) {
             const ratio = likes / total;
 
             const url = task.get('url');
-            const videoId = getIdFromUrl(url);
-            const ytUrl = `https://img.youtube.com/vi/${videoId}/${randomIndex}.jpg`;
+            const ytUrl = getVideoThumbnail(url);
 
             return (
               <a

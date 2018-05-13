@@ -35,4 +35,5 @@ class Task(models.Model):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return "%s - %s - %s" % (self.agent, self.type, self.created_at)
+        return "%s - %s - %s - %s" % (self.agent, self.type, self.scenario,
+                                      self.created_at)

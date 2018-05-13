@@ -2,4 +2,10 @@ from django.contrib import admin
 
 from tasks.models import Task
 
-admin.site.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    fields = ('type', 'status', 'agent', 'session', 'scenario',
+              'created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')
+    list_filter = ('agent',)
+
+admin.site.register(Task, TaskAdmin)

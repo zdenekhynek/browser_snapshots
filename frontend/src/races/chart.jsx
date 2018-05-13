@@ -9,6 +9,8 @@ import { line } from 'd3-shape';
 import { axisLeft, axisBottom } from 'd3-axis';
 import { min, max } from 'd3-array';
 
+import { getVideoThumbnail } from './utils';
+
 import classes from './chart.css';
 
 export const formatter = format(',');
@@ -111,30 +113,6 @@ class Chart extends Component {
     ]);
     sizeScale.domain([min(flattenedData, sizeValue) - 1, max(flattenedData, sizeValue) + 1]);
 
-    // x-axis
-    // svg.append("g")
-    //     .attr("class", "x axis")
-    //     .attr("transform", "translate(0," + height + ")")
-    //     .call(xAxis)
-    //   .append("text")
-    //     .attr("class", "label")
-    //     .attr("x", width)
-    //     .attr("y", -6)
-    //     .style("text-anchor", "end")
-    //     .text("Calories");
-
-    // // y-axis
-    // svg.append("g")
-    //     .attr("class", "y axis")
-    //     .call(yAxis)
-    //   .append("text")
-    //     .attr("class", "label")
-    //     .attr("transform", "rotate(-90)")
-    //     .attr("y", 6)
-    //     .attr("dy", ".71em")
-    //     .style("text-anchor", "end")
-    //     .text("Protein (g)");
-
     // draw dots
     const racers = select(this.svg)
       .selectAll('.racer')
@@ -166,11 +144,11 @@ class Chart extends Component {
     const dotsEnter =
       dots
         .enter()
-        .append('circle')
+        .append('image')
+        .attr('href', (d) => getVideoThumbnail(d.url))
         .attr('class', classes.dot)
 
         .on('mouseover', (d) => {
-          console.log('d', d);
           const htmlString = `
             <ul>
               <li>Title: ${d.title}</li>
@@ -196,8 +174,8 @@ class Chart extends Component {
 
     dots.merge(dotsEnter)
       .attr('r', sizeMap)
-      .attr('cx', xMap)
-      .attr('cy', yMap)
+      .attr('x', xMap)
+      .attr('y', yMap)
       .style('fill', colorMap);
 
     dots.exit().remove();
