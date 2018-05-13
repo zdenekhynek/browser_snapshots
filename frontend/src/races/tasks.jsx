@@ -93,14 +93,12 @@ export class Tasks extends React.Component {
     const { agents, tasks } = this.props;
     const { index } = this.state;
 
-    console.log('index', index);
-
     return (
       <div className={classes.tasks}>
         <div className={classes.lists}>
           {
             tasks.map((t, i) => {
-              return renderAgentTasks(t, agents.get(i), index);
+              return renderAgentTasks(t.reverse(), agents.get(i), index);
             })
           }
         </div>

@@ -99,7 +99,7 @@ export function mapStateToProps({ agents, races }) {
     const newT = t.map((d) => d.set('ratio', calculateRatio(d)));
 
     //  want the oldest first
-    const reversedTasks = newT.reverse();
+    const reversedTasks = newT;
     return acc.push(reversedTasks);
   }, List());
 
