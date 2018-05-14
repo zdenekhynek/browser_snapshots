@@ -2,22 +2,17 @@
   margin: 20px;
 }
 
-.viz {
-  display: flex;
-}
+.viz {}
 
-.agents,
-.agents ul {
+.agents {
+  display: flex;
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.agents li {
-  margin-bottom: 5px;
-}
-
 .agent {
+  flex: 0 0 300px;
   min-width: 300px;
   padding: 10px 20px;
   color: white;

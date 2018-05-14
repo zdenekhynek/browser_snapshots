@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import sizeMe from 'react-sizeme';
 import PropTypes from 'prop-types';
-import { List, Map } from 'immutable';
-import { connect } from 'react-redux';
+import { List } from 'immutable';
 import { select, event } from 'd3-selection';
 import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
 import { line } from 'd3-shape';
-import { axisLeft, axisBottom } from 'd3-axis';
 import { min, max } from 'd3-array';
 
 import { getVideoThumbnail } from './utils';
@@ -29,6 +28,7 @@ class Chart extends Component {
   constructor(props) {
     super(props);
 
+    this.chart = null;
     this.svg = null;
   }
 
@@ -41,7 +41,8 @@ class Chart extends Component {
   }
 
   updateChart() {
-    const { tasks } = this.props;
+    const { tasks, size } = this.props;
+    const { width, height } = size;
 
     const data = tasks.reduce((acc, t, i) => {
       const newT = t.map((d) => {
@@ -51,22 +52,20 @@ class Chart extends Component {
       return acc;
     }, []);
 
-    const width = 960 - MARGIN.left - MARGIN.right;
-    const height = 350 - MARGIN.top - MARGIN.bottom;
+    const chartWidth = width - MARGIN.left - MARGIN.right;
+    const chartHeight = 600 - MARGIN.top - MARGIN.bottom;
 
     // setup x
     const xValue = (d, i) => i;
-    const xScale = scaleLinear().range([0, width]);
+    const xScale = scaleLinear().range([0, chartWidth]);
     const xMap = (d, i) => xScale(xValue(d, i));
-    const xAxis = axisBottom().scale(xScale);
 
     // setup y
     const yValue = (d) => {
       return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
     };
-    const yScale = scaleLinear().range([height, 0]); // value -> display
+    const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
     const yMap = (d) => yScale(yValue(d));
-    const yAxis = axisLeft().scale(yScale);
 
     const sizeValue = (d) => d.views;
     const sizeScale = scaleLinear().range([2, 20]);
@@ -81,19 +80,6 @@ class Chart extends Component {
       colorIndex += 1;
       return COLORS[colorIndex];
     };
-
-    // add the graph canvas to the body of the webpage
-    // var svg = d3.select(this.svg).append("svg")
-    // .attr("width", width + margin.left + margin.right)
-    // .attr("height", height + margin.top + margin.bottom)
-    // .append("g")
-    //   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // add the tooltip area to the webpage
-    const tooltip =
-      select(this.svg).append('div')
-        .attr('class', 'tooltip')
-        .style('opacity', 0);
 
     // don't want dots overlapping axis, so add in buffer to data domain
     const flattenedData = data.reduce((acc, d) => {
@@ -122,11 +108,11 @@ class Chart extends Component {
       racers
         .enter()
         .append('g')
-          .attr('class', 'racer');
+        .attr('class', 'racer');
 
     racersEnter
-        .append('path')
-          .attr('class', classes.progress);
+      .append('path')
+      .attr('class', classes.progress);
 
     racers.exit().remove();
 
@@ -145,7 +131,6 @@ class Chart extends Component {
       dots
         .enter()
         .append('image')
-        .attr('href', (d) => getVideoThumbnail(d.url))
         .attr('class', classes.dot)
 
         .on('mouseover', (d) => {
@@ -161,11 +146,14 @@ class Chart extends Component {
             </ul>
           `;
 
+          const pageY = yMap(d);
+          //  console.log('pageY', pageY, 'event', event, this.chart.scrollTop);
+
           select(this.tooltip)
             .html(htmlString)
             .style('display', 'block')
-            .style('left', `${(event.pageX + 15)}px`)
-            .style('top', `${(event.pageY)}px`);
+            .style('left', `${(event.pageX)}px`)
+            .style('top', `${pageY}px`);
         })
         .on('mouseout', (d) => {
           select(this.tooltip)
@@ -174,6 +162,7 @@ class Chart extends Component {
 
     dots.merge(dotsEnter)
       .attr('r', sizeMap)
+      .attr('href', (d) => getVideoThumbnail(d.url))
       .attr('x', xMap)
       .attr('y', yMap)
       .style('fill', colorMap);
@@ -186,7 +175,10 @@ class Chart extends Component {
     const style = { transform: transformString };
 
     return (
-      <div className={classes.chart}>
+      <div
+        ref={(el) => this.chart = el}
+        className={classes.chart}
+      >
         <svg className={classes.svg}>
           <g
             ref={(el) => this.svg = el}
@@ -207,4 +199,11 @@ Chart.defaultProps = {
   tasks: List(),
 };
 
-export default Chart;
+// Create the config
+const config = { monitorHeight: true, monitorWidth: true };
+
+// Call SizeMe with the config to get back the HOC.
+const sizeMeHOC = sizeMe(config);
+
+// Wrap your component with the HOC.
+export default sizeMeHOC(Chart);

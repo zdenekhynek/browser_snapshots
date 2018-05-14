@@ -8,7 +8,7 @@ const config = {
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    './frontend/src/index.js',
+    './frontend/src/index.jsx',
   ],
   output: {
     path: __dirname + '/frontend/dist',

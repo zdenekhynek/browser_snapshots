@@ -7,6 +7,12 @@
       // require or disallow a space before function opening parenthesis (fixable)
       "space-before-function-paren": [2, "never"],
 
-      "arrow-parens": ["error", "always"]
+      "arrow-parens": ["error", "always"],
+
+      "arrow-body-style": 0,
+
+      "object-curly-spacing": [2, "always"],
+
+      "no-return-assign": 2,
   }
 }
