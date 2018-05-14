@@ -36,3 +36,16 @@
   padding: 0;
   margin: 0;
 }
+
+.thumbs {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.thumb {
+  position: absolute;
+  width: 80px;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
