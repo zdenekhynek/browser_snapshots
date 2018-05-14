@@ -101,138 +101,22 @@ class Chart extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      tooltip: null,
+    };
+
     this.chart = null;
     this.svg = null;
   }
 
-  updateChart() {
-    const { tasks, size } = this.props;
-    const { width, height } = size;
+  onMouseOver(t, i) {
+    const tooltip = t.set('index', i);
 
-    const data = tasks.reduce((acc, t, i) => {
-      const newT = t.map((d) => {
-        return d.set('index', i);
-      });
-      acc.push(newT.toJS());
-      return acc;
-    }, []);
+    this.setState({ tooltip });
+  }
 
-    const chartWidth = width - MARGIN.left - MARGIN.right;
-    const chartHeight = 600 - MARGIN.top - MARGIN.bottom;
-
-    // setup x
-    const xValue = (d, i) => i;
-    const xScale = scaleLinear().range([0, chartWidth]);
-    const xMap = (d, i) => xScale(xValue(d, i));
-
-    // setup y
-    const yValue = (d) => {
-      return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
-    };
-    const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
-    const yMap = (d) => yScale(yValue(d));
-
-    const sizeValue = (d) => d.views;
-    const sizeScale = scaleLinear().range([2, 20]);
-    const sizeMap = (d) => sizeScale(sizeValue(d));
-
-    let colorIndex = -1;
-    const colorMap = (d) => {
-      if (typeof d.index !== 'undefined') {
-        return COLORS[d.index];
-      }
-
-      colorIndex += 1;
-      return COLORS[colorIndex];
-    };
-
-    // don't want dots overlapping axis, so add in buffer to data domain
-    const flattenedData = data.reduce((acc, d) => {
-      return acc.concat(d);
-    }, []);
-    const dataLens = data.map((d) => {
-      return d.length;
-    });
-
-    xScale.domain([-1, max(dataLens) + 1]);
-    yScale.domain([
-      //  just hardcode when using custom ration
-      0,
-      100,
-      //  min(flattenedData, yValue),
-      //  max(flattenedData, yValue),
-    ]);
-    sizeScale.domain([min(flattenedData, sizeValue) - 1, max(flattenedData, sizeValue) + 1]);
-
-    // draw dots
-    const racers = select(this.svg)
-      .selectAll('.racer')
-      .data(data);
-
-    const racersEnter =
-      racers
-        .enter()
-        .append('g')
-        .attr('class', 'racer');
-
-    racersEnter
-      .append('path')
-      .attr('class', classes.progress);
-
-    racers.exit().remove();
-
-    const lineFn = line()
-      .x(xMap)
-      .y(yMap);
-
-    racers.merge(racersEnter).selectAll(`.${classes.progress}`)
-      .attr('d', lineFn)
-      .style('stroke', colorMap);
-
-    const dots = racers.merge(racersEnter).selectAll(`.${classes.dot}`)
-      .data((d, i) => d);
-
-    const dotsEnter =
-      dots
-        .enter()
-        .append('image')
-        .attr('class', classes.dot)
-
-        .on('mouseover', (d) => {
-          const htmlString = `
-            <ul>
-              <li>Title: ${d.title}</li>
-              <li>Views: ${formatter(d.views)}</li>
-              <li>Likes: ${formatter(d.likes)}</li>
-              <li>Dislikes: ${formatter(d.dislikes)}</li>
-              <li>Ratio: ${ratioFormatter(d.ratio)}</li>
-              <li>Temperature: ${formatter(d.temperature)}</li>
-              <li>Engagment ratio: ${formatter(d.engagementRatio)}</li>
-            </ul>
-          `;
-
-          const pageY = yMap(d);
-          //  console.log('pageY', pageY, 'event', event, this.chart.scrollTop);
-
-          select(this.tooltip)
-            .html(htmlString)
-            .style('display', 'block')
-            .style('left', `${(event.pageX)}px`)
-            .style('top', `${pageY}px`);
-        })
-        .on('mouseout', (d) => {
-          select(this.tooltip)
-            .style('display', 'none');
-        });
-
-    dots.merge(dotsEnter)
-      .attr('r', sizeMap)
-      .attr('href', (d) => getVideoThumbnail(d.url))
-      .attr('x', xMap)
-      .attr('y', yMap)
-      .style('fill', colorMap);
-
-    dots.exit().remove();
+  onMouseOut() {
+    this.setState({ tooltip: null });
   }
 
   renderPath(task, i) {
@@ -240,7 +124,6 @@ class Chart extends Component {
     const pathString = lineFn(task.toJS());
 
     const stroke = COLORS[i];
-    console.log('stroke', stroke);
 
     return (
       <path
@@ -251,11 +134,11 @@ class Chart extends Component {
     );
   }
 
-  renderPaths() {
+  renderPaths(i) {
     const { tasks } = this.props;
 
     return (
-      <g>
+      <g key={i}>
         {tasks.map(this.renderPath.bind(this))}
       </g>
     );
@@ -277,6 +160,8 @@ class Chart extends Component {
         className={classes.thumb}
         style={style}
         alt="thumb"
+        onMouseOver={() => this.onMouseOver(t, i)}
+        onMouseOut={() => this.onMouseOut()}
       />
     );
   }
@@ -289,11 +174,31 @@ class Chart extends Component {
     );
   }
 
+  renderTooltip() {
+    const { xMap, yMap, tooltip } = this.state;
+    const index = tooltip.get('index');
+    const x = xMap(tooltip.toJS(), index);
+    const y = yMap(tooltip.toJS());
+    const style = { left: x, top: y };
+
+    return (
+      <ul className={classes.tooltip} style={style}>
+        <li>Title: {tooltip.get('title')}</li>
+        <li>Views: {formatter(tooltip.get('views'))}</li>
+        <li>Likes: {formatter(tooltip.get('likes'))}</li>
+        <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
+        <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
+        <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
+        <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
+      </ul>
+    );
+  }
+
   render() {
     const { tasks } = this.props;
+    const { tooltip } = this.state;
 
-    const transformString = `translate(${MARGIN.top}px,${MARGIN.left}px)`;
-    const style = { transform: transformString };
+    const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
 
     return (
       <div
@@ -306,7 +211,7 @@ class Chart extends Component {
         <div>
           {tasks.map(this.renderThumbnails.bind(this))}
         </div>
-        <div className={classes.tooltip} ref={(el) => this.tooltip = el} />
+        {renderedTooltip}
       </div>
     );
   }

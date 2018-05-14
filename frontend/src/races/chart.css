@@ -22,7 +22,6 @@
 }
 
 .tooltip {
-  display: none;
   position: absolute;
   width: 300px;
   background: white;
@@ -31,10 +30,11 @@
   transform: translateY(-50%);
 }
 
-.tooltip ul {
+.tooltip {
   list-style-type: none;
-  padding: 0;
+  padding: 20;
   margin: 0;
+  pointer-events: none;
 }
 
 .thumbs {
