@@ -140,7 +140,7 @@ class RaceView(APIView):
         try:
             # get all snapshot titles
             # https://stackoverflow.com/questions/5380529/django-model-foreign-key-queryset-selecting-related-fields
-            snapshots = Snapshot.objects.filter(session_id__in=session_ids).values('title', 'url', 'agent_id', 'video__views', 'video__likes', 'video__dislikes', 'video__length')
+            snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('created_at').values('title', 'url', 'agent_id', 'video__views', 'video__likes', 'video__dislikes', 'video__length')
             for snapshot in snapshots:
 
                 # append only snapshots with a video

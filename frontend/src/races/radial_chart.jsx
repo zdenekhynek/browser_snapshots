@@ -80,7 +80,7 @@ class Chart extends Component {
       //  -1,
       //  max(dataLens) + 1
       0,
-      100,
+      200,
     ]);
     yScale.domain([
       //  just hardcode when using custom ration

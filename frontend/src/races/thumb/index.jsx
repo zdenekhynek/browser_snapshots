@@ -42,11 +42,9 @@ class Thumb extends Component {
         style={style}
         alt="thumb"
         onMouseOver={() => {
-          console.log('onMouseOver');
           this.props.onMouseOver(data, index);
         }}
         onMouseOut={() => {
-          console.log('onMouseOut');
           this.props.onMouseOut();
         }}
       />

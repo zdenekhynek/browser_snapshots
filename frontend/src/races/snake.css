@@ -18,10 +18,12 @@
 
 .tooltip {
   position: absolute;
+  min-width: 300px;
   padding: 20px;
   list-style-type: none;
   background: gray;
   border: 1px solid black;
   pointer-events: none;
   transform: translate(100px, 0);
+  white-space: nowrap;
 }
