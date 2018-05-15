@@ -28,7 +28,7 @@ export const MARGIN = { top: 20, right: 20, bottom: 30, left: 40 };
 class Chart extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { tasks, size } = nextProps;
-    const { width } = size;
+    const { width, height } = size;
 
     const data = tasks.reduce((acc, t, i) => {
       const newT = t.map((d) => {
@@ -39,19 +39,19 @@ class Chart extends Component {
     }, []);
 
     const chartWidth = width - MARGIN.left - MARGIN.right;
-    const chartHeight = 600 - MARGIN.top - MARGIN.bottom;
+    const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xValue = (d, i) => i;
-    const xScale = scaleLinear().range([0, chartWidth]);
-    const xMap = (d, i) => xScale(xValue(d, i));
-
-    // setup y
-    const yValue = (d) => {
+    const xValue = (d) => {
       return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
     };
+    const xScale = scaleLinear().range([0, chartWidth]);
+    const xMap = (d) => xScale(xValue(d));
+
+    // setup y
+    const yValue = (d, i) => i;
     const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
-    const yMap = (d) => yScale(yValue(d));
+    const yMap = (d, i) => yScale(yValue(d, i));
 
     const sizeValue = (d) => d.views;
     const sizeScale = scaleLinear().range([2, 20]);
@@ -75,14 +75,14 @@ class Chart extends Component {
       return d.length;
     });
 
-    xScale.domain([-1, max(dataLens) + 1]);
-    yScale.domain([
+    xScale.domain([
       //  just hardcode when using custom ration
       0,
       100,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);
+    yScale.domain([-1, max(dataLens) + 1]);
     sizeScale.domain([
       min(flattenedData, sizeValue) - 1,
       max(flattenedData, sizeValue) + 1,
@@ -198,8 +198,11 @@ class Chart extends Component {
   }
 
   renderSnake(t) {
-    console.log('renderSnake', t);
-    return (<Snake tasks={t} />);
+    return (
+      <div className={classes.col}>
+        <Snake tasks={t} />
+      </div>
+    );
   }
 
   render() {
@@ -213,9 +216,7 @@ class Chart extends Component {
         ref={(el) => this.chart = el}
         className={classes.chart}
       >
-        <div className={classes.col}>
-          {tasks.map(this.renderSnake)}
-        </div>
+        {tasks.map(this.renderSnake)}
       </div>
     );
   }
