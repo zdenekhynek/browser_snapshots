@@ -38,7 +38,8 @@ class Chart extends Component {
       return acc;
     }, []);
 
-    const chartWidth = width - MARGIN.left - MARGIN.right;
+    //  just width of the columns
+    const chartWidth = ((width / 3) - 20) - MARGIN.left - MARGIN.right;
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
@@ -200,7 +201,10 @@ class Chart extends Component {
   renderSnake(t) {
     return (
       <div className={classes.col}>
-        <Snake tasks={t} />
+        <Snake
+          tasks={t}
+          {...this.state}
+        />
       </div>
     );
   }
@@ -216,7 +220,7 @@ class Chart extends Component {
         ref={(el) => this.chart = el}
         className={classes.chart}
       >
-        {tasks.map(this.renderSnake)}
+        {tasks.map(this.renderSnake.bind(this))}
       </div>
     );
   }
