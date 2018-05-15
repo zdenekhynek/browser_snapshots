@@ -41,13 +41,15 @@ class Chart extends Component {
     const chartHeight = 600 - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xValue = (d, i) => i;
+    const xValue = (d) => {
+      return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
+    };
     const xScale = scaleLinear().range([0, chartWidth]);
     const xMap = (d, i) => xScale(xValue(d, i));
 
     // setup y
     const yValue = (d) => {
-      return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
+      return (d.views && !Number.isNaN(d.views)) ? d.views : 0;
     };
     const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
     const yMap = (d) => yScale(yValue(d));
@@ -74,13 +76,18 @@ class Chart extends Component {
       return d.length;
     });
 
-    xScale.domain([-1, max(dataLens) + 1]);
-    yScale.domain([
-      //  just hardcode when using custom ration
+    xScale.domain([
+      //  -1,
+      //  max(dataLens) + 1
       0,
       100,
-      //  min(flattenedData, yValue),
-      //  max(flattenedData, yValue),
+    ]);
+    yScale.domain([
+      //  just hardcode when using custom ration
+      //  0,
+      //  100,
+      min(flattenedData, yValue),
+      max(flattenedData, yValue),
     ]);
     sizeScale.domain([
       min(flattenedData, sizeValue) - 1,

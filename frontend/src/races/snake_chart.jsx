@@ -9,8 +9,9 @@ import { line } from 'd3-shape';
 import { min, max } from 'd3-array';
 
 import { getVideoThumbnail } from './utils';
+import Snake from './snake';
 
-import classes from './chart.css';
+import classes from './snake_chart.css';
 
 export const formatter = format(',');
 export const ratioFormatter = format('.3f');
@@ -196,24 +197,25 @@ class Chart extends Component {
     );
   }
 
+  renderSnake(t) {
+    console.log('renderSnake', t);
+    return (<Snake tasks={t} />);
+  }
+
   render() {
     const { tasks } = this.props;
     const { tooltip } = this.state;
 
-    const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
+    //  const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
 
     return (
       <div
         ref={(el) => this.chart = el}
         className={classes.chart}
       >
-        <svg className={classes.svg}>
-          {tasks.map(this.renderPaths.bind(this))}
-        </svg>
-        <div>
-          {tasks.map(this.renderThumbnails.bind(this))}
+        <div className={classes.col}>
+          {tasks.map(this.renderSnake)}
         </div>
-        {renderedTooltip}
       </div>
     );
   }

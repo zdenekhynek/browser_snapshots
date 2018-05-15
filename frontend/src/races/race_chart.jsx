@@ -10,6 +10,8 @@ import { axisLeft, axisBottom } from 'd3-axis';
 import { min, max } from 'd3-array';
 
 import Chart, { COLORS } from './chart';
+import RadialChart from './radial_chart';
+import SnakeChart from './snake_chart';
 
 import classes from './race_chart.css';
 
@@ -64,9 +66,13 @@ class RaceChart extends Component {
 
     return (
       <div className={classes.raceChart}>
-        <h3>Metrics</h3>
         <div className={classes.viz}>
+          <h3>Snake Chart</h3>
+          <SnakeChart tasks={tasks} />
+          <h3>Linear Chart</h3>
           <Chart tasks={tasks} />
+          <h3>Radial Chart</h3>
+          <RadialChart tasks={tasks} />
           {this.renderAgents()}
         </div>
       </div>
