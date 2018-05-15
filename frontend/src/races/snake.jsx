@@ -8,7 +8,7 @@ import { scaleLinear } from 'd3-scale';
 import { line } from 'd3-shape';
 import { min, max } from 'd3-array';
 
-import { getVideoThumbnail } from './utils';
+import Thumb from './thumb';
 
 import classes from './snake.css';
 
@@ -28,13 +28,14 @@ class Snake extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { tooltip: null };
+
     this.chart = null;
     this.svg = null;
   }
 
   onMouseOver(t, i) {
     const tooltip = t.set('index', i);
-
     this.setState({ tooltip });
   }
 
@@ -59,23 +60,17 @@ class Snake extends Component {
 
   renderThumbnail(t, i) {
     const { xMap, yMap, sizeMap } = this.props;
-    const thumbUrl = getVideoThumbnail(t.get('url'));
-
-    const tObj = t.toJS();
-    const left = xMap(tObj);
-    const top = yMap(tObj, i);
-    const width = sizeMap(tObj);
-    const style = { left, top, width };
 
     return (
-      <img
+      <Thumb
         key={i}
-        src={thumbUrl}
-        className={classes.thumb}
-        style={style}
-        alt="thumb"
-        onMouseOver={() => this.onMouseOver(t, i)}
-        onMouseOut={() => this.onMouseOut()}
+        index={i}
+        data={t}
+        xMap={xMap}
+        yMap={yMap}
+        sizeMap={sizeMap}
+        onMouseOver={this.onMouseOver.bind(this)}
+        onMouseOut={this.onMouseOut.bind(this)}
       />
     );
   }
@@ -89,10 +84,12 @@ class Snake extends Component {
   }
 
   renderTooltip() {
-    const { xMap, yMap, tooltip } = this.state;
+    const { xMap, yMap } = this.props;
+    const { tooltip } = this.state;
+
     const index = tooltip.get('index');
-    const x = xMap(tooltip.toJS(), index);
-    const y = yMap(tooltip.toJS());
+    const x = xMap(tooltip.toJS());
+    const y = yMap(tooltip.toJS(), index);
     const style = { left: x, top: y };
 
     return (
@@ -111,8 +108,8 @@ class Snake extends Component {
   render() {
     const { tasks } = this.props;
 
-    //  const { tooltip } = this.state;
-    //  const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
+    const { tooltip } = this.state;
+    const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
 
     return (
       <div className={classes.snake}>
@@ -122,6 +119,7 @@ class Snake extends Component {
         <svg className={classes.svg}>
           {this.renderPath(tasks)}
         </svg>
+        {renderedTooltip}
       </div>
     );
   }
