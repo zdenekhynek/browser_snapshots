@@ -33,7 +33,8 @@ class Snake extends Component {
   }
 
   onMouseOver(t, i) {
-    this.props.onMouseOver(t, i);
+    const { index } = this.props;
+    this.props.onMouseOver(t, i, index);
   }
 
   onMouseOut() {

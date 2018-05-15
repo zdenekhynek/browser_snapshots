@@ -23,7 +23,11 @@ export const COLORS = [
   '#2D882D',
 ];
 
-export const MARGIN = { top: 20, right: 20, bottom: 30, left: 40 };
+export const MARGIN = { top: 20, right: 20, bottom: 30, left: 240 };
+
+export function getWidth(width) {
+  return (width / 3);
+}
 
 class Chart extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -39,7 +43,7 @@ class Chart extends Component {
     }, []);
 
     //  just width of the columns
-    const chartWidth = ((width / 3) - 100) - MARGIN.left - MARGIN.right;
+    const chartWidth = getWidth(width) - MARGIN.left - MARGIN.right;
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
@@ -112,8 +116,8 @@ class Chart extends Component {
     this.svg = null;
   }
 
-  onMouseOver(t, i) {
-    const tooltip = t.set('index', i);
+  onMouseOver(t, i, index) {
+    const tooltip = t.set('index', i).set('offset', index);
 
     this.setState({ tooltip });
   }
@@ -123,9 +127,14 @@ class Chart extends Component {
   }
 
   renderTooltip() {
+    const { size } = this.props;
+    const { width } = size;
     const { xMap, yMap, tooltip } = this.state;
     const index = tooltip.get('index');
-    const x = xMap(tooltip.toJS());
+
+    const offset = getWidth(width) * tooltip.get('offset');
+
+    const x = xMap(tooltip.toJS()) + offset;
     const y = yMap(tooltip.toJS(), index);
     const style = { left: x, top: y };
 
@@ -142,10 +151,11 @@ class Chart extends Component {
     );
   }
 
-  renderSnake(t) {
+  renderSnake(t, i) {
     return (
       <div className={classes.col}>
         <Snake
+          index={i}
           tasks={t}
           onMouseOver={this.onMouseOver.bind(this)}
           onMouseOut={this.onMouseOut.bind(this)}
