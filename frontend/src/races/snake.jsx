@@ -58,13 +58,14 @@ class Snake extends Component {
   }
 
   renderThumbnail(t, i) {
-    const { xMap, yMap } = this.props;
+    const { xMap, yMap, sizeMap } = this.props;
     const thumbUrl = getVideoThumbnail(t.get('url'));
 
     const tObj = t.toJS();
     const left = xMap(tObj);
     const top = yMap(tObj, i);
-    const style = { left, top };
+    const width = sizeMap(tObj);
+    const style = { left, top, width };
 
     return (
       <img

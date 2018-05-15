@@ -55,7 +55,7 @@ class Chart extends Component {
     const yMap = (d, i) => yScale(yValue(d, i));
 
     const sizeValue = (d) => d.views;
-    const sizeScale = scaleLinear().range([2, 20]);
+    const sizeScale = scaleLinear().range([80, 140]);
     const sizeMap = (d) => sizeScale(sizeValue(d));
 
     let colorIndex = -1;
@@ -96,6 +96,7 @@ class Chart extends Component {
     return {
       xMap,
       yMap,
+      sizeMap,
       lineFn,
     };
   }
