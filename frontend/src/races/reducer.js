@@ -7,7 +7,7 @@ import {
   CHANGE_ACTIVE_RACE,
 } from './action_creators';
 import {
-  getWeightedTemperature,
+  getTemperature,
   getEngagementRatio,
 } from './utils';
 
@@ -33,7 +33,7 @@ export function addMetrics(tasks) {
   return tasks.map((t) => {
     const tObj = t.toJS();
     return t
-      .set('temperature', getWeightedTemperature(tObj))
+      .set('temperature', getTemperature(tObj))
       .set('engagementRatio', getEngagementRatio(tObj));
   });
 }

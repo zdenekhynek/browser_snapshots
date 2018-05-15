@@ -5,7 +5,7 @@ export function getTemperature(video) {
   const total = likes + dislikes;
   const engagement = 1 - Math.abs((likes - dislikes) / total);
 
-  return engagement * 100;
+  return engagement * 200;
 }
 
 export const WEIGHT_SCALE = scaleLinear()
@@ -18,7 +18,7 @@ export function getWeightedTemperature(video) {
   const temperature = getTemperature(video);
 
   //  get weight from 1 to 10
-  const weight = WEIGHT_SCALE(views)
+  const weight = WEIGHT_SCALE(views);
 
   return temperature * weight;
 }
