@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { select, event } from 'd3-selection';
 import { format } from 'd3-format';
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scaleLog } from 'd3-scale';
 import { line } from 'd3-shape';
 import { min, max } from 'd3-array';
 
@@ -39,7 +39,7 @@ class Chart extends Component {
     }, []);
 
     //  just width of the columns
-    const chartWidth = ((width / 3) - 20) - MARGIN.left - MARGIN.right;
+    const chartWidth = ((width / 3) - 100) - MARGIN.left - MARGIN.right;
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
@@ -55,7 +55,7 @@ class Chart extends Component {
     const yMap = (d, i) => yScale(yValue(d, i));
 
     const sizeValue = (d) => d.views;
-    const sizeScale = scaleLinear().range([80, 140]);
+    const sizeScale = scaleLog().range([60, 180]);
     const sizeMap = (d) => sizeScale(sizeValue(d));
 
     let colorIndex = -1;
@@ -122,68 +122,11 @@ class Chart extends Component {
     this.setState({ tooltip: null });
   }
 
-  renderPath(task, i) {
-    const { lineFn } = this.state;
-    const pathString = lineFn(task.toJS());
-
-    const stroke = COLORS[i];
-
-    return (
-      <path
-        className={classes.progress}
-        style={{ stroke }}
-        d={pathString}
-      />
-    );
-  }
-
-  renderPaths(i) {
-    const { tasks } = this.props;
-
-    return (
-      <g key={i}>
-        {tasks.map(this.renderPath.bind(this))}
-      </g>
-    );
-  }
-
-  renderThumbnail(t, i) {
-    const { xMap, yMap } = this.state;
-    const thumbUrl = getVideoThumbnail(t.get('url'));
-
-    const tObj = t.toJS();
-    const left = xMap(tObj, i);
-    const top = yMap(tObj);
-    const color = COLORS[i];
-
-    const style = { left, top };
-
-    return (
-      <img
-        key={i}
-        src={thumbUrl}
-        className={classes.thumb}
-        style={style}
-        alt="thumb"
-        onMouseOver={() => this.onMouseOver(t, i)}
-        onMouseOut={() => this.onMouseOut()}
-      />
-    );
-  }
-
-  renderThumbnails(tasks, i) {
-    return (
-      <div key={i} className={classes.thumbs}>
-        {tasks.map(this.renderThumbnail.bind(this))}
-      </div>
-    );
-  }
-
   renderTooltip() {
     const { xMap, yMap, tooltip } = this.state;
     const index = tooltip.get('index');
-    const x = xMap(tooltip.toJS(), index);
-    const y = yMap(tooltip.toJS());
+    const x = xMap(tooltip.toJS());
+    const y = yMap(tooltip.toJS(), index);
     const style = { left: x, top: y };
 
     return (
@@ -204,6 +147,8 @@ class Chart extends Component {
       <div className={classes.col}>
         <Snake
           tasks={t}
+          onMouseOver={this.onMouseOver.bind(this)}
+          onMouseOut={this.onMouseOut.bind(this)}
           {...this.state}
         />
       </div>
@@ -214,7 +159,7 @@ class Chart extends Component {
     const { tasks } = this.props;
     const { tooltip } = this.state;
 
-    //  const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
+    const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
 
     return (
       <div
@@ -222,6 +167,7 @@ class Chart extends Component {
         className={classes.chart}
       >
         {tasks.map(this.renderSnake.bind(this))}
+        {renderedTooltip}
       </div>
     );
   }

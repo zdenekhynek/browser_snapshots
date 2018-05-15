@@ -28,19 +28,16 @@ class Snake extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { tooltip: null };
-
     this.chart = null;
     this.svg = null;
   }
 
   onMouseOver(t, i) {
-    const tooltip = t.set('index', i);
-    this.setState({ tooltip });
+    this.props.onMouseOver(t, i);
   }
 
   onMouseOut() {
-    this.setState({ tooltip: null });
+    this.props.onMouseOut();
   }
 
   renderPath(task, i) {
@@ -83,33 +80,8 @@ class Snake extends Component {
     );
   }
 
-  renderTooltip() {
-    const { xMap, yMap } = this.props;
-    const { tooltip } = this.state;
-
-    const index = tooltip.get('index');
-    const x = xMap(tooltip.toJS());
-    const y = yMap(tooltip.toJS(), index);
-    const style = { left: x, top: y };
-
-    return (
-      <ul className={classes.tooltip} style={style}>
-        <li>Title: {tooltip.get('title')}</li>
-        <li>Views: {formatter(tooltip.get('views'))}</li>
-        <li>Likes: {formatter(tooltip.get('likes'))}</li>
-        <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
-        <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
-        <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
-        <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
-      </ul>
-    );
-  }
-
   render() {
     const { tasks } = this.props;
-
-    const { tooltip } = this.state;
-    const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
 
     return (
       <div className={classes.snake}>
@@ -119,7 +91,6 @@ class Snake extends Component {
         <svg className={classes.svg}>
           {this.renderPath(tasks)}
         </svg>
-        {renderedTooltip}
       </div>
     );
   }
