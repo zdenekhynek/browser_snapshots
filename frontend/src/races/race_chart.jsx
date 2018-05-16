@@ -67,11 +67,8 @@ class RaceChart extends Component {
     return (
       <div className={classes.raceChart}>
         <div className={classes.viz}>
-          <h3>Snake Chart</h3>
           <SnakeChart tasks={tasks} />
-          <h3>Linear Chart</h3>
           <Chart tasks={tasks} />
-          <h3>Radial Chart</h3>
           <RadialChart tasks={tasks} />
           {this.renderAgents()}
         </div>

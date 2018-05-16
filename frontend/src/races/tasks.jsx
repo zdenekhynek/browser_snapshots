@@ -15,7 +15,9 @@ export function renderAgentTasks(tasks, agent, index) {
 
   return (
     <div key={agent.get('id')}>
-      <h3>{agent.get('name')}: {agent.get('gmail')}</h3>
+      <h3 className={classes.agent}>
+        {agent.get('name')}: {agent.get('gmail')}
+      </h3>
       <ul>
         {
           tasks.map((task, i) => {

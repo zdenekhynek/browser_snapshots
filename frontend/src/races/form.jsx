@@ -83,8 +83,6 @@ class Form extends Component {
 
     return (
       <form className={classes.form} onSubmit={this.onSubmit}>
-        <h2>New search</h2>
-
         <div className={classes.section}>
           <div className={classes.agentsList}>
             {currentAgents.map((a, i) => this.renderAgentDropdown(a, agents, i))}

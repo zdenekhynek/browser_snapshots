@@ -38,7 +38,7 @@ class Chart extends Component {
     }, []);
 
     const chartWidth = width - MARGIN.left - MARGIN.right;
-    const chartHeight = 600 - MARGIN.top - MARGIN.bottom;
+    const chartHeight = 1000 - MARGIN.top - MARGIN.bottom;
 
     // setup x
     const xValue = (d) => {
@@ -151,16 +151,15 @@ class Chart extends Component {
     );
   }
 
-  renderThumbnail(t, i) {
+  renderThumbnail(t, i, agentIndex) {
     const { xMap, yMap } = this.state;
     const thumbUrl = getVideoThumbnail(t.get('url'));
 
     const tObj = t.toJS();
     const left = xMap(tObj, i);
     const top = yMap(tObj);
-    const color = COLORS[i];
-
-    const style = { left, top };
+    const borderColor = COLORS[agentIndex];
+    const style = { left, top, borderColor };
 
     return (
       <img
@@ -178,7 +177,7 @@ class Chart extends Component {
   renderThumbnails(tasks, i) {
     return (
       <div key={i} className={classes.thumbs}>
-        {tasks.map(this.renderThumbnail.bind(this))}
+        {tasks.map((t, index) => this.renderThumbnail(t, index, i))}
       </div>
     );
   }

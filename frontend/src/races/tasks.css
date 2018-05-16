@@ -5,12 +5,16 @@
   margin: 20px;
 }
 
+.agent {
+  color: #999;
+}
+
 .task {
   display: flex;
   padding: 10px 20px 10px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #666;
   font-size: 12px;
-  color: rgb(10, 10, 10) !important;
+  color: #999 !important;
   text-decoration: none !important;
 }
 
@@ -26,7 +30,7 @@
 
 .metric {
   margin-top: 5px;
-  color: rgba(17, 17, 17, 0.6);
+  color: #666;
 }
 
 .metric > span {

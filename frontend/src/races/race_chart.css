@@ -6,6 +6,9 @@
 
 .agents {
   display: flex;
+}
+
+.agent ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -15,5 +18,5 @@
   flex: 0 0 300px;
   min-width: 300px;
   padding: 10px 20px;
-  color: white;
+  color: #333;
 }
