@@ -55,7 +55,7 @@ class Chart extends Component {
 
     // setup y
     const yValue = (d, i) => i;
-    const yScale = scaleLinear().range([0, chartHeight]); // value -> display
+    const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
     const yMap = (d, i) => yScale(yValue(d, i));
 
     const sizeValue = (d) => d.views;
