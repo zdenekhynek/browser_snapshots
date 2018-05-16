@@ -57,6 +57,9 @@
 
 .agents {
   font-size: 14px;
+  background-color: black;
+  color: #999;
+  border: 0;
 }
 
 .section {
