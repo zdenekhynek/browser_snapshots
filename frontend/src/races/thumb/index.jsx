@@ -26,7 +26,7 @@ class Thumb extends Component {
   }
 
   render() {
-    const { index, data, xMap, yMap, sizeMap } = this.props;
+    const { index, data, xMap, yMap, sizeMap, withTitle } = this.props;
     const thumbUrl = getVideoThumbnail(data.get('url'));
 
     const tObj = data.toJS();
@@ -36,6 +36,8 @@ class Thumb extends Component {
     const style = { left, top };
     const width = sizeMap(tObj);
     const imageStyle = { width };
+    const titleLeft = `${width + 5}px`;
+    const titleStyle = { left: titleLeft };
 
     return (
       <div className={classes.thumb} style={style}>
@@ -51,16 +53,25 @@ class Thumb extends Component {
             this.props.onMouseOut();
           }}
         />
-        <div className={classes.title}>
-          {tObj.title}
-        </div>
+        { withTitle &&
+          (
+            <div className={classes.title} style={titleStyle}>
+              {tObj.title}
+            </div>
+          )
+        }
+
       </div>
     );
   }
 }
 
-Thumb.propTypes = {};
+Thumb.propTypes = {
+  withTitle: PropTypes.bool,
+};
 
-Thumb.defaultProps = {};
+Thumb.defaultProps = {
+  withTitle: true,
+};
 
 export default Thumb;
