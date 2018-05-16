@@ -1,6 +1,7 @@
 .chart {
   width: 100%;
   height: 1000px;
+  margin: 200px 50px;
 }
 
 .svg {
