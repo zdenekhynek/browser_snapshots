@@ -154,13 +154,15 @@ class Chart extends Component {
   renderSnake(t, i) {
     return (
       <div className={classes.col}>
-        <Snake
-          index={i}
-          tasks={t}
-          onMouseOver={this.onMouseOver.bind(this)}
-          onMouseOut={this.onMouseOut.bind(this)}
-          {...this.state}
-        />
+        <div className={classes.innerCol}>
+          <Snake
+            index={i}
+            tasks={t}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
       </div>
     );
   }

@@ -6,9 +6,15 @@
 
 .col {
   flex: 33% 0 0;
+}
+
+.innerCol {
+  width: 100%;
+  height: 100%;
   padding: 0 20px;
   padding-right: 200px;
 }
+
 
 .svg {
   width: 100%;
