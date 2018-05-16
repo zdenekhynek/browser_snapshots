@@ -32,22 +32,29 @@ class Thumb extends Component {
     const tObj = data.toJS();
     const left = xMap(tObj);
     const top = yMap(tObj, index);
+
+    const style = { left, top };
     const width = sizeMap(tObj);
-    const style = { left, top, width };
+    const imageStyle = { width };
 
     return (
-      <img
-        src={thumbUrl}
-        className={classes.thumb}
-        style={style}
-        alt="thumb"
-        onMouseOver={() => {
-          this.props.onMouseOver(data, index);
-        }}
-        onMouseOut={() => {
-          this.props.onMouseOut();
-        }}
-      />
+      <div className={classes.thumb} style={style}>
+        <img
+          className={classes.image}
+          src={thumbUrl}
+          style={imageStyle}
+          alt="thumb"
+          onMouseOver={() => {
+            this.props.onMouseOver(data, index);
+          }}
+          onMouseOut={() => {
+            this.props.onMouseOut();
+          }}
+        />
+        <div className={classes.title}>
+          {tObj.title}
+        </div>
+      </div>
     );
   }
 }

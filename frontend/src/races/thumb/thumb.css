@@ -1,6 +1,19 @@
 .thumb {
   position: absolute;
+}
+
+.image {
+  float: left;
   width: 100px;
   height: auto;
   border: 1px solid black;
+}
+
+.title {
+  max-width: 250px;
+  padding: 10px;
+  float: left;
+  font-size: 12px;
+  color: rgb(100, 100, 100) !important;
+  text-decoration: none !important;
 }
