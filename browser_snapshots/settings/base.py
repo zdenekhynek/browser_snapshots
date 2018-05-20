@@ -182,6 +182,9 @@ WATSON_PASSWORD = os.environ.get('WATSON_PASSWORD', '')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
 GOOGLE_APPLICATION_CREDENTIALS = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', '')
 
+FACE_API_KEY = os.environ.get('FACE_API_KEY', '')
+FACE_API_ENDPOINT = os.environ.get('FACE_API_ENDPOINT', '')
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': DEBUG,

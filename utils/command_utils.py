@@ -19,13 +19,15 @@ def get_snapshots(pk=False, race_id=False, limit=False, offset=False):
     elif race_id:
         snapshots = get_snapshots_for_race(race_id)
     else:
-        if limit and offset:
-            snapshots = Snapshot.objects.all()[offset:offset+limit]
-        elif limit:
-            snapshots = Snapshot.objects.all()[:limit]
-        elif offset:
-            snapshots = Snapshot.objects.all()[offset:]
-        else:
-            snapshots = Snapshot.objects.all()
+        snapshots = Snapshot.objects.all()
+
+    if limit and offset:
+        snapshots = snapshots[offset:offset+limit]
+    elif limit:
+        snapshots = snapshots[:limit]
+    elif offset:
+        snapshots = snapshots[offset:]
+    else:
+        snapshots = snapshots
 
     return snapshots

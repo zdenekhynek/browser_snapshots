@@ -140,7 +140,7 @@ class RaceView(APIView):
         try:
             # get all snapshot titles
             # https://stackoverflow.com/questions/5380529/django-model-foreign-key-queryset-selecting-related-fields
-            snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('-created_at').values('id', 'title', 'url', 'agent_id', 'video__views', 'video__likes', 'video__dislikes', 'video__length', 'analysis__sentiment', 'analysis__gcp_sentiment_score', 'analysis__gcp_sentiment_magnitude')
+            snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('-created_at').values('id', 'title', 'url', 'agent_id', 'video__views', 'video__likes', 'video__dislikes', 'video__length', 'analysis__sentiment', 'analysis__gcp_sentiment_score', 'analysis__gcp_sentiment_magnitude', 'analysis__face_sentiment')
             for snapshot in snapshots:
 
                 # append only snapshots with a video
@@ -157,7 +157,8 @@ class RaceView(APIView):
                             'length': snapshot['video__length'],
                             'sentiment': snapshot['analysis__sentiment'],
                             'sentiment_score': snapshot['analysis__gcp_sentiment_score'],
-                            'sentiment_magnitude': snapshot['analysis__gcp_sentiment_magnitude']
+                            'sentiment_magnitude': snapshot['analysis__gcp_sentiment_magnitude'],
+                            'face_sentiment': snapshot['analysis__face_sentiment']
                         }
                         snapshots_data.append(snapshot_object)
                     except:
