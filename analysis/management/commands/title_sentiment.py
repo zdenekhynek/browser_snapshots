@@ -1,3 +1,5 @@
+from cProfile import Profile
+from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 
 from snapshots.models import Snapshot
@@ -11,6 +13,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('--limit', type=int)
         parser.add_argument('--offset', type=int)
+        parser.add_argument('--profile', type=bool)
 
 
     def get_snapshots(self, limit=False, offset=False):
@@ -25,8 +28,15 @@ class Command(BaseCommand):
 
         return snapshots
 
-
     def handle(self, *args, **options):
+        if options['profile']:
+            profiler = Profile()
+            profiler.runcall(self._handle, *args, **options)
+            profiler.print_stats()
+        else:
+            self._handle(*args, **options)
+
+    def _handle(self, *args, **options):
         limit = options['limit']
         offset = options['offset']
 
