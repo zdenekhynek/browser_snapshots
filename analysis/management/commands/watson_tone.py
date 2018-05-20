@@ -6,32 +6,19 @@ from snapshots.models import Snapshot
 from analysis.models import Sentiment
 from analysis.sentiment import SentimentClassifier
 from analysis.watson_tone_analyzer import WatsonToneAnalyzer
+from utils.command_utils import get_snapshots, add_arguments
 
 
 class Command(BaseCommand):
     help = 'Do watson tone analysis on titles'
 
-
     def add_arguments(self, parser):
-        parser.add_argument('--limit', type=int)
-        parser.add_argument('--offset', type=int)
-        parser.add_argument('--override', type=bool)
-
-
-    def get_snapshots(self, limit=False, offset=False):
-        if limit and offset:
-            snapshots = Snapshot.objects.all()[offset:offset+limit]
-        elif limit:
-            snapshots = Snapshot.objects.all()[:limit]
-        elif offset:
-            snapshots = Snapshot.objects.all()[offset:]
-        else:
-            snapshots = Snapshot.objects.all()
-
-        return snapshots
+        add_arguments(parser)
 
 
     def handle(self, *args, **options):
+        pk = options['pk']
+        race_id = options['race_id']
         limit = options['limit']
         offset = options['offset']
         override = options['override']
@@ -43,19 +30,9 @@ class Command(BaseCommand):
             )
         )
 
-        self.stdout.write(
-            self.style.SUCCESS('Start training classifier')
-        )
-        sentiment_classifier = SentimentClassifier()
-        sentiment_classifier.train()
-
-        self.stdout.write(
-            self.style.SUCCESS('Stop training classifier')
-        )
-
         watson_tone_analyzer = WatsonToneAnalyzer()
 
-        snapshots = self.get_snapshots(limit, offset)
+        snapshots = get_snapshots(pk, race_id, limit, offset)
 
         # use iterator to avoid huge memory consumption on heroku
         for snapshot in snapshots.iterator():
@@ -63,7 +40,6 @@ class Command(BaseCommand):
             s, created = Sentiment.objects.get_or_create(snapshot=snapshot)
 
             if created or override:
-                s.sentiment = sentiment_classifier.classify([title])[0]
                 s.watson_raw_tone = json.dumps(watson_tone_analyzer.tone(title))
                 s.title = title
                 s.save()

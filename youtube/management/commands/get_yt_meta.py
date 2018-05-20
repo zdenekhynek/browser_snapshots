@@ -13,7 +13,7 @@ from utils.command_utils import get_snapshots, add_arguments
 class Command(BaseCommand):
     help = 'Get video meta from Youtube Data API'
 
-    def add_arguments(parser):
+    def add_arguments(self, parser):
         add_arguments(parser)
 
     def handle(self, *args, **options):
