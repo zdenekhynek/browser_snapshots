@@ -6,6 +6,7 @@ import {
   getTemperature,
   getWeightedTemperature,
   getEngagementRatio,
+  getSentiment,
 } from './utils';
 
 describe('Races utils', () => {
@@ -54,6 +55,28 @@ describe('Races utils', () => {
       };
       result = getEngagementRatio(video);
       expect(result).to.be.eq(5);
+    });
+  });
+
+  describe('getSentiment', () => {
+    it('should calculate sentiment', () => {
+      let video = {
+        sentiment_magnitude: -1, sentiment_score: 1,
+      };
+      let result = getSentiment(video);
+      expect(result).to.be.eq(200);
+
+      video = {
+        sentiment_magnitude: 1, sentiment_score: 1,
+      };
+      result = getSentiment(video);
+      expect(result).to.be.eq(0);
+
+      video = {
+        sentiment_magnitude: 0, sentiment_score: 0,
+      };
+      result = getSentiment(video);
+      expect(result).to.be.eq(100);
     });
   });
 });

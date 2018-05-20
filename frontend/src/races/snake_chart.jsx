@@ -47,8 +47,9 @@ class Chart extends Component {
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
+    const xProp = 'sentiment';
     const xValue = (d) => {
-      return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
+      return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
     const xScale = scaleLinear().range([0, chartWidth]);
     const xMap = (d) => xScale(xValue(d));

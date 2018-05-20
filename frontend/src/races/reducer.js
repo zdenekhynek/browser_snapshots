@@ -9,6 +9,7 @@ import {
 import {
   getTemperature,
   getEngagementRatio,
+  getSentiment,
 } from './utils';
 
 export const WAITING_STATUS = 'WAITING_STATUS';
@@ -34,6 +35,7 @@ export function addMetrics(tasks) {
     const tObj = t.toJS();
     return t
       .set('temperature', getTemperature(tObj))
+      .set('sentiment', getSentiment(tObj))
       .set('engagementRatio', getEngagementRatio(tObj));
   });
 }

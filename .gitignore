@@ -17,3 +17,5 @@ dist
 .tmp_dist
 
 static
+
+.gcp_credentials.json

@@ -9,6 +9,8 @@ class Sentiment(models.Model):
     description = models.TextField(max_length=10009, blank=True, null=True)
     sentiment = models.CharField(max_length=255, blank=True, null=True)
     watson_raw_tone = models.CharField(max_length=10000, blank=True, null=True)
+    gcp_sentiment_score = models.FloatField(default=0.0)
+    gcp_sentiment_magnitude = models.FloatField(default=0.0)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""

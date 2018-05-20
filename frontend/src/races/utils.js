@@ -43,3 +43,8 @@ export function getVideoThumbnail(url) {
   const videoId = getIdFromUrl(url);
   return `https://img.youtube.com/vi/${videoId}/0.jpg`;
 }
+
+export function getSentiment(video) {
+  const { sentiment_magnitude, sentiment_score } = video;
+  return 100 - sentiment_magnitude * 100;
+}
