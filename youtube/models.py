@@ -19,6 +19,8 @@ class Video(models.Model):
     author = models.CharField(max_length=500, blank=True, null=True)
     published = models.DateTimeField(blank=True, null=True)
 
+    meta = models.TextField(max_length=10000, blank=True, null=True)
+
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return "%s" % (self.title)

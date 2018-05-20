@@ -179,7 +179,8 @@ NLTK_DATA_DIR = os.path.join(DATA_DIR, 'nltk_data')
 WATSON_USERNAME = os.environ.get('WATSON_USERNAME', '')
 WATSON_PASSWORD = os.environ.get('WATSON_PASSWORD', '')
 
-GOOGLE_APPLICATION_CREDENTIALS = os.path.join(DATA_DIR, '.gcp_credentials.json')
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
+GOOGLE_APPLICATION_CREDENTIALS = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', '')
 
 WEBPACK_LOADER = {
     'DEFAULT': {
