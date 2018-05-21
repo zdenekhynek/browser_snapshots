@@ -119,7 +119,6 @@ class Chart extends Component {
 
   onMouseOver(t, i, index) {
     const tooltip = t.set('index', i).set('offset', index);
-
     this.setState({ tooltip });
   }
 
@@ -139,6 +138,36 @@ class Chart extends Component {
     const y = yMap(tooltip.toJS(), index);
     const style = { left: x, top: y };
 
+    const faceSentiment = tooltip.get('face_sentiment', '').replace(/'/g, '"');
+    const faces = JSON.parse(faceSentiment).reduce((acc, f) => {
+      acc.push(f.faceAttributes.emotion);
+      return acc;
+    }, []);
+
+    const facesString = faces.reduce((acc, f) => {
+      const stringArr = Object.keys(f).reduce((acc, k) => {
+        const value = f[k];
+        if (value !== 0) {
+          acc.push(`${k}: ${value}`);
+        }
+
+        return acc;
+      }, []);
+
+      acc.push(stringArr);
+
+      return acc;
+    }, []).join(', ');
+
+    const rawToneString = tooltip.get('watson_raw_tone');
+    const rawTone = JSON.parse(rawToneString);
+
+    const tone = rawTone['document_tone'].tones.reduce((acc, t) => {
+      const toneString = `${t['tone_name']}: ${t.score}`;
+      acc.push(toneString);
+      return acc;
+    }, []).join(', ');
+
     return (
       <ul className={classes.tooltip} style={style}>
         <li>Title: {tooltip.get('title')}</li>
@@ -148,6 +177,10 @@ class Chart extends Component {
         <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
         <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
+        <li>Sentiment magnitude (Google): {ratioFormatter(tooltip.get('sentiment_magnitude'))}</li>
+        <li>Sentiment score (Google): {ratioFormatter(tooltip.get('sentiment_score'))}</li>
+        <li>Watson Tone (IBM): {tone}</li>
+        <li>Faces API (Microsoft): {facesString}</li>
       </ul>
     );
   }
