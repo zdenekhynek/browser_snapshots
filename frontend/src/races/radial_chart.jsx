@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { select, event } from 'd3-selection';
 import { format } from 'd3-format';
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scalePow } from 'd3-scale';
 import { line } from 'd3-shape';
 import { min, max } from 'd3-array';
 
@@ -44,14 +44,14 @@ class Chart extends Component {
     const xValue = (d) => {
       return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
     };
-    const xScale = scaleLinear().range([0, chartWidth]);
+    const xScale = scalePow().exponent(0.5).range([0, chartWidth]);
     const xMap = (d, i) => xScale(xValue(d, i));
 
     // setup y
     const yValue = (d) => {
       return (d.views && !Number.isNaN(d.views)) ? d.views : 0;
     };
-    const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
+    const yScale = scalePow().exponent(0.5).range([chartHeight, 0]); // value -> display
     const yMap = (d) => yScale(yValue(d));
 
     const sizeValue = (d) => d.views;
