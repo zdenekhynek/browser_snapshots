@@ -1,13 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
 
 import Home from '../home';
 import Races from '../races';
-import Form from '../races/form';
-import Selector from '../races/selector';
+import Archive from '../archive';
 
 import {
   createRace,
@@ -21,6 +20,10 @@ import classes from './app.css';
 
 export function App(props, { store }) {
   const { agents, races, activeRace } = props;
+
+  //  make sure we have data for route
+  store.dispatch(getRaces());
+  let initialLoad = true;
 
   return (
     <div className={classes.app}>
@@ -36,16 +39,19 @@ export function App(props, { store }) {
             const { params } = match;
             const { raceId } = params;
 
-            //  make sure we have data for route
-            store.dispatch(getRaces());
-
-            setTimeout(() => {
+            if (initialLoad) {
+              //  wait for races to load
+              setTimeout(() => {
+                store.dispatch(changeActiveRace(+raceId));
+                initialLoad = false;
+              }, 1000);
+            } else {
               store.dispatch(changeActiveRace(+raceId));
-            }, 1000);
-
+            }
             return (<Races raceId={raceId} />);
           }}
           />
+          <Route exact path="/viz/archive" component={Archive} />
         </Switch>
       </Router>
     </div>

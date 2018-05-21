@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { select, event } from 'd3-selection';
 import { format } from 'd3-format';
@@ -62,10 +63,24 @@ class RaceChart extends Component {
   }
 
   render() {
-    const { tasks } = this.props;
+    const { activeRace, tasks } = this.props;
+
+    const backLink = `/viz/archive/`;
+
+    const raceId = activeRace.get('id');
+    const raceKeyword = activeRace.get('keyword');
+
+    const date = new Date(activeRace.get('created_at'));
+    const raceDate = (raceId > -1) ?
+      `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}` : '';
+
+    const label = (raceId > -1) ?
+      `Searched for ${raceKeyword}` : activeRace.get('label');
 
     return (
       <div className={classes.raceChart}>
+        <Link className={classes.link} to={backLink}>Back to archive</Link>
+        <h2>{label}</h2>
         <div className={classes.viz}>
           <SnakeChart tasks={tasks} />
           <Chart tasks={tasks} />
@@ -120,6 +135,7 @@ export function mapStateToProps({ agents, races }) {
   });
 
   return {
+    activeRace,
     agents: raceAgents,
     tasks: flattenedTasks,
   };

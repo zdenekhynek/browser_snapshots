@@ -60,7 +60,6 @@ class Chart extends Component {
     const yMap = (d, i) => yScale(yValue(d, i));
 
     const sizeValue = (d) => {
-      console.log('d', d, d.views, d.views && !Number.isNaN(d.views));
       return (d.views && !Number.isNaN(d.views)) ? d.views : 150;
     };
     const sizeScale = scaleLog().range([60, 180]);
