@@ -99,7 +99,7 @@ export class Tasks extends React.Component {
   }
 }
 
-export function mapStateToProps({ agents, races }) {
+export function mapStateToProps({ agents, races }, { raceId }) {
   const activeRace = races.find((r) => r.get('isActive', false), null, Map());
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();

@@ -26,6 +26,7 @@
   position: absolute;
   width: 300px;
   background: gray;
+  color: black;
   border: 1px solid black;
   padding: 10px 20px;
   transform: translateY(-50%);

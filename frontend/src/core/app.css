@@ -2,6 +2,7 @@
   overflow: hidden;
   font-family: Roboto, Arial, sans-serif;
   background-color: rgba(0,0,0,.8);
+  color: #999 !important;
 }
 
 body {

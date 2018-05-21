@@ -98,6 +98,7 @@ export const CHANGE_ACTIVE_RACE = 'CHANGE_ACTIVE_RACE';
 
 export function changeActiveRace(raceId) {
   return (dispatch, getState) => {
+    console.log('raceId', raceId);
     dispatch(updateRace(raceId));
 
     dispatch({
