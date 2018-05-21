@@ -138,7 +138,7 @@ class Chart extends Component {
     const y = yMap(tooltip.toJS(), index);
     const style = { left: x, top: y };
 
-    const faceSentiment = tooltip.get('face_sentiment', '').replace(/'/g, '"');
+    const faceSentiment = (tooltip.get('face_sentiment') || '[]').replace(/'/g, '"');
     const faces = JSON.parse(faceSentiment).reduce((acc, f) => {
       acc.push(f.faceAttributes.emotion);
       return acc;
@@ -159,14 +159,18 @@ class Chart extends Component {
       return acc;
     }, []).join(', ');
 
-    const rawToneString = tooltip.get('watson_raw_tone');
+    const rawToneString = tooltip.get('watson_raw_tone') || '[]';
     const rawTone = JSON.parse(rawToneString);
 
-    const tone = rawTone['document_tone'].tones.reduce((acc, t) => {
-      const toneString = `${t['tone_name']}: ${t.score}`;
-      acc.push(toneString);
-      return acc;
-    }, []).join(', ');
+    let tone = [];
+
+    if (rawTone['document_tone']) {
+      tone = rawTone['document_tone'].tones.reduce((acc, t) => {
+        const toneString = `${t['tone_name']}: ${t.score}`;
+        acc.push(toneString);
+        return acc;
+      }, []).join(', ');
+    }
 
     return (
       <ul className={classes.tooltip} style={style}>
