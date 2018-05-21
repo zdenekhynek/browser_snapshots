@@ -26,7 +26,12 @@ export function App(props, { store }) {
     <div className={classes.app}>
       <Router>
         <Switch>
-          <Route exact path="/viz" component={Home} />
+          <Route exact path="/viz" render={({ match }) => {
+            store.dispatch(getRaces());
+
+            return <Home />;
+          }}
+          />
           <Route exact path="/viz/races/:raceId" render={({ match }) => {
             const { params } = match;
             const { raceId } = params;

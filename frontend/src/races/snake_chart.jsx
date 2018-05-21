@@ -47,7 +47,7 @@ class Chart extends Component {
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xProp = 'sentiment';
+    const xProp = 'temperature';
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
@@ -59,7 +59,10 @@ class Chart extends Component {
     const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
     const yMap = (d, i) => yScale(yValue(d, i));
 
-    const sizeValue = (d) => d.views;
+    const sizeValue = (d) => {
+      console.log('d', d, d.views, d.views && !Number.isNaN(d.views));
+      return (d.views && !Number.isNaN(d.views)) ? d.views : 150;
+    };
     const sizeScale = scaleLog().range([60, 180]);
     const sizeMap = (d) => sizeScale(sizeValue(d));
 
