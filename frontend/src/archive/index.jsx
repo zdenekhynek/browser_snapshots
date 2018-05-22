@@ -10,10 +10,11 @@ const Archive = ({ races }) => {
 
   return (
     <div className={classes.archive}>
+      <Link to={'/viz'}>Start a session</Link>
       <h2>Archive</h2>
       <ul>
         {
-          latestRaces.map((race) => {
+          latestRaces.map((race, i) => {
             const raceId = race.get('id');
             const link = `/viz/races/${raceId}`;
 
@@ -26,7 +27,7 @@ const Archive = ({ races }) => {
             const label = (raceId > -1) ?
               `Searched for ${raceKeyword}` : race.get('label');
 
-            return (<li>
+            return (<li key={i}>
               <Link to={link}>
                 <span className={classes.date}>{raceDate}:</span> {label}
               </Link>

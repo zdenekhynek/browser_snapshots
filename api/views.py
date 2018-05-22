@@ -131,6 +131,9 @@ class RaceView(APIView):
         """
         Return a list of all races.
         """
+
+        race = Race.objects.get(pk=pk)
+
         # get all sessions which correspond to a given task
         sessions = RaceTask.objects.filter(race_id=pk).values('task__session_id')
 
@@ -167,4 +170,4 @@ class RaceView(APIView):
         except:
             print('No snapshots yet')
 
-        return Response({'id': pk, 'tasks': snapshots_data})
+        return Response({'id': pk, 'keyword': race.keyword, 'created_at': race.created_at, 'tasks': snapshots_data})

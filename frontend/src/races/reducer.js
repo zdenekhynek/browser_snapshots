@@ -40,13 +40,16 @@ export function addMetrics(tasks) {
   });
 }
 
-export function reduceUpdateRace(state, raceId, tasks) {
+export function reduceUpdateRace(state, raceId, response) {
+  const tasks = response.tasks;
   const list = fromJS(tasks);
   const grouped = list.groupBy((t) => t.get('agent_id'));
 
   return state.map((r) => {
     if (r.get('id') === raceId) {
-      return r.set('tasks', grouped.map((group) => addMetrics(group)));
+      return r.set('tasks', grouped.map((group) => addMetrics(group)))
+        .set('keyword', response.keyword)
+        .set('created_at', response.created_at);
     }
 
     //  return original copy
@@ -75,7 +78,7 @@ export default function(state = getInitialState(), action) {
       const newRaces = reduceCreateRace(state, raceId);
       return changeActiveRace(newRaces, raceId);
     case RECEIVE_UPDATE_RACE:
-      return reduceUpdateRace(state, action.raceId, action.response.tasks);
+      return reduceUpdateRace(state, action.raceId, action.response);
     case RECEIVE_RACES:
       return reduceRaces(action.response);
     case CHANGE_ACTIVE_RACE:

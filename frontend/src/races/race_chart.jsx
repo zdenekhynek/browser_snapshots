@@ -79,7 +79,8 @@ class RaceChart extends Component {
 
     return (
       <div className={classes.raceChart}>
-        <Link className={classes.link} to={backLink}>Back to archive</Link>
+        <Link className={classes.link} to={'/viz'}>Start a session</Link>
+        <Link className={classes.link} to={backLink}>See the archive</Link>
         <h2>{label}</h2>
         <div className={classes.viz}>
           <SnakeChart tasks={tasks} />
