@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List, Map } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
+import { withRouter } from 'react-router';
 
 import noop from '../utils/noop';
 
 import classes from './form.css';
+
+export const AGENTS = [
+  { id: 4, name: 'Donald Trump', email: 'boy.from.queens@gmail.com' },
+  { id: 5, name: 'Gwyneth Paltrow', email: 'healthy.bunny.guru@gmail.com' },
+  { id: 6, name: 'Julian Assange', email: 'transparency.hacker.pirate@gmail.com' },
+];
 
 class Form extends Component {
   static renderAgentDropdownOption(agent) {
@@ -18,7 +25,8 @@ class Form extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { keyword: '', currentAgents: List() };
+    const list = fromJS(AGENTS);
+    this.state = { keyword: '', currentAgents: list };
 
     this.onKeywordChange = this.onKeywordChange.bind(this);
     this.onAgentChange = this.onAgentChange.bind(this);
@@ -39,9 +47,10 @@ class Form extends Component {
 
   onSubmit(evt) {
     evt.preventDefault();
+    const { history } = this.props;
     const { keyword, currentAgents } = this.state;
     const agentIds = currentAgents.map((a) => a.get('id'));
-    this.props.onSubmit(keyword, agentIds);
+    this.props.onSubmit(keyword, agentIds, history);
   }
 
   onAddRacer(evt) {
@@ -120,4 +129,4 @@ Form.defaultProps = {
   onSubmit: noop,
 };
 
-export default Form;
+export default withRouter(Form);

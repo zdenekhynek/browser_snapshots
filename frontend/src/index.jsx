@@ -10,9 +10,7 @@ const store = makeStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <div>
-      <App />
-    </div>
+    <App />
   </Provider>
   ,
   document.getElementById('app')

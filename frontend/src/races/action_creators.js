@@ -1,5 +1,4 @@
 import * as dao from './dao.js';
-
 import { startService } from './race_task';
 
 export const REQUEST_CREATE_RACE = 'REQUEST_CREATE_RACE';
@@ -18,13 +17,17 @@ export function receiveCreateRace(response) {
   };
 }
 
-export function createRace(keyword, agents) {
+export function createRace(keyword, agents, history) {
   return (dispatch, getState) => {
     dispatch(requestCreateRace());
     dao.createRace(keyword, agents)
       .then((response) => {
         dispatch(receiveCreateRace(response || {}));
         startService(dispatch, response.id);
+
+        //  navigate to the new race route
+        const newRaceLink = `/races/${response.id}`;
+        history.push(newRaceLink);
       })
       .catch((error) => {
         console.error(error); //  eslint-disable-line no-console
