@@ -8,6 +8,8 @@ class Sentiment(models.Model):
     title = models.CharField(max_length=1000, blank=False)
     description = models.TextField(max_length=10009, blank=True, null=True)
     sentiment = models.CharField(max_length=255, blank=True, null=True)
+    caps_sentiment = models.FloatField(default=0.0)
+    punctuation_sentiment = models.FloatField(default=0.0)
     watson_raw_tone = models.CharField(max_length=10000, blank=True, null=True)
     gcp_sentiment_score = models.FloatField(default=0.0)
     gcp_sentiment_magnitude = models.FloatField(default=0.0)

@@ -9,6 +9,7 @@ import {
 import {
   getTemperature,
   getEngagementRatio,
+  getGcpSentiment,
   getSentiment,
 } from './utils';
 
@@ -35,8 +36,9 @@ export function addMetrics(tasks) {
     const tObj = t.toJS();
     return t
       .set('temperature', getTemperature(tObj))
-      .set('sentiment', getSentiment(tObj))
-      .set('engagementRatio', getEngagementRatio(tObj));
+      .set('gcpSentiment', getGcpSentiment(tObj))
+      .set('engagementRatio', getEngagementRatio(tObj))
+      .set('sentiment', getSentiment(tObj));
   });
 }
 

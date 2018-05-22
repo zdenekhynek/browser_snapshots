@@ -143,7 +143,7 @@ class RaceView(APIView):
         try:
             # get all snapshot titles
             # https://stackoverflow.com/questions/5380529/django-model-foreign-key-queryset-selecting-related-fields
-            snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('-created_at').values('id', 'title', 'url', 'agent_id', 'video__views', 'video__likes', 'video__dislikes', 'video__length', 'analysis__sentiment', 'analysis__gcp_sentiment_score', 'analysis__gcp_sentiment_magnitude', 'analysis__face_sentiment', 'analysis__watson_raw_tone')
+            snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('-created_at').values('id', 'title', 'url', 'agent_id', 'video__views', 'video__likes', 'video__dislikes', 'video__length', 'analysis__sentiment', 'analysis__caps_sentiment', 'analysis__punctuation_sentiment', 'analysis__gcp_sentiment_score', 'analysis__gcp_sentiment_magnitude', 'analysis__face_sentiment', 'analysis__watson_raw_tone')
             for snapshot in snapshots:
 
                 # append only snapshots with a video
@@ -159,6 +159,8 @@ class RaceView(APIView):
                             'dislikes': snapshot['video__dislikes'],
                             'length': snapshot['video__length'],
                             'sentiment': snapshot['analysis__sentiment'],
+                            'caps_sentiment': snapshot['analysis__caps_sentiment'],
+                            'punctuation_sentiment': snapshot['analysis__punctuation_sentiment'],
                             'sentiment_score': snapshot['analysis__gcp_sentiment_score'],
                             'sentiment_magnitude': snapshot['analysis__gcp_sentiment_magnitude'],
                             'face_sentiment': snapshot['analysis__face_sentiment'],

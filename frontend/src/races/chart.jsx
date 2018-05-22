@@ -78,7 +78,7 @@ class Chart extends Component {
     yScale.domain([
       //  just hardcode when using custom ration
       0,
-      200,
+      100,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);

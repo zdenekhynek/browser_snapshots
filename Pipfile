@@ -30,6 +30,8 @@ newrelic = "*"
 raven = "*"
 "django-sentry-400-middleware" = "*"
 google-cloud-language = "*"
+pytest = "*"
+pytest-watch = "*"
 
 
 [dev-packages]

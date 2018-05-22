@@ -5,7 +5,7 @@ export function getTemperature(video) {
   const total = likes + dislikes;
   const engagement = 1 - Math.abs((likes - dislikes) / total);
 
-  return engagement * 200;
+  return engagement * 100;
 }
 
 export const WEIGHT_SCALE = scaleLinear()
@@ -44,7 +44,24 @@ export function getVideoThumbnail(url) {
   return `https://img.youtube.com/vi/${videoId}/0.jpg`;
 }
 
-export function getSentiment(video) {
+export function getGcpSentiment(video) {
   const { sentiment_magnitude, sentiment_score } = video;
   return 100 - sentiment_magnitude * 100;
+}
+
+export function getSentiment(video) {
+  //  add up the cap, punctionation, gcp temperature and
+  const { caps_sentiment, punctuation_sentiment,
+    sentiment_magnitude, sentiment_score } = video;
+  const temperature = getTemperature(video);
+
+  //  just take absolute value (any sentiment is good)
+  const gcpSentiment = Math.abs(sentiment_score);
+
+  let totalSentiment = (caps_sentiment * 100) + (punctuation_sentiment * 100) +
+    (gcpSentiment * 100) + temperature;
+
+  // clamped it to 0 -> 100
+  totalSentiment = Math.min(100, Math.max(0, totalSentiment));
+  return totalSentiment;
 }

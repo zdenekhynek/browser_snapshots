@@ -86,7 +86,7 @@ class Chart extends Component {
     xScale.domain([
       //  just hardcode when using custom ration
       0,
-      200,
+      100,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);
@@ -183,6 +183,9 @@ class Chart extends Component {
         <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
         <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
+        <li>Sentiment: {ratioFormatter(tooltip.get('sentiment'))}</li>
+        <li>Caps sentiment: {ratioFormatter(tooltip.get('caps_sentiment'))}</li>
+        <li>Punctuation sentiment: {ratioFormatter(tooltip.get('punctuation_sentiment'))}</li>
         <li>Sentiment magnitude (Google): {ratioFormatter(tooltip.get('sentiment_magnitude'))}</li>
         <li>Sentiment score (Google): {ratioFormatter(tooltip.get('sentiment_score'))}</li>
         <li>Watson Tone (IBM): {tone}</li>

@@ -4,12 +4,12 @@ from django.core.management.base import BaseCommand, CommandError
 
 from snapshots.models import Snapshot
 from analysis.models import Sentiment
-from analysis.google_sentiment import classify_text
+from analysis.caps_sentiment import classify_text
 from races.models import RaceTask
 from utils.command_utils import get_snapshots, add_arguments
 
 class Command(BaseCommand):
-    help = 'Do google cloud platform natural language sentiment analysis'
+    help = 'Do caps sentiment analysis'
 
     def add_arguments(self, parser):
         add_arguments(parser)
@@ -35,15 +35,13 @@ class Command(BaseCommand):
             s, created = Sentiment.objects.get_or_create(snapshot=snapshot)
 
             if created or override:
-                google_sentiment = classify_text(title)
-                s.gcp_sentiment_score = google_sentiment[0]
-                s.gcp_sentiment_magnitude = google_sentiment[1]
+                s.caps_sentiment = classify_text(title)
                 s.save()
 
                 self.stdout.write(
                     self.style.SUCCESS(
-                        'Saving snapshot sentiment: %s - %s: %s' %
-                        (title, s.sentiment, s.watson_raw_tone)
+                        'Saving snapshot sentiment: %s - %s' %
+                        (title, s.caps_sentiment)
                     )
                 )
             else:
