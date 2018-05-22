@@ -46,8 +46,9 @@ class Chart extends Component {
     const xMap = (d, i) => xScale(xValue(d, i));
 
     // setup y
+    const yProp = 'sentiment';
     const yValue = (d) => {
-      return (d.temperature && !Number.isNaN(d.temperature)) ? d.temperature : 0;
+      return (d[yProp] && !Number.isNaN(d[yProp])) ? d[yProp] : 0;
     };
     const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
     const yMap = (d) => yScale(yValue(d));

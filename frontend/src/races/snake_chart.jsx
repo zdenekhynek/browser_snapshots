@@ -47,7 +47,7 @@ class Chart extends Component {
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xProp = 'temperature';
+    const xProp = 'sentiment';
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
