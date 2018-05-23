@@ -46,7 +46,7 @@ class Chart extends Component {
     const xMap = (d, i) => xScale(xValue(d, i));
 
     // setup y
-    const yProp = 'sentiment';
+    const yProp = 'temperature';
     const yValue = (d) => {
       return (d[yProp] && !Number.isNaN(d[yProp])) ? d[yProp] : 0;
     };
@@ -189,8 +189,9 @@ class Chart extends Component {
         <li>Views: {formatter(tooltip.get('views'))}</li>
         <li>Likes: {formatter(tooltip.get('likes'))}</li>
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
-        <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
+        <li>Avg Temperature: {formatter(tooltip.get('avgTemperature'))}</li>
+        <li>Sum Temperature: {formatter(tooltip.get('sumTemperature'))}</li>
         <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
       </ul>
     );

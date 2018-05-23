@@ -33,18 +33,36 @@ export function reduceCreateRace(state, raceId) {
 
 export function addMetrics(tasks) {
   let sumTemperature = 0;
+  let numTemperatures = 0;
 
   return tasks.map((t) => {
     const tObj = t.toJS();
 
     const temperature = getTemperature(tObj);
-    sumTemperature += temperature;
 
-    sumTemperature = Math.min(500, sumTemperature);
+    let avgTemperature = 36;
+
+    if (!Number.isNaN(temperature)) {
+      //  calculate total temperature
+
+      sumTemperature += temperature;
+
+      //  calculate avg temperature
+      numTemperatures += 1;
+
+      avgTemperature = sumTemperature / numTemperatures;
+      avgTemperature = Math.min(50, avgTemperature);
+    }
+
+    console.log('temperature', temperature);
+    console.log('sumTemperature', sumTemperature);
+    console.log('numTemperatures', numTemperatures);
+    console.log('avgTemperature', avgTemperature);
 
     return t
       .set('temperature', temperature)
       .set('sumTemperature', sumTemperature)
+      .set('avgTemperature', avgTemperature)
       .set('gcpSentiment', getGcpSentiment(tObj))
       .set('engagementRatio', getEngagementRatio(tObj))
       .set('sentiment', getSentiment(tObj));

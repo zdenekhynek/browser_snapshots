@@ -49,7 +49,7 @@ class Chart extends Component {
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xProp = 'sentiment';
+    const xProp = 'avgTemperature';
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
@@ -88,7 +88,7 @@ class Chart extends Component {
     xScale.domain([
       //  just hardcode when using custom ration
       0,
-      500,
+      50,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);
@@ -147,25 +147,32 @@ class Chart extends Component {
     const style = { left: x, top: y };
 
     const faceSentiment = (tooltip.get('face_sentiment') || '[]').replace(/'/g, '"');
-    const faces = JSON.parse(faceSentiment).reduce((acc, f) => {
-      acc.push(f.faceAttributes.emotion);
-      return acc;
-    }, []);
 
-    const facesString = faces.reduce((acc, f) => {
-      const stringArr = Object.keys(f).reduce((acc, k) => {
-        const value = f[k];
-        if (value !== 0) {
-          acc.push(`${k}: ${value}`);
-        }
+    //
+    const parsedSentiment = JSON.parse(faceSentiment);
+    let facesString = '';
 
+    if (parsedSentiment && typeof parsedSentiment.reduce === 'function') {
+      const faces = JSON.parse(faceSentiment).reduce((acc, f) => {
+        acc.push(f.faceAttributes.emotion);
         return acc;
       }, []);
 
-      acc.push(stringArr);
+      facesString = faces.reduce((acc, f) => {
+        const stringArr = Object.keys(f).reduce((acc, k) => {
+          const value = f[k];
+          if (value !== 0) {
+            acc.push(`${k}: ${value}`);
+          }
 
-      return acc;
-    }, []).join(', ');
+          return acc;
+        }, []);
+
+        acc.push(stringArr);
+
+        return acc;
+      }, []).join(', ');
+    }
 
     const rawToneString = tooltip.get('watson_raw_tone') || '[]';
     const rawTone = JSON.parse(rawToneString);
@@ -193,6 +200,7 @@ class Chart extends Component {
         <li>Likes: {formatter(tooltip.get('likes'))}</li>
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
+        <li>Avg Temperature: {formatter(tooltip.get('avgTemperature'))}</li>
         <li>Sum Temperature: {formatter(tooltip.get('sumTemperature'))}</li>
         <li>Sentiment magnitude (Google): {ratioFormatter(tooltip.get('sentiment_magnitude'))}</li>
         <li>Sentiment score (Google): {ratioFormatter(tooltip.get('sentiment_score'))}</li>

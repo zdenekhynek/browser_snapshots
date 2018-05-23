@@ -197,6 +197,8 @@ class Chart extends Component {
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
         <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
+        <li>Avg Temperature: {formatter(tooltip.get('avgTemperature'))}</li>
+        <li>Sum Temperature: {formatter(tooltip.get('sumTemperature'))}</li>
         <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
       </ul>
     );
