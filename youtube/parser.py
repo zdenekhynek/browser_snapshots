@@ -2,7 +2,7 @@ import time
 
 from bs4 import BeautifulSoup
 
-from youtube.models import Video
+from youtube.models import Video, VideoComment
 
 
 def amend_video(code, url, title):
@@ -81,8 +81,6 @@ def parse_next_up_video(html):
     if len(next_up_els) > 0:
         next_up_el = next_up_els[0]
         (code, url, title) = parse_thumbnail(next_up_el)
-
-        print('storing next up video', code, url, title)
         return amend_video(code, url, title)
 
 
@@ -150,8 +148,6 @@ def parse_likes_dislikes(html):
 
 
 def get_length_in_seconds(length_string):
-    print('get_length_in_seconds', length_string)
-
     try:
         t_struct = time.strptime(length_string, '%M:%S')
     except ValueError:
@@ -188,6 +184,29 @@ def parse_related_videos(html):
 
     return videos
 
+def amend_comment(video, text):
+    comment, _ = VideoComment.objects.get_or_create(video=video, text=text)
+    comment.video = video
+    comment.text = text
+    comment.save()
+
+    return comment
+
+def parse_comments(html):
+    comments_els = html.select(
+        'ytd-comment-renderer #content-text'
+    )
+
+    comments = []
+    if len(comments_els) > 0:
+        for comments_el in comments_els:
+            comment = comments_el.get_text()
+
+            print('getting comment', comment)
+            comments.append(comment)
+
+    return comments
+
 
 def parse_snapshot(snapshot):
     #   validate snapshot
@@ -208,36 +227,42 @@ def parse_snapshot(snapshot):
     # get video meta
 
     snapshot.description = get_video_description(html)
-    print('description')
-    print(snapshot.description)
+    # print('description')
+    # print(snapshot.description)
 
     # get views
     views = parse_video_views(html)
     snapshot.video.views = views
-    print('views')
-    print(views)
+    # print('views')
+    # print(views)
 
     # get likes
     (likes, dislikes) = parse_likes_dislikes(html)
-    print('likes, dislikes')
-    print(likes, dislikes)
+    # print('likes, dislikes')
+    # print(likes, dislikes)
     snapshot.video.likes = likes
     snapshot.video.dislikes = dislikes
 
     # get length
-    print('snapshot.video.length')
+    # print('snapshot.video.length')
     length = parse_video_length(html)
-    print(length)
+    # print(length)
     snapshot.video.length = length
 
     # get next up video
-    print('parsing next up videos')
+    # print('parsing next up videos')
     # snapshot.next_up_video = parse_next_up_video(html)
 
     # get related videos
-    print('parsing related videos')
+    # print('parsing related videos')
     # snapshot.related_videos.set(parse_related_videos(html))
 
     snapshot.video.save()
+
+    # get comments
+    if snapshot.video:
+        comments = parse_comments(html)
+        for comment in comments:
+            amend_comment(snapshot.video, comment)
 
     snapshot.save()

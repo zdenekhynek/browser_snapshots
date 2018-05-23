@@ -3,14 +3,15 @@ from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from agents.models import Agent
+from agents.serializers import AgentSerializer
+from analysis.get_sentiment import get_sentiment
+from races.serializers import RaceSerializer
+from races.models import Race, RaceTask
 from snapshots.serializers import SnapshotSerializer, SessionSerializer
 from snapshots.models import Snapshot, Session
-from tasks.models import Task
-from agents.models import Agent
-from races.models import Race, RaceTask
-from agents.serializers import AgentSerializer
 from tasks.serializers import TaskSerializer
-from races.serializers import RaceSerializer
+from tasks.models import Task
 from youtube.parser import parse_snapshot
 
 
@@ -27,6 +28,9 @@ class CreateSnapshotView(generics.ListCreateAPIView):
         # parse the snaphost video straight away so that
         # the video stats are immediately available (e.g. for race)
         parse_snapshot(snapshot)
+
+        # parse all the sentiment analysis
+        get_sentiment(snapshot)
 
 
 class DetailsSnapshotView(generics.RetrieveUpdateDestroyAPIView):

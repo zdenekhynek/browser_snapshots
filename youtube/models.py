@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Video(models.Model):
     """This class represents the session model."""
     code = models.CharField(max_length=255, blank=False)
@@ -24,3 +23,12 @@ class Video(models.Model):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return "%s" % (self.title)
+
+class VideoComment(models.Model):
+    video = models.ForeignKey(Video, related_name='comments',
+        on_delete=models.CASCADE)
+    text = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "%s" % (text)

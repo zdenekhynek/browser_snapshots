@@ -11,13 +11,15 @@ from google.oauth2 import service_account
 credentials_raw = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS')
 
 # Generate credentials
-service_account_info = json.loads(credentials_raw)
-creds = service_account.Credentials.from_service_account_info(service_account_info)
+# skip if on localhost with no credentials
+if credentials_raw:
+  service_account_info = json.loads(credentials_raw)
+  creds = service_account.Credentials.from_service_account_info(service_account_info)
 
-# Instantiates a client
-client = language.LanguageServiceClient(
-  credentials=creds,
-)
+  # Instantiates a client
+  client = language.LanguageServiceClient(
+    credentials=creds,
+  )
 
 def classify_text(text):
   document = types.Document(
