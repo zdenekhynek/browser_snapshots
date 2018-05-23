@@ -35,9 +35,11 @@ class Chart extends Component {
     const { width, height } = size;
 
     const data = tasks.reduce((acc, t, i) => {
-      const newT = t.map((d) => {
+      //  sort them from the latest
+      const newT = t.reverse().map((d) => {
         return d.set('index', i);
       });
+
       acc.push(newT.toJS());
       return acc;
     }, []);
@@ -86,11 +88,15 @@ class Chart extends Component {
     xScale.domain([
       //  just hardcode when using custom ration
       0,
-      100,
+      500,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);
-    yScale.domain([-1, max(dataLens) + 1]);
+
+    //  yScale.domain([-1, max(dataLens) + 1]);
+    //  hardcoded y-value domain
+    yScale.domain([-1, 22]);
+
     sizeScale.domain([
       min(flattenedData, sizeValue) - 1,
       max(flattenedData, sizeValue) + 1,
@@ -174,18 +180,20 @@ class Chart extends Component {
       }, []).join(', ');
     }
 
+    //  <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
+    //  <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
+    //  <li>Sentiment: {ratioFormatter(tooltip.get('sentiment'))}</li>
+    //  <li>Caps sentiment: {ratioFormatter(tooltip.get('caps_sentiment'))}</li>
+    //  <li>Punctuation sentiment: {ratioFormatter(tooltip.get('punctuation_sentiment'))}</li>
+
     return (
       <ul className={classes.tooltip} style={style}>
         <li>Title: {tooltip.get('title')}</li>
         <li>Views: {formatter(tooltip.get('views'))}</li>
         <li>Likes: {formatter(tooltip.get('likes'))}</li>
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
-        <li>Ratio: {ratioFormatter(tooltip.get('ratio'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
-        <li>Engagment ratio: {formatter(tooltip.get('engagementRatio'))}</li>
-        <li>Sentiment: {ratioFormatter(tooltip.get('sentiment'))}</li>
-        <li>Caps sentiment: {ratioFormatter(tooltip.get('caps_sentiment'))}</li>
-        <li>Punctuation sentiment: {ratioFormatter(tooltip.get('punctuation_sentiment'))}</li>
+        <li>Sum Temperature: {formatter(tooltip.get('sumTemperature'))}</li>
         <li>Sentiment magnitude (Google): {ratioFormatter(tooltip.get('sentiment_magnitude'))}</li>
         <li>Sentiment score (Google): {ratioFormatter(tooltip.get('sentiment_score'))}</li>
         <li>Watson Tone (IBM): {tone}</li>
@@ -200,7 +208,7 @@ class Chart extends Component {
         <div className={classes.innerCol}>
           <Snake
             index={i}
-            tasks={t}
+            tasks={t.reverse()}
             onMouseOver={this.onMouseOver.bind(this)}
             onMouseOut={this.onMouseOut.bind(this)}
             {...this.state}

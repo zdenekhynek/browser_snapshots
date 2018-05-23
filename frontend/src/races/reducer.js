@@ -32,10 +32,19 @@ export function reduceCreateRace(state, raceId) {
 }
 
 export function addMetrics(tasks) {
+  let sumTemperature = 0;
+
   return tasks.map((t) => {
     const tObj = t.toJS();
+
+    const temperature = getTemperature(tObj);
+    sumTemperature += temperature;
+
+    sumTemperature = Math.min(500, sumTemperature);
+
     return t
-      .set('temperature', getTemperature(tObj))
+      .set('temperature', temperature)
+      .set('sumTemperature', sumTemperature)
       .set('gcpSentiment', getGcpSentiment(tObj))
       .set('engagementRatio', getEngagementRatio(tObj))
       .set('sentiment', getSentiment(tObj));
