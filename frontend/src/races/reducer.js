@@ -54,11 +54,6 @@ export function addMetrics(tasks) {
       avgTemperature = Math.min(50, avgTemperature);
     }
 
-    console.log('temperature', temperature);
-    console.log('sumTemperature', sumTemperature);
-    console.log('numTemperatures', numTemperatures);
-    console.log('avgTemperature', avgTemperature);
-
     return t
       .set('temperature', temperature)
       .set('sumTemperature', sumTemperature)
