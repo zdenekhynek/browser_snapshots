@@ -51,7 +51,8 @@ class Chart extends Component {
     // setup x
     const xProp = 'avgTemperature';
     const xValue = (d) => {
-      return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
+      return 0;
+      //  return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
     const xScale = scaleLinear().range([0, chartWidth]);
     const xMap = (d) => xScale(xValue(d));
@@ -62,7 +63,8 @@ class Chart extends Component {
     const yMap = (d, i) => yScale(yValue(d, i));
 
     const sizeValue = (d) => {
-      return (d.views && !Number.isNaN(d.views)) ? d.views : 150;
+      return 150;
+      //  return (d.views && !Number.isNaN(d.views)) ? d.views : 150;
     };
     const sizeScale = scaleLog().range([60, 180]);
     const sizeMap = (d) => sizeScale(sizeValue(d));

@@ -1,7 +1,9 @@
 # Browser Snapshots
 
-https://www.googleapis.com/youtube/v3/commentThreads?videoId=m4Jtj2lCMAA&key=<KEY>&part=snippet,replies
+## Youtube Data API
 
+https://www.googleapis.com/youtube/v3/commentThreads?videoId=m4Jtj2lCMAA&key=<KEY>&part=snippet,replies
+https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=
 
 ## Sample commands
 

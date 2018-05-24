@@ -108,6 +108,8 @@ export function mapStateToProps({ agents, races }) {
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();
 
+  console.log('tasks', tasks);
+
   let raceAgents = agents.get('available').filter((a) => {
     return agentsIds.includes(a.get('id'));
   });

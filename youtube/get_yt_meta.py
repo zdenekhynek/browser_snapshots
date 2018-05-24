@@ -1,26 +1,66 @@
-import os
-import json
-
 import requests
 
 from django.conf import settings
+from youtube.get_id_from_url import get_id_from_url
+from youtube.models import VideoCategory
 
-API_KEY = settings.GOOGLE_API_KEY
 
-GOOGLE_API_ENDPOINT = 'https://www.googleapis.com/youtube/v3/videos'
+def get_yt_data_api_url(id):
+  """https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=<key>&part=snippet,contentDetails,statistics"""
+  endpoint = 'https://www.googleapis.com/youtube/v3/videos'
+  video_id = 'id=%s' % (id)
+  key = 'key=%s' % (settings.GOOGLE_API_KEY)
+  part = 'part=snippet,contentDetails,statistics'
+  return '%s?%s&%s&%s' % (endpoint, video_id, key, part)
 
-def get_url(video_id):
-  url = GOOGLE_API_ENDPOINT
-  url += '?id=%s' % (video_id)
-  url += '&key=%s' % (API_KEY)
-  url += '&part=snippet,contentDetails,statistics,status'
 
-  return url
+def fetch_metadata(id):
+  api_url = get_yt_data_api_url(id)
+  r = requests.get(api_url)
 
-def get_video_meta(video_id):
-  print('get_video_meta')
-  print(video_id)
-  url = get_url(video_id)
-  print(url)
-  r = requests.get(url)
-  return r.json()
+  metadata = {}
+
+  if r.status_code == 200:
+    metadata = r.json()
+
+  return metadata
+
+
+def get_yt_meta(id):
+  metadata = fetch_metadata(id)
+  return metadata
+
+
+def amend_video(video, metadata):
+  # title + description
+  if 'items' in metadata and len(metadata['items']) > 0:
+    item = metadata['items'][0]
+
+    if 'snippet' in item:
+      snippet = item['snippet']
+      video.title = snippet['title']
+      video.description = snippet['description']
+      video.channel = snippet['channelTitle']
+
+      if 'statistics' in item:
+        statistics = item['statistics']
+        video.views = statistics['viewCount']
+        video.likes = statistics['likeCount']
+        video.dislikes = statistics['dislikeCount']
+        video.favorites = statistics['favoriteCount']
+        video.comment_count = statistics['commentCount']
+
+      # try getting category
+      try:
+        category = VideoCategory.objects.get(category_id=snippet['categoryId'])
+        video.category = category
+      except VideoCategory.DoesNotExist:
+        # couldn't find category
+        pass
+
+  video.raw_response = metadata
+
+  video.save()
+
+  pass
+
