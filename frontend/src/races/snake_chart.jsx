@@ -49,10 +49,9 @@ class Chart extends Component {
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xProp = 'avgTemperature';
+    const xProp = 'temperature';
     const xValue = (d) => {
-      return 0;
-      //  return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
+      return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
     const xScale = scaleLinear().range([0, chartWidth]);
     const xMap = (d) => xScale(xValue(d));
@@ -90,7 +89,7 @@ class Chart extends Component {
     xScale.domain([
       //  just hardcode when using custom ration
       0,
-      50,
+      150,
       //  min(flattenedData, yValue),
       //  max(flattenedData, yValue),
     ]);

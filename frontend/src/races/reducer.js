@@ -67,7 +67,9 @@ export function addMetrics(tasks) {
 export function reduceUpdateRace(state, raceId, response) {
   const tasks = response.tasks;
   const list = fromJS(tasks);
-  const grouped = list.groupBy((t) => t.get('agent_id'));
+  const grouped = list.groupBy((t) => t.get('agent_id')).sortBy((v, k) => k, (a, b) => a > b);
+
+  console.log('grouped', grouped);
 
   return state.map((r) => {
     if (r.get('id') === raceId) {
