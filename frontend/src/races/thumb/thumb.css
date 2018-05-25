@@ -22,3 +22,13 @@
   color: #999 !important;
   text-decoration: none !important;
 }
+
+.categoryIcon {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+}

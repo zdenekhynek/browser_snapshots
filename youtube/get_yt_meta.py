@@ -31,7 +31,7 @@ def get_yt_meta(id):
   return metadata
 
 
-def amend_video(video, metadata):
+def amend_video(yt_id, url, video, metadata):
   # title + description
   if 'items' in metadata and len(metadata['items']) > 0:
     item = metadata['items'][0]
@@ -57,6 +57,9 @@ def amend_video(video, metadata):
       except VideoCategory.DoesNotExist:
         # couldn't find category
         pass
+
+  video.code = yt_id
+  video.url = url
 
   video.raw_response = metadata
 

@@ -49,7 +49,7 @@ class Chart extends Component {
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xProp = 'temperature';
+    const xProp = nextProps.metric || 'temperature';
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
@@ -198,6 +198,7 @@ class Chart extends Component {
       <ul className={classes.tooltip} style={style}>
         <li>Title: {tooltip.get('title')}</li>
         <li>Views: {formatter(tooltip.get('views'))}</li>
+        <li>Category: {tooltip.get('category_name')}</li>
         <li>Likes: {formatter(tooltip.get('likes'))}</li>
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>

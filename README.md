@@ -15,3 +15,6 @@ greenfell:
 python manage.py face_sentiment --race_id=101 --override=True --limit=10 --offset=10
 python manage.py gcp_sentiment --race_id=101 --override=True
 python manage.py watson_tone --race_id=101 --override=True
+python manage.py get_yt_meta --race_id=96 --override=True
+
+python manage.py delete_duplicates --race_id=96 --override=True
