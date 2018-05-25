@@ -115,6 +115,8 @@ class RaceChart extends Component {
         <h2>{label}</h2>
         <div className={classes.viz}>
           {this.renderMetrics(metrics)}
+          <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
+          <SnakeChart type="grid" tasks={tasks} metric={activeMetric} />
           <SnakeChart tasks={tasks} metric={activeMetric} />
           <Chart tasks={tasks} />
           <RadialChart tasks={tasks} />

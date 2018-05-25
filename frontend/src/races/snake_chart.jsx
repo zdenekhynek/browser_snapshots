@@ -10,6 +10,8 @@ import { min, max } from 'd3-array';
 
 import { getVideoThumbnail } from './utils';
 import Snake from './snake';
+import Grid from './grid';
+import Pizza from './pizza';
 
 import classes from './snake_chart.css';
 
@@ -228,18 +230,58 @@ class Chart extends Component {
     );
   }
 
+  renderGrid(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Grid
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  renderPizza(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Pizza
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    const { tasks } = this.props;
+    const { tasks, type } = this.props;
     const { tooltip } = this.state;
 
     const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
+
+    let renderFn = this.renderSnake;
+
+    if (type === 'grid') {
+      renderFn = this.renderGrid;
+    } else if (type === 'pizza') {
+      renderFn = this.renderPizza;
+    }
 
     return (
       <div
         ref={(el) => this.chart = el}
         className={classes.chart}
       >
-        {tasks.map(this.renderSnake.bind(this))}
+        {tasks.map(renderFn.bind(this))}
         {renderedTooltip}
       </div>
     );
