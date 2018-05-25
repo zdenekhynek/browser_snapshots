@@ -16,6 +16,7 @@ def get_yt_data_api_url(id):
 
 def fetch_metadata(id):
   api_url = get_yt_data_api_url(id)
+  print('Fetching from YT Data API:', api_url)
   r = requests.get(api_url)
 
   metadata = {}
@@ -44,11 +45,11 @@ def amend_video(yt_id, url, video, metadata):
 
       if 'statistics' in item:
         statistics = item['statistics']
-        video.views = statistics['viewCount']
-        video.likes = statistics['likeCount']
-        video.dislikes = statistics['dislikeCount']
-        video.favorites = statistics['favoriteCount']
-        video.comment_count = statistics['commentCount']
+        video.views = statistics['viewCount'] if 'viewCount' in statistics else 0
+        video.likes = statistics['likeCount'] if 'likeCount' in statistics else 0
+        video.dislikes = statistics['dislikeCount'] if 'dislikeCount' in statistics else 0
+        video.favorites = statistics['favoriteCount'] if 'favoriteCount' in statistics else 0
+        video.comment_count = statistics['commentCount'] if 'commentCount' in statistics else 0
 
       # try getting category
       try:

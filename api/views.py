@@ -32,10 +32,6 @@ class CreateSnapshotView(generics.ListCreateAPIView):
         # parse all the sentiment analysis
         get_sentiment(snapshot)
 
-        # get video category
-
-
-
 
 class DetailsSnapshotView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
