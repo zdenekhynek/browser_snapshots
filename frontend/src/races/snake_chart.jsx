@@ -12,6 +12,7 @@ import { getVideoThumbnail } from './utils';
 import Snake from './snake';
 import Grid from './grid';
 import Pizza from './pizza';
+import Stack from './stack';
 
 import classes from './snake_chart.css';
 
@@ -262,6 +263,22 @@ class Chart extends Component {
     );
   }
 
+  renderStack(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Stack
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { tasks, type } = this.props;
     const { tooltip } = this.state;
@@ -274,6 +291,8 @@ class Chart extends Component {
       renderFn = this.renderGrid;
     } else if (type === 'pizza') {
       renderFn = this.renderPizza;
+    } else if (type === 'stack') {
+      renderFn = this.renderStack;
     }
 
     return (
