@@ -78,3 +78,12 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(DATA_DIR, 'webpack-stats-staging.json'),
     }
 }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379')],
+        },
+    },
+}
