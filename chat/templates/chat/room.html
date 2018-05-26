@@ -13,7 +13,9 @@
     var roomName = {{ room_name_json }};
 
     var host = window.location.host;
-    var protocol = (host.indexOf('127.0.0.1') > -1) ? 'wss' : 'ws';
+
+    //  want to use wss if on https (e.g. heroku)
+    var protocol = (host.indexOf('127.0.0.1') > -1) ? 'ws' : 'wss';
 
     var chatSocket = new WebSocket(
         protocol + '://' + window.location.host +
