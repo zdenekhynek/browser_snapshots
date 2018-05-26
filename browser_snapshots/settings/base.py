@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'channels',
+    'chat',
     'storages',
     'webpack_loader',
     'api',
@@ -189,4 +191,14 @@ WEBPACK_LOADER = {
         'CACHE': DEBUG,
         'STATS_FILE': os.path.join(DATA_DIR, 'webpack-stats.json'),
     }
+}
+
+ASGI_APPLICATION = "browser_snapshots.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(os.environ.get('REDIS_URL', '127.0.0.1'), 6379)],
+        },
+    },
 }
