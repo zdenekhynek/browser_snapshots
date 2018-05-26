@@ -8,7 +8,7 @@ ALLOWED_HOSTS = [
 
 # Update database configuration with $DATABASE_URL.
 import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
 
@@ -77,4 +77,13 @@ WEBPACK_LOADER = {
         'BUNDLE_DIR_NAME': 'bundles/',
         'STATS_FILE': os.path.join(DATA_DIR, 'webpack-stats-staging.json'),
     }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://redis:6379')],
+        },
+    },
 }

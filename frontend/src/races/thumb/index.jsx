@@ -4,6 +4,7 @@ import { List } from 'immutable';
 import { format } from 'd3-format';
 
 import { getVideoThumbnail } from '../utils';
+import { getColorForId } from '../../categories/utils';
 
 import classes from './thumb.css';
 
@@ -39,6 +40,9 @@ class Thumb extends Component {
     const titleLeft = `${width + 5}px`;
     const titleStyle = { left: titleLeft };
 
+    const color = getColorForId(tObj.category);
+    const iconStyle = { backgroundColor: color };
+
     return (
       <div className={classes.thumb} style={style}>
         <img
@@ -53,6 +57,7 @@ class Thumb extends Component {
             this.props.onMouseOut();
           }}
         />
+        <span className={classes.categoryIcon} style={iconStyle} />
         { withTitle &&
           (
             <div className={classes.title} style={titleStyle}>

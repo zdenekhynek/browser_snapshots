@@ -13,6 +13,7 @@ import { min, max } from 'd3-array';
 import Chart, { COLORS } from './chart';
 import RadialChart from './radial_chart';
 import SnakeChart from './snake_chart';
+import { setActiveMetric } from '../metrics/action_creators';
 
 import classes from './race_chart.css';
 
@@ -28,9 +29,36 @@ export function calculateRatio(d) {
   return 1 - Math.abs((likes - dislikes) / total);
 }
 
+export function renderMetricDropdownOption(metric) {
+  return (
+    <option key={metric.get('id')} value={metric.get('id')}>
+      {metric.get('title')}
+    </option>
+  );
+}
+
 class RaceChart extends Component {
   constructor(props) {
     super(props);
+  }
+
+  onMetricChange(evt) {
+    this.props.setActiveMetric(evt.target.value);
+  }
+
+  renderMetrics(metrics) {
+    const activeMetric = metrics.find((m) => m.get('active', false));
+
+    return (
+      <div>
+        <select
+          value={activeMetric.get('id')}
+          onChange={this.onMetricChange.bind(this)}
+        >
+          {metrics.map(renderMetricDropdownOption)}
+        </select>
+      </div>
+    );
   }
 
   renderAgent(agent, i) {
@@ -63,7 +91,7 @@ class RaceChart extends Component {
   }
 
   render() {
-    const { activeRace, tasks } = this.props;
+    const { activeRace, metrics, tasks } = this.props;
 
     const backLink = `/viz/archive/`;
 
@@ -77,13 +105,21 @@ class RaceChart extends Component {
     const label = (raceId > -1) ?
       `Searched for ${raceKeyword}` : activeRace.get('label');
 
+    //  get active metric
+    const activeMetric = metrics.find((m) => m.get('active'), null, Map()).get('id');
+
     return (
       <div className={classes.raceChart}>
         <Link className={classes.link} to={'/viz'}>Start a session</Link>
         <Link className={classes.link} to={backLink}>See the archive</Link>
         <h2>{label}</h2>
         <div className={classes.viz}>
-          <SnakeChart tasks={tasks} />
+          {this.renderMetrics(metrics)}
+          <SnakeChart type="mosaic" tasks={tasks} metric={activeMetric} />
+          <SnakeChart type="stack" tasks={tasks} metric={activeMetric} />
+          <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
+          <SnakeChart type="grid" tasks={tasks} metric={activeMetric} />
+          <SnakeChart tasks={tasks} metric={activeMetric} />
           <Chart tasks={tasks} />
           <RadialChart tasks={tasks} />
           {this.renderAgents()}
@@ -103,7 +139,7 @@ export function sum(collection, key) {
   }, 0);
 }
 
-export function mapStateToProps({ agents, races }) {
+export function mapStateToProps({ agents, metrics, races }) {
   const activeRace = races.find((r) => r.get('isActive', false), null, Map());
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();
@@ -138,6 +174,7 @@ export function mapStateToProps({ agents, races }) {
   return {
     activeRace,
     agents: raceAgents,
+    metrics,
     tasks: flattenedTasks,
   };
 }
@@ -152,4 +189,4 @@ RaceChart.defaultProps = {
   tasks: List(),
 };
 
-export default connect(mapStateToProps)(RaceChart);
+export default connect(mapStateToProps, { setActiveMetric })(RaceChart);

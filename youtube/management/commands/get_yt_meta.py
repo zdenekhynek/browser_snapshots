@@ -25,27 +25,30 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                'Classifying tone for limit %s and offset %s and override %s'
+                'Getting metadata for limit %s and offset %s and override %s'
                 % (limit, offset, override)
             )
         )
         snapshots = get_snapshots(pk, race_id, limit, offset)
 
+        print(snapshots.count())
+
         # use iterator to avoid huge memory consumption on heroku
         for snapshot in snapshots.iterator():
             title = snapshot.title
-            video, created = Video.objects.get_or_create(title=title)
+            url = snapshot.url
+            video, created = Video.objects.get_or_create(url=snapshot.url)
 
             if created or override:
                 url = snapshot.url
                 yt_id = get_id_from_url(url)
                 meta = get_yt_meta(yt_id)
 
-                amend_video(video, meta)
+                amend_video(yt_id, url, video, meta)
 
                 self.stdout.write(
                     self.style.SUCCESS(
-                        'Saving video meta: %s' % (id)
+                        'Saving video meta: %s - %s' % (yt_id, video.title)
                     )
                 )
             else:

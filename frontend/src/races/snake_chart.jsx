@@ -3,6 +3,7 @@ import sizeMe from 'react-sizeme';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { select, event } from 'd3-selection';
+import { interpolateLab } from 'd3-interpolate';
 import { format } from 'd3-format';
 import { scaleLinear, scaleLog } from 'd3-scale';
 import { line } from 'd3-shape';
@@ -10,6 +11,10 @@ import { min, max } from 'd3-array';
 
 import { getVideoThumbnail } from './utils';
 import Snake from './snake';
+import Grid from './grid';
+import Pizza from './pizza';
+import Mosaic from './mosaic';
+import Stack from './stack';
 
 import classes from './snake_chart.css';
 
@@ -49,7 +54,7 @@ class Chart extends Component {
     const chartHeight = height - MARGIN.top - MARGIN.bottom;
 
     // setup x
-    const xProp = 'temperature';
+    const xProp = nextProps.metric || 'temperature';
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
@@ -69,13 +74,16 @@ class Chart extends Component {
     const sizeMap = (d) => sizeScale(sizeValue(d));
 
     let colorIndex = -1;
+    const colorScale = interpolateLab('#ffffff', '#fe08f9');
     const colorMap = (d) => {
       if (typeof d.index !== 'undefined') {
         return COLORS[d.index];
       }
 
-      colorIndex += 1;
-      return COLORS[colorIndex];
+      const x = xMap(d);
+      const portion = x / chartWidth;
+
+      return colorScale(portion);
     };
 
     // don't want dots overlapping axis, so add in buffer to data domain
@@ -111,6 +119,7 @@ class Chart extends Component {
       xMap,
       yMap,
       sizeMap,
+      colorMap,
       lineFn,
     };
   }
@@ -198,6 +207,7 @@ class Chart extends Component {
       <ul className={classes.tooltip} style={style}>
         <li>Title: {tooltip.get('title')}</li>
         <li>Views: {formatter(tooltip.get('views'))}</li>
+        <li>Category: {tooltip.get('category_name')}</li>
         <li>Likes: {formatter(tooltip.get('likes'))}</li>
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
@@ -227,18 +237,94 @@ class Chart extends Component {
     );
   }
 
+  renderGrid(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Grid
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  renderPizza(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Pizza
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  renderMossaic(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Mosaic
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  renderStack(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Stack
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    const { tasks } = this.props;
+    const { tasks, type } = this.props;
     const { tooltip } = this.state;
 
     const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
+
+    let renderFn = this.renderSnake;
+
+    if (type === 'grid') {
+      renderFn = this.renderGrid;
+    } else if (type === 'pizza') {
+      renderFn = this.renderPizza;
+    } else if (type === 'mosaic') {
+      renderFn = this.renderMossaic;
+    } else if (type === 'stack') {
+      renderFn = this.renderStack;
+    }
 
     return (
       <div
         ref={(el) => this.chart = el}
         className={classes.chart}
       >
-        {tasks.map(this.renderSnake.bind(this))}
+        {tasks.map(renderFn.bind(this))}
         {renderedTooltip}
       </div>
     );

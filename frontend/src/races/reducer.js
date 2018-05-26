@@ -64,12 +64,20 @@ export function addMetrics(tasks) {
   });
 }
 
+export function sortAgents(a, b) {
+  if (a > b) {
+    return 1;
+  } else if (a < b) {
+    return -1;
+  }
+
+  return 0;
+}
+
 export function reduceUpdateRace(state, raceId, response) {
   const tasks = response.tasks;
   const list = fromJS(tasks);
-  const grouped = list.groupBy((t) => t.get('agent_id')).sortBy((v, k) => k, (a, b) => a > b);
-
-  console.log('grouped', grouped);
+  const grouped = list.groupBy((t) => t.get('agent_id')).sortBy((v, k) => k, sortAgents);
 
   return state.map((r) => {
     if (r.get('id') === raceId) {

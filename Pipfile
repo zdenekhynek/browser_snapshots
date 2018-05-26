@@ -32,6 +32,8 @@ raven = "*"
 google-cloud-language = "*"
 pytest = "*"
 pytest-watch = "*"
+channels = "*"
+channels-redis = "*"
 
 
 [dev-packages]
