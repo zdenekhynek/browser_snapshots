@@ -18,3 +18,26 @@ python manage.py watson_tone --race_id=101 --override=True
 python manage.py get_yt_meta --race_id=96 --override=True
 
 python manage.py delete_duplicates --race_id=96 --override=True
+
+
+## Run Redis locally
+
+# https://channels.readthedocs.io/en/latest/tutorial/part_2.html
+```docker run -p 6379:6379 -d redis:2.8```
+
+## Routes
+
+/viz
+
+/viz/landing
+/viz/races/<race_id>/
+/viz/races/<race_id/results
+/viz/highlights/<race_id>/
+/viz/highlights/<race_id/results
+
+
+/viz/ipad/landing
+/viz/ipad/races/<race_id>/
+/viz/ipad/races/<race_id>/results
+/viz/ipad/highlights/
+/viz/ipad/highlights/<race_id/

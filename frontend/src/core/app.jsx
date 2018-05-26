@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,6 +7,8 @@ import { Map, List } from 'immutable';
 import Home from '../home';
 import Races from '../races';
 import Archive from '../archive';
+import Desktop from '../desktop/';
+import Ipad from '../ipad/';
 
 import {
   createRace,
@@ -52,6 +54,9 @@ export function App(props, { store }) {
           }}
           />
           <Route exact path="/viz/archive" component={Archive} />
+
+          <Route path="/viz/desktop/" component={Desktop} />
+          <Route path="/viz/ipad/" component={Ipad} />
         </Switch>
       </Router>
     </div>

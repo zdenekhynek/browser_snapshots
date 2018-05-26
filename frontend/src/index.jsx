@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import App from './core/app';
 import makeStore from './core/store';
 import { getRaces } from './races/action_creators';
+import { initSocket } from './sockets/socket_service';
 
 const store = makeStore();
 
