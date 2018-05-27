@@ -17,6 +17,8 @@ export const WAITING_STATUS = 'WAITING_STATUS';
 export const IN_PROGRESS_STATUS = 'IN_PROGRESS_STATUS';
 export const FINISHED_STATUS = 'FINISHED_STATUS';
 
+export const NUM_STEPS = 20;
+
 export function getInitialState() {
   return List();
 }
@@ -29,6 +31,21 @@ export function reduceCreateRace(state, raceId) {
   });
 
   return state.push(newRace);
+}
+
+export function calculateProgress(tasks) {
+  if (!tasks) {
+    return 0;
+  }
+
+  const progress = tasks.size / NUM_STEPS;
+  const clamped = Math.min(1, Math.max(0, progress));
+  return clamped;
+}
+
+export function calculateRaceProgress(raceTasks) {
+  const profilesProgress = raceTasks.map((t) => calculateProgress(t));
+  return profilesProgress.max();
 }
 
 export function addMetrics(tasks) {
@@ -75,7 +92,6 @@ export function sortAgents(a, b) {
 }
 
 export function reduceUpdateRace(state, raceId, response) {
-  console.log('reduceUpdateRace', raceId, response);
   let newState = state;
 
   const { tasks } = response;
@@ -89,12 +105,13 @@ export function reduceUpdateRace(state, raceId, response) {
     raceIndex = newState.size - 1;
   }
 
-  console.log('newState', newState);
-
   return newState.update(raceIndex, (r) => {
-    return r.set('tasks', grouped.map((group) => addMetrics(group)))
+    const groupedTasks = grouped.map((group) => addMetrics(group));
+
+    return r.set('tasks', groupedTasks)
       .set('keyword', response.keyword)
-      .set('created_at', response.created_at);
+      .set('created_at', response.created_at)
+      .set('progress', calculateRaceProgress(groupedTasks));
   });
 }
 

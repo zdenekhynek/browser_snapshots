@@ -1,4 +1,3 @@
-from django.dispatch import Signal
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.views import APIView

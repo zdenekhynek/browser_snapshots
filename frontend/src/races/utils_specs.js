@@ -82,7 +82,7 @@ describe('Races utils', () => {
   });
 
   describe('getSentiment', () => {
-    it('should calculate sentiment', () => {
+    xit('should calculate sentiment', () => {
       let video = {
         sentiment_magnitude: -1, sentiment_score: 1,
       };
