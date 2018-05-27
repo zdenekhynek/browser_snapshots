@@ -17,8 +17,9 @@ class Ipad extends Component {
     initSocket('ipad', this.onSocketMessage.bind(this));
   }
 
-  onSocketMessage(message) {
+  onSocketMessage(socketData) {
     const { history } = this.props;
+    const { message } = socketData;
 
     if (message === 'session_start') {
       const racesLink = '/viz/ipad/races/';
@@ -26,6 +27,9 @@ class Ipad extends Component {
     } else if (message === 'restart') {
       const landingLink = '/viz/ipad/landing/';
       history.push(landingLink);
+    } else if (message === 'race_started') {
+      const raceLink = `/viz/ipad/races/${socketData.id}`;
+      history.push(raceLink);
     }
   }
 

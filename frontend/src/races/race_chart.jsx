@@ -107,6 +107,7 @@ class RaceChart extends Component {
 
     //  get active metric
     const activeMetric = metrics.find((m) => m.get('active'), null, Map()).get('id');
+    console.log('tasks', tasks);
 
     return (
       <div className={classes.raceChart}>
@@ -139,14 +140,16 @@ export function sum(collection, key) {
   }, 0);
 }
 
-export function mapStateToProps({ agents, metrics, races }) {
-  const activeRace = races.find((r) => r.get('isActive', false), null, Map());
+export function mapStateToProps({ agents, metrics, races }, { raceId }) {
+  const activeRace = races.find((r) => r.get('id', '') === +raceId, null, Map());
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();
 
   let raceAgents = agents.get('available').filter((a) => {
     return agentsIds.includes(a.get('id'));
   });
+
+  console.log('activeRace', activeRace, raceId, races);
 
   //  convert from id based orderedmap to normal list
   const flattenedTasks = tasks.reduce((acc, t) => {
@@ -156,6 +159,8 @@ export function mapStateToProps({ agents, metrics, races }) {
     const reversedTasks = newT;
     return acc.push(reversedTasks);
   }, List());
+
+  console.log('flattenedTasks', flattenedTasks);
 
   const totals = flattenedTasks.map((t) => {
     const total = new Map({
@@ -170,6 +175,8 @@ export function mapStateToProps({ agents, metrics, races }) {
   raceAgents = raceAgents.map((a, i) => {
     return a.set('totals', totals.get(i));
   });
+
+  console.log('flattenedTasks 2', flattenedTasks);
 
   return {
     activeRace,

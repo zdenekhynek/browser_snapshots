@@ -25,8 +25,7 @@ export function initSocket(group, onMessage) {
 
 export function addSocketCallbacks(socket, onMessage) {
   socket.onmessage = (e) => {
-    const { message } = JSON.parse(e.data);
-    onMessage(message);
+    onMessage(JSON.parse(e.data));
   };
 
   socket.onclose = (e) => {

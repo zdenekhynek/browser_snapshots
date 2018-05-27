@@ -27,6 +27,9 @@ def classify_text(text):
       type=enums.Document.Type.PLAIN_TEXT)
 
   # Detects the sentiment of the text
-  sentiment = client.analyze_sentiment(document=document).document_sentiment
-
-  return (sentiment.score, sentiment.magnitude)
+  # on localhost, we might not have client, so wrap it in try/except
+  try:
+    sentiment = client.analyze_sentiment(document=document).document_sentiment
+    return (sentiment.score, sentiment.magnitude)
+  except:
+    return (0, 0)

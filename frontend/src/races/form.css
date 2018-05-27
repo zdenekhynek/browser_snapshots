@@ -20,7 +20,7 @@
 .form button {
   margin: 10px 0;
   color: #999;
-  background-color: black;
+  background-color: #333;
   border: 0;
 }
 
@@ -57,7 +57,7 @@
 
 .agents {
   font-size: 14px;
-  background-color: black;
+  background-color: #333;
   color: #999;
   border: 0;
 }

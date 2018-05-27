@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Landing = ({ className }) => {
+import classes from './landing.css';
+
+const Landing = (props) => {
+
   return (
-    <div>
-      <h1>Landing page</h1>
+    <div className={classes.landing}>
+      <h1>Engaged and Outraged</h1>
     </div>
   );
 };

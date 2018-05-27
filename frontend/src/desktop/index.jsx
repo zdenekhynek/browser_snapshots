@@ -2,12 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 import Races from '../races';
-import Archive from '../archive';
 import Landing from '../landing';
 import Results from '../races/results';
 import { initSocket } from '../sockets/socket_service';
+import { receiveUpdateRace } from '../races/action_creators';
 
 class Desktop extends Component {
   constructor(props) {
@@ -17,9 +18,9 @@ class Desktop extends Component {
     initSocket('desktop', this.onSocketMessage.bind(this));
   }
 
-  onSocketMessage(message) {
-    console.log('onSocketMessage', message);
+  onSocketMessage(socketData) {
     const { history } = this.props;
+    const { message } = socketData;
 
     if (message === 'session_start') {
       const racesLink = '/viz/desktop/races/';
@@ -27,6 +28,11 @@ class Desktop extends Component {
     } else if (message === 'restart') {
       const landingLink = '/viz/desktop/landing/';
       history.push(landingLink);
+    } else if (message === 'race_started') {
+      const raceLink = `/viz/desktop/races/${socketData.id}`;
+      history.push(raceLink);
+    } else if (message === 'race_update') {
+      this.props.receiveUpdateRace(socketData.id, socketData);
     }
   }
 
@@ -34,11 +40,24 @@ class Desktop extends Component {
     return (
       <Fragment>
         <Route exact path="/viz/desktop/landing" component={Landing} />
-        <Route exact path="/viz/desktop/races/:raceId" component={Races} />
+        <Route
+          exact
+          path="/viz/desktop/races/:raceId"
+          render={({ match }) => {
+            const { params } = match;
+            const { raceId } = params;
+
+            return (<Races raceId={+raceId} />);
+          }}
+        />
         <Route exact path="/viz/desktop/races/:raceId/results" component={Results} />
       </Fragment>
     );
   }
+}
+
+export function mapStateToProps({ agents, metrics, races }) {
+  return {};
 }
 
 Desktop.propTypes = {
@@ -47,6 +66,6 @@ Desktop.propTypes = {
 
 Desktop.defaultProps = {
   className: '',
-}
+};
 
-export default withRouter(Desktop);
+export default connect(mapStateToProps, { receiveUpdateRace })(withRouter(Desktop));

@@ -1,3 +1,4 @@
+from django.dispatch import Signal
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.views import APIView
@@ -7,12 +8,13 @@ from agents.models import Agent
 from agents.serializers import AgentSerializer
 from analysis.get_sentiment import get_sentiment
 from races.serializers import RaceSerializer
-from races.models import Race, RaceTask
+from races.models import Race, RaceTask, get_race_data
 from snapshots.serializers import SnapshotSerializer, SessionSerializer
 from snapshots.models import Snapshot, Session
 from tasks.serializers import TaskSerializer
 from tasks.models import Task
 from youtube.parser import parse_snapshot
+from chat.broadcast import broadcast
 
 
 class CreateSnapshotView(generics.ListCreateAPIView):
@@ -120,7 +122,9 @@ class CreateRacesView(generics.ListCreateAPIView):
             # try
             agents = data.get('agents')
 
-        serializer.save(keyword=keyword, agents=agents)
+        race = serializer.save(keyword=keyword, agents=agents)
+        broadcast({ 'keyword': keyword, 'id': race.id, 'message': 'race_started' })
+
 
 class DetailsRacesView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
@@ -135,49 +139,5 @@ class RaceView(APIView):
         """
         Return a list of all races.
         """
-
-        race = Race.objects.get(pk=pk)
-
-        # get all sessions which correspond to a given task
-        sessions = RaceTask.objects.filter(race_id=pk).values('task__session_id')
-
-        session_ids = [session['task__session_id'] for session in sessions]
-
-        snapshots_data = []
-        try:
-            # get all snapshot titles
-            # https://stackoverflow.com/questions/5380529/django-model-foreign-key-queryset-selecting-related-fields
-            snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('created_at').values('id', 'video__title', 'url', 'created_at', 'agent_id', 'video__id', 'video__views', 'video__likes', 'video__dislikes', 'video__length', 'analysis__sentiment', 'analysis__caps_sentiment', 'analysis__punctuation_sentiment', 'analysis__gcp_sentiment_score', 'analysis__gcp_sentiment_magnitude', 'analysis__face_sentiment', 'analysis__watson_raw_tone', 'video__category_id', 'video__category__title')
-            for snapshot in snapshots:
-
-                # append only snapshots with a video
-                if snapshot['url'].find('youtube.com/watch?') > -1:
-                    try:
-                        snapshot_object = {
-                            'id': snapshot['id'],
-                            'video_id': snapshot['video__id'],
-                            'title': snapshot['video__title'],
-                            'url': snapshot['url'],
-                            'created_at': snapshot['created_at'],
-                            'agent_id': snapshot['agent_id'],
-                            'views': snapshot['video__views'],
-                            'likes': snapshot['video__likes'],
-                            'dislikes': snapshot['video__dislikes'],
-                            'length': snapshot['video__length'],
-                            'sentiment': snapshot['analysis__sentiment'],
-                            'caps_sentiment': snapshot['analysis__caps_sentiment'],
-                            'punctuation_sentiment': snapshot['analysis__punctuation_sentiment'],
-                            'sentiment_score': snapshot['analysis__gcp_sentiment_score'],
-                            'sentiment_magnitude': snapshot['analysis__gcp_sentiment_magnitude'],
-                            'face_sentiment': snapshot['analysis__face_sentiment'],
-                            'watson_raw_tone': snapshot['analysis__watson_raw_tone'],
-                            'category': snapshot['video__category_id'],
-                            'category_name': snapshot['video__category__title']
-                        }
-                        snapshots_data.append(snapshot_object)
-                    except:
-                        print('No video for the snapshot')
-        except:
-            print('No snapshots yet')
-
-        return Response({'id': pk, 'keyword': race.keyword, 'created_at': race.created_at, 'tasks': snapshots_data})
+        data = get_race_data(int(pk))
+        return Response(data)

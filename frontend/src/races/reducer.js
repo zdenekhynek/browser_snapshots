@@ -75,19 +75,26 @@ export function sortAgents(a, b) {
 }
 
 export function reduceUpdateRace(state, raceId, response) {
-  const tasks = response.tasks;
+  console.log('reduceUpdateRace', raceId, response);
+  let newState = state;
+
+  const { tasks } = response;
   const list = fromJS(tasks);
   const grouped = list.groupBy((t) => t.get('agent_id')).sortBy((v, k) => k, sortAgents);
 
-  return state.map((r) => {
-    if (r.get('id') === raceId) {
-      return r.set('tasks', grouped.map((group) => addMetrics(group)))
-        .set('keyword', response.keyword)
-        .set('created_at', response.created_at);
-    }
+  let raceIndex = state.findIndex((r) => r.get('id') === raceId);
 
-    //  return original copy
-    return r;
+  if (raceIndex === -1) {
+    newState = reduceCreateRace(newState, raceId);
+    raceIndex = newState.size - 1;
+  }
+
+  console.log('newState', newState);
+
+  return newState.update(raceIndex, (r) => {
+    return r.set('tasks', grouped.map((group) => addMetrics(group)))
+      .set('keyword', response.keyword)
+      .set('created_at', response.created_at);
   });
 }
 
