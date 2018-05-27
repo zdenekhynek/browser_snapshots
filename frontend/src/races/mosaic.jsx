@@ -90,8 +90,8 @@ class Pizza extends Component {
       </div>
     );
 
-//    <span className={classes.line} />
-//        <span className={classes.number}>{i}</span>
+    //    <span className={classes.line} />
+    //        <span className={classes.number}>{i}</span>
 
     // return (
     //   <Thumb
@@ -120,12 +120,7 @@ class Pizza extends Component {
 
     return (
       <div className={classes.mosaic}>
-        <div>
-          {this.renderThumbnails(tasks.reverse())}
-        </div>
-        <svg className={classes.svg}>
-          {this.renderPath(tasks)}
-        </svg>
+        {this.renderThumbnails(tasks.reverse())}
       </div>
     );
   }

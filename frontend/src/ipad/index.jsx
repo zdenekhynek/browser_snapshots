@@ -2,12 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 import IpadLanding from './landing';
 import IpadRaces from './races';
 import IpadResults from './results';
 import IpadHighlights from './highlights';
 import { initSocket } from '../sockets/socket_service';
+import { receiveUpdateRace } from '../races/action_creators';
 
 class Ipad extends Component {
   constructor(props) {
@@ -30,6 +32,8 @@ class Ipad extends Component {
     } else if (message === 'race_started') {
       const raceLink = `/viz/ipad/races/${socketData.id}`;
       history.push(raceLink);
+    } else if (message === 'race_update') {
+      this.props.receiveUpdateRace(socketData.id, socketData);
     }
   }
 
@@ -38,12 +42,25 @@ class Ipad extends Component {
       <Fragment>
         <Route exact path="/viz/ipad/landing" component={IpadLanding} />
         <Route exact path="/viz/ipad/races/" component={IpadRaces} />
-        <Route exact path="/viz/ipad/races/:raceId" component={IpadRaces} />
+        <Route
+          exact
+          path="/viz/ipad/races/:raceId"
+          render={({ match }) => {
+            const { params } = match;
+            const { raceId } = params;
+
+            return (<IpadRaces raceId={+raceId} />);
+          }}
+        />
         <Route exact path="/viz/ipad/races/:raceId/results" component={IpadResults} />
         <Route exact path="/viz/ipad/highlights" component={IpadHighlights} />
       </Fragment>
     );
   }
+}
+
+export function mapStateToProps({ agents, metrics, races }) {
+  return {};
 }
 
 Ipad.propTypes = {
@@ -54,4 +71,4 @@ Ipad.defaultProps = {
   className: '',
 };
 
-export default withRouter(Ipad);
+export default connect(mapStateToProps, { receiveUpdateRace })(withRouter(Ipad));

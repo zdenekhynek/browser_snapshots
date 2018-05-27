@@ -107,15 +107,15 @@ class RaceChart extends Component {
 
     //  get active metric
     const activeMetric = metrics.find((m) => m.get('active'), null, Map()).get('id');
-    console.log('tasks', tasks);
+
+    //  <Link className={classes.link} to={'/viz'}>Start a session</Link>
+    //  <Link className={classes.link} to={backLink}>See the archive</Link>
+    //  {this.renderMetrics(metrics)}
 
     return (
       <div className={classes.raceChart}>
-        <Link className={classes.link} to={'/viz'}>Start a session</Link>
-        <Link className={classes.link} to={backLink}>See the archive</Link>
         <h2>{label}</h2>
         <div className={classes.viz}>
-          {this.renderMetrics(metrics)}
           <SnakeChart type="mosaic" tasks={tasks} metric={activeMetric} />
           <SnakeChart type="stack" tasks={tasks} metric={activeMetric} />
           <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
@@ -149,8 +149,6 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
     return agentsIds.includes(a.get('id'));
   });
 
-  console.log('activeRace', activeRace, raceId, races);
-
   //  convert from id based orderedmap to normal list
   const flattenedTasks = tasks.reduce((acc, t) => {
     const newT = t.map((d) => d.set('ratio', calculateRatio(d)));
@@ -159,8 +157,6 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
     const reversedTasks = newT;
     return acc.push(reversedTasks);
   }, List());
-
-  console.log('flattenedTasks', flattenedTasks);
 
   const totals = flattenedTasks.map((t) => {
     const total = new Map({
@@ -175,8 +171,6 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
   raceAgents = raceAgents.map((a, i) => {
     return a.set('totals', totals.get(i));
   });
-
-  console.log('flattenedTasks 2', flattenedTasks);
 
   return {
     activeRace,

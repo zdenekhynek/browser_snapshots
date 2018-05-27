@@ -2,14 +2,13 @@
   position: relative;
   width: 100%;
   height: 100%;
-  margin: 40px 0 120px;
 }
 
-.svg {
-  position: relative;
+.thumbs {
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .progress {
@@ -19,9 +18,9 @@
 
 .item {
   position: relative;
-  width: 500px;
-  height: 250px;
-  margin-bottom: -110px;
+  width: 100%;
+  height: 8%;
+  margin-top: -20px;
 }
 
 .imageWrap {
@@ -31,7 +30,6 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  border-bottom: 16px solid black;
 }
 
 .image {
@@ -40,7 +38,7 @@
   background-size: cover;
   background-position: center;
   clip-path: polygon(100% 50%, 0 0, 0 100%);
-  filter: grayscale(90%);
+  filter: grayscale(30%);
 }
 
 .imageRight {
@@ -73,6 +71,7 @@
   width: 60%;
   background-color: rgba(0,0,0, .5);
   padding: 10px 20px;
+  font-size: 12px;
 }
 
 .titleRight {

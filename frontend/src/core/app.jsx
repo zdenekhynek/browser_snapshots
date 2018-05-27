@@ -24,6 +24,9 @@ import classes from './app.css';
 export function App(props, { store }) {
   const { agents, races, activeRace } = props;
 
+  //  temp
+  //  store.dispatch(updateRace(124));
+
   return (
     <div className={classes.app}>
       <Router>
