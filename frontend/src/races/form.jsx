@@ -19,6 +19,10 @@ export const AGENTS = {
   ],
 };
 
+export const KEYWORDS = [
+  'Fox News', 'surveillance', 'london knife crime',
+];
+
 class Form extends Component {
   static renderAgentDropdownOption(agent) {
     return (
@@ -74,7 +78,7 @@ class Form extends Component {
 
   renderAgentDropdown(agent, agents, i) {
     return (
-      <div  key={i}>
+      <div key={i}>
         <select
           className={classes.agents}
           value={agent.get('id')}
@@ -117,7 +121,11 @@ class Form extends Component {
             onChange={this.onKeywordChange}
             placeholder="Type in keyword"
           />
-          <button className={classes.searchBtn}>Search</button>
+          <button
+            className={classes.searchBtn}
+          >
+            Search
+          </button>
         </div>
 
       </form>
