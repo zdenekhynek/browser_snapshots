@@ -14,7 +14,7 @@ from tasks.serializers import TaskSerializer
 from tasks.models import Task
 from youtube.parser import parse_snapshot
 from chat.broadcast import broadcast
-
+from api.signals import snapshot_created_signal
 
 class CreateSnapshotView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
@@ -32,6 +32,8 @@ class CreateSnapshotView(generics.ListCreateAPIView):
 
         # parse all the sentiment analysis
         get_sentiment(snapshot)
+
+        snapshot_created_signal.send(sender=Snapshot)
 
 
 class DetailsSnapshotView(generics.RetrieveUpdateDestroyAPIView):

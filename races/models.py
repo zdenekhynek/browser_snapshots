@@ -1,11 +1,11 @@
 from django.db import models
 from django.dispatch import receiver
-from django.db.models.signals import post_save
 
 from agents.models import Agent
 from tasks.models import Task
 from snapshots.models import Snapshot
 from chat.broadcast import broadcast
+from api.signals import snapshot_created_signal
 
 class RaceStatus(models.Model):
     """This class represents the scenario status model."""
@@ -101,8 +101,8 @@ def get_race_data(race_id):
     return {'id': race_id, 'keyword': race.keyword, 'created_at': race_created_at, 'tasks': snapshots_data}
 
 
-@receiver(post_save, sender=Snapshot)
-def update_race(sender, instance=None, created=False, **kwargs):
+@receiver(snapshot_created_signal)
+def update_race(sender, **kwargs):
     # TODO - check that the snapshot belongs to the active race
     # TODO - how to pick an active race
     last_race = Race.objects.latest('created_at')
