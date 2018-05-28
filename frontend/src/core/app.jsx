@@ -6,6 +6,7 @@ import { Map, List } from 'immutable';
 
 import Home from '../home';
 import Races from '../races';
+import Results from '../races/results';
 import Archive from '../archive';
 import Desktop from '../desktop/';
 import Ipad from '../ipad/';
@@ -40,6 +41,16 @@ export function App(props, { store }) {
             store.dispatch(updateRace(+raceId));
 
             return (<Races raceId={+raceId} />);
+          }}
+          />
+          <Route exact path="/viz/races/:raceId/results" render={({ match }) => {
+            const { params } = match;
+            const { raceId } = params;
+
+            //  no ws on this route so request data manually
+            store.dispatch(updateRace(+raceId));
+
+            return (<Results raceId={+raceId} />);
           }}
           />
           <Route exact path="/viz/archive" render={() => {

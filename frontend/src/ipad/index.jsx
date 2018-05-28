@@ -57,7 +57,16 @@ class Ipad extends Component {
             return (<IpadRaces raceId={+raceId} />);
           }}
         />
-        <Route exact path="/viz/ipad/races/:raceId/results" component={IpadResults} />
+        <Route
+          exact
+          path="/viz/ipad/races/:raceId/results"
+          render={({ match }) => {
+            const { params } = match;
+            const { raceId } = params;
+
+            return (<IpadResults raceId={+raceId} />);
+          }}
+        />
         <Route exact path="/viz/ipad/highlights" component={IpadHighlights} />
       </Fragment>
     );

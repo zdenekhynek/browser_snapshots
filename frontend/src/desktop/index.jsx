@@ -55,7 +55,16 @@ class Desktop extends Component {
             return (<Races raceId={+raceId} />);
           }}
         />
-        <Route exact path="/viz/desktop/races/:raceId/results" component={Results} />
+        <Route
+          exact
+          path="/viz/desktop/races/:raceId/results"
+          render={({ match }) => {
+            const { params } = match;
+            const { raceId } = params;
+
+            return (<Results raceId={+raceId} />);
+          }}
+        />
       </Fragment>
     );
   }
