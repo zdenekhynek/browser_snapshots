@@ -5,7 +5,7 @@ from agents.models import Agent
 from tasks.models import Task
 from snapshots.models import Snapshot
 from chat.broadcast import broadcast
-from api.signals import snapshot_created_signal
+from api.signals import snapshot_created_signal, task_finished_signal
 
 class RaceStatus(models.Model):
     """This class represents the scenario status model."""
@@ -109,3 +109,23 @@ def update_race(sender, **kwargs):
 
     data['message'] = 'race_update'
     broadcast(data)
+
+
+@receiver(task_finished_signal)
+def task_finished(sender, **kwargs):
+    # TODO - check that the snapshot belongs to the active race
+    # TODO - how to pick an active race
+    last_race = Race.objects.latest('created_at')
+
+    # go through all race tasks, and if all finished, broadcast race stopped
+
+    race_tasks = last_race.racetask_set.all()
+    race_finished = all([race_task.task.status.id == 4 for race_task in race_tasks])
+
+    if race_finished:
+        data = {'message': 'race_finished'}
+        broadcast(data)
+    else:
+        # race has still some unfinished tasks, do nothing
+        print('race has still some unfinished tasks')
+        pass

@@ -34,6 +34,9 @@ class Desktop extends Component {
       this.props.receiveCreateRace(socketData);
     } else if (message === 'race_update') {
       this.props.receiveUpdateRace(socketData.id, socketData);
+    } else if (message === 'race_finished') {
+      const finishLink = `/viz/desktop/races/${socketData.id}/results`;
+      history.push(finishLink);
     }
   }
 

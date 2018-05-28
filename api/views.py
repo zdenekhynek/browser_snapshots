@@ -14,7 +14,7 @@ from tasks.serializers import TaskSerializer
 from tasks.models import Task
 from youtube.parser import parse_snapshot
 from chat.broadcast import broadcast
-from api.signals import race_created_signal, snapshot_created_signal
+from api.signals import race_created_signal, snapshot_created_signal, task_finished_signal
 
 class CreateSnapshotView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
@@ -104,6 +104,14 @@ class DetailsTasksView(generics.RetrieveUpdateDestroyAPIView):
     """This class handles the http GET, PUT and DELETE requests."""
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+    def perform_update(self, serializer):
+
+        instance = serializer.save()
+
+        if instance.type.id == 1 and instance.status.id == 4:
+            task_finished_signal.send(sender=Task)
+
 
 
 class CreateRacesView(generics.ListCreateAPIView):
