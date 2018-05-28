@@ -25,10 +25,9 @@ class ChatConsumer(WebsocketConsumer):
     # Receive message from WebSocket
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
 
         # Send message to both groups
-        self.send_message_to_groups({ 'message': message })
+        self.send_message_to_groups(text_data_json)
 
     def send_message_to_groups(self, data, groups=['ipad', 'desktop', 'extension']):
         print('send_message_to_groups')

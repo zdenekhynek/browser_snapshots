@@ -19,13 +19,14 @@ export function displayResults(title, results) {
 }
 
 const Results = ({ keyword, results }) => {
-  console.log('results', results);
-
   const totalResults = displayResults('totals', results.get('totals', Map()));
   const profileResults = results.get('profiles', Map()).map((r) => {
     const title = `Profile: ${r.get('id')}`;
     return displayResults(title, r.delete('id'));
   });
+
+  const formattedKeyword = (keyword) ?
+    `&ldquo;${keyword}&rdquo` : 'something ';
 
   return (
     <div>
@@ -35,8 +36,8 @@ const Results = ({ keyword, results }) => {
         {profileResults}
       </div>
       <h2>
-        Why don&apos;t you try searching for &ldquo;{keyword}&rdquo;
-        on your YouTube.
+        Why don&apos;t you try searching for {formattedKeyword}
+        on your YouTube?
       </h2>
     </div>
   );
@@ -45,8 +46,6 @@ const Results = ({ keyword, results }) => {
 export function mapStateToProps({ agents, metrics, races }, { raceId }) {
   const activeRace = races.find((r) => r.get('id', '') === +raceId, null, Map());
   const results = activeRace.get('results', Map());
-
-  console.log('activeRace', activeRace, races, raceId);
 
   return {
     keyword: activeRace.get('keyword'),

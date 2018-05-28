@@ -20,6 +20,7 @@ module.exports = {
     new BundleTracker({ filename: './webpack-stats.json' }),
     new webpack.DefinePlugin({
       API_URL: JSON.stringify('http://127.0.0.1:8000/'),
+      AGENTS_LIST: JSON.stringify('development'),
     }),
   ],
   module: {

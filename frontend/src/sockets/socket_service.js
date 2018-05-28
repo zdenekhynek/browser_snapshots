@@ -33,9 +33,10 @@ export function addSocketCallbacks(socket, onMessage) {
   };
 }
 
-export function sendSocketMessage(message) {
+export function sendSocketMessage(message, args) {
   console.log('sendSocketMessage', socket);
   socket.send(JSON.stringify({
     message,
+    ...args,
   }));
 }

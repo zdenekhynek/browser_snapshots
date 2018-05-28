@@ -15,7 +15,6 @@ const Landing = (props) => {
 
   return (
     <div className={classes.landing}>
-      <Link className={classes.link} to={'/viz/archive'}>See the archive</Link>
       <Form
         agents={agents}
         onSubmit={(keyword, agentIds) => {
@@ -23,6 +22,15 @@ const Landing = (props) => {
           sendSocketMessage('session_start');
         }}
       />
+      <Link
+        className={classes.link}
+        to={'/viz/ipad/highlights/'}
+        onClick={() => {
+          sendSocketMessage('display_highlights');
+        }}
+      >
+        See the highlights
+      </Link>
     </div>
   );
 };

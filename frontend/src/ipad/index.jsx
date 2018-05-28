@@ -9,7 +9,11 @@ import IpadRaces from './races';
 import IpadResults from './results';
 import IpadHighlights from './highlights';
 import { initSocket } from '../sockets/socket_service';
-import { receiveCreateRace, receiveUpdateRace } from '../races/action_creators';
+import {
+  getRaces,
+  receiveCreateRace,
+  receiveUpdateRace,
+} from '../races/action_creators';
 
 class Ipad extends Component {
   constructor(props) {
@@ -67,7 +71,14 @@ class Ipad extends Component {
             return (<IpadResults raceId={+raceId} />);
           }}
         />
-        <Route exact path="/viz/ipad/highlights" component={IpadHighlights} />
+        <Route
+          exact
+          path="/viz/ipad/highlights"
+          render={({ match }) => {
+            this.props.getRaces();
+            return (<IpadHighlights />);
+          }}
+        />
       </Fragment>
     );
   }
@@ -87,5 +98,5 @@ Ipad.defaultProps = {
 
 export default connect(
   mapStateToProps,
-  { receiveCreateRace, receiveUpdateRace }
+  { getRaces, receiveCreateRace, receiveUpdateRace }
 )(withRouter(Ipad));

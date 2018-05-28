@@ -1,3 +1,4 @@
+/* global AGENTS_LIST */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map, fromJS } from 'immutable';
@@ -7,13 +8,16 @@ import noop from '../utils/noop';
 
 import classes from './form.css';
 
-export const AGENTS = [
-  { id: 1, name: 'Slavoj Krizala', email: 'slavoj.krizala@gmail.com' },
-
-  // { id: 4, name: 'Donald Trump', email: 'boy.from.queens@gmail.com' },
-  // { id: 5, name: 'Gwyneth Paltrow', email: 'healthy.bunny.guru@gmail.com' },
-  // { id: 6, name: 'Julian Assange', email: 'transparency.hacker.pirate@gmail.com' },
-];
+export const AGENTS = {
+  development: [
+    { id: 1, name: 'Slavoj Krizala', email: 'slavoj.krizala@gmail.com' },
+  ],
+  staging: [
+    { id: 4, name: 'Donald Trump', email: 'boy.from.queens@gmail.com' },
+    { id: 5, name: 'Gwyneth Paltrow', email: 'healthy.bunny.guru@gmail.com' },
+    { id: 6, name: 'Julian Assange', email: 'transparency.hacker.pirate@gmail.com' },
+  ],
+};
 
 class Form extends Component {
   static renderAgentDropdownOption(agent) {
@@ -27,7 +31,7 @@ class Form extends Component {
   constructor(props) {
     super(props);
 
-    const list = fromJS(AGENTS);
+    const list = fromJS(AGENTS[AGENTS_LIST]);
     this.state = { keyword: '', currentAgents: list };
 
     this.onKeywordChange = this.onKeywordChange.bind(this);
