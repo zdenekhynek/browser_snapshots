@@ -118,12 +118,12 @@ def task_finished(sender, **kwargs):
     last_race = Race.objects.latest('created_at')
 
     # go through all race tasks, and if all finished, broadcast race stopped
-
     race_tasks = last_race.racetask_set.all()
     race_finished = all([race_task.task.status.id == 4 for race_task in race_tasks])
 
     if race_finished:
-        data = {'message': 'race_finished'}
+        data = get_race_data(last_race.id)
+        data['message'] = 'race_finished'
         broadcast(data)
     else:
         # race has still some unfinished tasks, do nothing

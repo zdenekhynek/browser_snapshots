@@ -38,6 +38,7 @@ class Ipad extends Component {
     } else if (message === 'race_finished') {
       const finishLink = `/viz/ipad/races/${socketData.id}/results`;
       history.push(finishLink);
+      this.props.receiveUpdateRace(socketData.id, socketData);
     }
   }
 

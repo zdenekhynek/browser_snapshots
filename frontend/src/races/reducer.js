@@ -11,6 +11,7 @@ import {
   getEngagementRatio,
   getGcpSentiment,
   getSentiment,
+  getRaceResults,
 } from './utils';
 
 export const WAITING_STATUS = 'WAITING_STATUS';
@@ -58,9 +59,9 @@ export function addMetrics(tasks) {
 
     const temperature = getTemperature(tObj);
 
-    let avgTemperature = 36;
+    let avgTemperature = 0;
 
-    if (!Number.isNaN(temperature)) {
+    if (!isNaN(temperature)) {
       //  calculate total temperature
 
       sumTemperature += temperature;
@@ -108,11 +109,13 @@ export function reduceUpdateRace(state, raceId, response) {
 
   return newState.update(raceIndex, (r) => {
     const groupedTasks = grouped.map((group) => addMetrics(group));
+    const results = getRaceResults(groupedTasks);
 
     return r.set('tasks', groupedTasks)
       .set('keyword', response.keyword)
       .set('created_at', response.created_at)
-      .set('progress', calculateRaceProgress(groupedTasks));
+      .set('progress', calculateRaceProgress(groupedTasks))
+      .set('results', results);
   });
 }
 

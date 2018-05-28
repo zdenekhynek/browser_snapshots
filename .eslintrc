@@ -17,5 +17,8 @@
   },
   "globals": {
     "WebSocket": true,
+    "describe": true,
+    "it": true,
+    "xit": true,
   }
 }
