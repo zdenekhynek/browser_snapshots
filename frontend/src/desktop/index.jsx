@@ -8,7 +8,7 @@ import Races from '../races';
 import Landing from '../landing';
 import Results from '../races/results';
 import { initSocket } from '../sockets/socket_service';
-import { receiveUpdateRace } from '../races/action_creators';
+import { receiveCreateRace, receiveUpdateRace } from '../races/action_creators';
 
 class Desktop extends Component {
   constructor(props) {
@@ -31,6 +31,7 @@ class Desktop extends Component {
     } else if (message === 'race_started') {
       const raceLink = `/viz/desktop/races/${socketData.id}`;
       history.push(raceLink);
+      this.props.receiveCreateRace(socketData);
     } else if (message === 'race_update') {
       this.props.receiveUpdateRace(socketData.id, socketData);
     }
@@ -68,4 +69,7 @@ Desktop.defaultProps = {
   className: '',
 };
 
-export default connect(mapStateToProps, { receiveUpdateRace })(withRouter(Desktop));
+export default connect(
+  mapStateToProps,
+  { receiveCreateRace, receiveUpdateRace }
+)(withRouter(Desktop));

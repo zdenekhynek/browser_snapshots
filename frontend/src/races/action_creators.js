@@ -22,11 +22,13 @@ export function createRace(keyword, agents, history) {
     dispatch(requestCreateRace());
     dao.createRace(keyword, agents)
       .then((response) => {
-        dispatch(receiveCreateRace(response || {}));
-        //  startService(dispatch, response.id);
-
         //  navigate to the new race route
+        //  and store results only if we don't have
+        //  history (so we're not using websockets)
         if (history) {
+          dispatch(receiveCreateRace(response || {}));
+          //  startService(dispatch, response.id);
+
           const newRaceLink = `/viz/races/${response.id}`;
           history.push(newRaceLink);
         }

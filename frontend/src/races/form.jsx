@@ -8,9 +8,11 @@ import noop from '../utils/noop';
 import classes from './form.css';
 
 export const AGENTS = [
-  { id: 4, name: 'Donald Trump', email: 'boy.from.queens@gmail.com' },
-  { id: 5, name: 'Gwyneth Paltrow', email: 'healthy.bunny.guru@gmail.com' },
-  { id: 6, name: 'Julian Assange', email: 'transparency.hacker.pirate@gmail.com' },
+  { id: 1, name: 'Slavoj Krizala', email: 'slavoj.krizala@gmail.com' },
+
+  // { id: 4, name: 'Donald Trump', email: 'boy.from.queens@gmail.com' },
+  // { id: 5, name: 'Gwyneth Paltrow', email: 'healthy.bunny.guru@gmail.com' },
+  // { id: 6, name: 'Julian Assange', email: 'transparency.hacker.pirate@gmail.com' },
 ];
 
 class Form extends Component {

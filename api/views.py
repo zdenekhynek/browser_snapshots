@@ -14,7 +14,7 @@ from tasks.serializers import TaskSerializer
 from tasks.models import Task
 from youtube.parser import parse_snapshot
 from chat.broadcast import broadcast
-from api.signals import snapshot_created_signal
+from api.signals import race_created_signal, snapshot_created_signal
 
 class CreateSnapshotView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
@@ -124,7 +124,17 @@ class CreateRacesView(generics.ListCreateAPIView):
             agents = data.get('agents')
 
         race = serializer.save(keyword=keyword, agents=agents)
-        broadcast({ 'keyword': keyword, 'id': race.id, 'message': 'race_started' })
+
+        # get race tasks
+        tasks = []
+        for racetask in race.racetask_set.all():
+            tasks.append(TaskSerializer(racetask.task).data)
+
+        broadcast({ 'keyword': keyword,
+                    'id': race.id,
+                    'tasks': tasks,
+                    'message': 'race_started'
+                  })
 
 
 class DetailsRacesView(generics.RetrieveUpdateDestroyAPIView):

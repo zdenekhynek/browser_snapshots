@@ -23,9 +23,10 @@ export function getInitialState() {
   return List();
 }
 
-export function reduceCreateRace(state, raceId) {
+export function reduceCreateRace(state, raceId, keyword) {
   const newRace = Map({
     id: raceId,
+    keyword,
     isActive: false,
     tasks: List(),
   });
@@ -133,7 +134,8 @@ export default function(state = getInitialState(), action) {
   switch (action.type) {
     case RECEIVE_CREATE_RACE:
       const raceId = action.response.id;
-      const newRaces = reduceCreateRace(state, raceId);
+      const keyword = action.response.keyword;
+      const newRaces = reduceCreateRace(state, raceId, keyword);
       return changeActiveRace(newRaces, raceId);
     case RECEIVE_UPDATE_RACE:
       return reduceUpdateRace(state, action.raceId, action.response);

@@ -9,7 +9,7 @@ import IpadRaces from './races';
 import IpadResults from './results';
 import IpadHighlights from './highlights';
 import { initSocket } from '../sockets/socket_service';
-import { receiveUpdateRace } from '../races/action_creators';
+import { receiveCreateRace, receiveUpdateRace } from '../races/action_creators';
 
 class Ipad extends Component {
   constructor(props) {
@@ -32,6 +32,7 @@ class Ipad extends Component {
     } else if (message === 'race_started') {
       const raceLink = `/viz/ipad/races/${socketData.id}`;
       history.push(raceLink);
+      this.props.receiveCreateRace(socketData);
     } else if (message === 'race_update') {
       this.props.receiveUpdateRace(socketData.id, socketData);
     }
@@ -71,4 +72,7 @@ Ipad.defaultProps = {
   className: '',
 };
 
-export default connect(mapStateToProps, { receiveUpdateRace })(withRouter(Ipad));
+export default connect(
+  mapStateToProps,
+  { receiveCreateRace, receiveUpdateRace }
+)(withRouter(Ipad));

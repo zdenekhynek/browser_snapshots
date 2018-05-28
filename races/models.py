@@ -29,7 +29,7 @@ class Race(models.Model):
 class RaceAgent(models.Model):
     """This class represents the scenario model."""
     race = models.ForeignKey(Race, on_delete=models.CASCADE)
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
+    agent = models.ForeignKey(Agent, related_name='agents', on_delete=models.CASCADE)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -39,7 +39,7 @@ class RaceAgent(models.Model):
 class RaceTask(models.Model):
     """This class represents the scenario model."""
     race = models.ForeignKey(Race, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, related_name='tasks', on_delete=models.CASCADE)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -99,7 +99,6 @@ def get_race_data(race_id):
     race_created_at = str(race.created_at.now())
 
     return {'id': race_id, 'keyword': race.keyword, 'created_at': race_created_at, 'tasks': snapshots_data}
-
 
 @receiver(snapshot_created_signal)
 def update_race(sender, **kwargs):
