@@ -79,7 +79,7 @@ export function getNoise(video) {
   const LIKES_WEIGHT = 10;
   const FAVORITE_WEIGHT = 40;
   const DISLIKES_WEIGHT = 20;
-  const COMMENT_WEIGHT = 100;
+  const COMMENT_WEIGHT = 10;
 
   let interaction = 0;
 

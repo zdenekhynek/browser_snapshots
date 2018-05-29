@@ -42,21 +42,6 @@ class Pizza extends Component {
     this.props.onMouseOut();
   }
 
-  renderPath(task, i) {
-    const { lineFn } = this.props;
-    const pathString = lineFn(task.toJS());
-
-    const stroke = COLORS[i];
-
-    return (
-      <path
-        className={classes.progress}
-        style={{ stroke }}
-        d={pathString}
-      />
-    );
-  }
-
   renderThumbnail(t, i) {
     const { xMap, yMap, sizeMap, colorMap } = this.props;
 
@@ -65,6 +50,9 @@ class Pizza extends Component {
     const imageStyle = { backgroundImage };
 
     const even = i % 2 === 0;
+    const imageWrapClass = (even) ? classes.imageWrap : classes.imageWrapRight;
+    const imageWrapInnerClass = (even) ?
+      classes.imageWrapInner : classes.imageWrapInnerRight;
     const imageClass = (even) ? classes.image : classes.imageRight;
     const titleClass = (even) ? classes.title : classes.titleRight;
     const overlayClass = (even) ? classes.overlay : classes.overlayRight;
@@ -82,9 +70,11 @@ class Pizza extends Component {
         }}
         onMouseOut={this.onMouseOut.bind(this)}
       >
-        <div className={classes.imageWrap}>
-          <div className={imageClass} style={imageStyle} />
-          <div className={overlayClass} style={overlayStyle} />
+        <div className={imageWrapClass} style={overlayStyle}>
+          <div className={imageWrapInnerClass}>
+            <div className={imageClass} style={imageStyle} />
+            <div className={overlayClass} style={overlayStyle} />
+          </div>
         </div>
         <p className={titleClass}>{t.get('title')}</p>
       </div>

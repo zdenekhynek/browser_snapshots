@@ -206,6 +206,7 @@ class Chart extends Component {
       <ul className={classes.tooltip} style={style}>
         <li>Title: {tooltip.get('title')}</li>
         <li>Noise: {formatter(tooltip.get('noise'))}</li>
+        <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
         <li>Fakebox Title Decision: {tooltip.get('fakebox_title_decision')}</li>
         <li>Fakebox Title Score: {tooltip.get('fakebox_title_score')}</li>
         <li>Views: {formatter(tooltip.get('views'))}</li>
@@ -214,7 +215,6 @@ class Chart extends Component {
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
         <li>Favorites: {tooltip.get('favorites')}</li>
         <li>Comment count: {tooltip.get('comment_count')}</li>
-        <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
         <li>Avg Temperature: {formatter(tooltip.get('avgTemperature'))}</li>
         <li>Sentiment magnitude (Google): {ratioFormatter(tooltip.get('sentiment_magnitude'))}</li>
         <li>Sentiment score (Google): {ratioFormatter(tooltip.get('sentiment_score'))}</li>
