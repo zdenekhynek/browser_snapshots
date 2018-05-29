@@ -202,3 +202,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+MB_KEY = os.environ.get('MB_KEY', '')
+MB_API_URL = os.environ.get('MB_API_URL', '')

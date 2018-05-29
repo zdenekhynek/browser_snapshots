@@ -36,7 +36,7 @@ class Landing extends Component {
   }
 
   onSubmit(keyword) {
-    const { agentIds } = this.props;
+    const { agentIds } = this.state;
     this.props.createRace(keyword, agentIds);
     sendSocketMessage('session_start');
   }

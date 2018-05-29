@@ -16,6 +16,9 @@ class Sentiment(models.Model):
     gcp_comments_sentiment_score = models.FloatField(default=0.0)
     gcp_comments_sentiment_magnitude = models.FloatField(default=0.0)
     face_sentiment = models.TextField(max_length=10009, blank=True, null=True)
+    fakebox_raw = models.TextField(max_length=10009, blank=True, null=True)
+    fakebox_title_decision = models.CharField(max_length=100, blank=True, null=True)
+    fakebox_title_score = models.FloatField(default=0.0)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""

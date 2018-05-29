@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from agents.models import Agent
 from agents.serializers import AgentSerializer
 from analysis.get_sentiment import get_sentiment
+from analysis.fakebox import store_fakebox
 from races.serializers import RaceSerializer
 from races.models import Race, RaceTask, get_race_data
 from snapshots.serializers import SnapshotSerializer, SessionSerializer
@@ -32,6 +33,9 @@ class CreateSnapshotView(generics.ListCreateAPIView):
 
         # parse all the sentiment analysis
         get_sentiment(snapshot)
+
+        # parse fakebox sentiment
+        store_fakebox(snapshot)
 
         snapshot_created_signal.send(sender=Snapshot)
 
