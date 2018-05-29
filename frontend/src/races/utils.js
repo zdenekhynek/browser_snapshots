@@ -68,6 +68,44 @@ export function getSentiment(video) {
   return totalSentiment;
 }
 
+export function getNoise(video) {
+  const { views, likes, dislikes, favorites, comment_count } = video;
+
+  if (!views || isNaN(views)) {
+    //  no views, no noise, nothing
+    return 0;
+  }
+
+  const LIKES_WEIGHT = 10;
+  const FAVORITE_WEIGHT = 40;
+  const DISLIKES_WEIGHT = 20;
+  const COMMENT_WEIGHT = 100;
+
+  let interaction = 0;
+
+  if (!isNaN(likes)) {
+    interaction += likes * LIKES_WEIGHT;
+  }
+
+  if (!isNaN(dislikes)) {
+    interaction += dislikes * DISLIKES_WEIGHT;
+  }
+
+  if (!isNaN(favorites)) {
+    interaction += favorites * FAVORITE_WEIGHT;
+  }
+
+  if (!isNaN(comment_count)) {
+    interaction += comment_count * COMMENT_WEIGHT;
+  }
+
+  let noise = (interaction / views) * 100;
+
+  //  clamped noise
+  noise = Math.min(100, Math.max(0, noise));
+  return noise;
+}
+
 export function sumByProp(list, propName) {
   return list.reduce((acc, x) => {
     const value = x.get(propName, 0);

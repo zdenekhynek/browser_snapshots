@@ -11,6 +11,7 @@ import {
   getEngagementRatio,
   getGcpSentiment,
   getSentiment,
+  getNoise,
   getRaceResults,
 } from './utils';
 
@@ -58,6 +59,7 @@ export function addMetrics(tasks) {
     const tObj = t.toJS();
 
     const temperature = getTemperature(tObj);
+    const noise = getNoise(tObj);
 
     let avgTemperature = 0;
 
@@ -75,6 +77,7 @@ export function addMetrics(tasks) {
 
     return t
       .set('temperature', temperature)
+      .set('noise', noise)
       .set('sumTemperature', sumTemperature)
       .set('avgTemperature', avgTemperature)
       .set('gcpSentiment', getGcpSentiment(tObj))

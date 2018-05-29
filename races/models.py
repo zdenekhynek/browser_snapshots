@@ -59,7 +59,7 @@ def get_race_data(race_id):
     try:
         # get all snapshot titles
         # https://stackoverflow.com/questions/5380529/django-model-foreign-key-queryset-selecting-related-fields
-        snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('created_at').values('id', 'video__title', 'url', 'created_at', 'agent_id', 'video__id', 'video__views', 'video__likes', 'video__dislikes', 'video__length', 'analysis__sentiment', 'analysis__gcp_sentiment_score', 'analysis__gcp_sentiment_magnitude', 'video__category_id', 'video__category__title', 'analysis__fakebox_title_decision', 'analysis__fakebox_title_score')
+        snapshots = Snapshot.objects.filter(session_id__in=session_ids).order_by('created_at').values('id', 'video__title', 'url', 'created_at', 'agent_id', 'video__id', 'video__views', 'video__likes', 'video__dislikes', 'video__length', 'video__favorites', 'video__comment_count', 'analysis__sentiment', 'analysis__gcp_sentiment_score', 'analysis__gcp_sentiment_magnitude', 'video__category_id', 'video__category__title', 'analysis__fakebox_title_decision', 'analysis__fakebox_title_score')
         for snapshot in snapshots:
 
             # append only snapshots with a video
@@ -78,6 +78,8 @@ def get_race_data(race_id):
                         'views': snapshot['video__views'],
                         'likes': snapshot['video__likes'],
                         'dislikes': snapshot['video__dislikes'],
+                        'favorites': snapshot['video__favorites'],
+                        'comment_count': snapshot['video__comment_count'],
                         'length': snapshot['video__length'],
                         'sentiment': snapshot['analysis__sentiment'],
                         'sentiment_score': snapshot['analysis__gcp_sentiment_score'],

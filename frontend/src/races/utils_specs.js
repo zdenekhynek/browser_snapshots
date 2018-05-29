@@ -9,6 +9,7 @@ import {
   getEngagementRatio,
   getGcpSentiment,
   getSentiment,
+  getNoise,
   getProfileResults,
   getRaceResults,
 } from './utils';
@@ -103,6 +104,62 @@ describe('Races utils', () => {
       };
       result = getSentiment(video);
       expect(result).to.be.eq(100);
+    });
+  });
+
+  describe('getNoise', () => {
+    it('should calculate noise', () => {
+      let video = {
+        views: 1000,
+        likes: 10,
+        dislikes: 1,
+        favorites: 0,
+        comment_count: 0,
+      };
+
+      expect(getNoise(video) > 10).to.be.true;
+
+      video = {
+        views: 1000,
+        likes: 10,
+        dislikes: 10,
+        favorites: 0,
+        comment_count: 10,
+      };
+
+      expect(getNoise(video)).to.eq(100);
+    });
+
+    it('should deal with non standard values', () => {
+      let video = {
+        views: 0,
+        likes: 10,
+        dislikes: 1,
+        favorites: 0,
+        comment_count: 0,
+      };
+
+      expect(getNoise(video)).to.eq(0);
+
+      video = {
+        views: 1000,
+        likes: 'fasdas',
+        dislikes: 'asdfasd',
+        favorites: false,
+        comment_count: 10,
+      };
+
+      expect(getNoise(video)).to.eq(100);
+
+      video = {
+        views: 'asdfas',
+        likes: 'fasdas',
+        dislikes: 'asdfasd',
+        favorites: false,
+        comment_count: 10,
+      };
+
+      expect(getNoise(video)).to.eq(0);
     });
   });
 
