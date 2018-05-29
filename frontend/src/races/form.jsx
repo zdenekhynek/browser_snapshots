@@ -19,10 +19,6 @@ export const AGENTS = {
   ],
 };
 
-export const KEYWORDS = [
-  'Fox News', 'surveillance', 'london knife crime',
-];
-
 class Form extends Component {
   static renderAgentDropdownOption(agent) {
     return (
