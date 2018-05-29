@@ -10,7 +10,6 @@ export function getInitialState() {
 }
 
 export function updateSelectedAgents(state, agents) {
-  console.log('agents', agents);
   return state.set('agents', fromJS(agents));
 }
 

@@ -1,7 +1,7 @@
 .chart {
   display: flex;
   width: 100%;
-  height: 2580px;
+  height: 200vh;
 }
 
 .col {
@@ -11,7 +11,8 @@
 .innerCol {
   width: 100%;
   height: 100%;
-  padding: 0 200px 0 100px;
+  padding: 0 150px;
+  box-sizing: border-box;
 }
 
 .svg {

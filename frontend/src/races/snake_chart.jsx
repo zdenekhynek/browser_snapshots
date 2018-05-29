@@ -40,8 +40,7 @@ class Chart extends Component {
     const { width, height } = size;
 
     const data = tasks.reduce((acc, t, i) => {
-      //  sort them from the latest
-      const newT = t.reverse().map((d) => {
+      const newT = t.map((d) => {
         return d.set('index', i);
       });
 
@@ -275,7 +274,7 @@ class Chart extends Component {
         <div className={classes.innerCol}>
           <Mosaic
             index={i}
-            tasks={t.reverse()}
+            tasks={t}
             onMouseOver={this.onMouseOver.bind(this)}
             onMouseOut={this.onMouseOut.bind(this)}
             {...this.state}
@@ -319,10 +318,15 @@ class Chart extends Component {
       renderFn = this.renderStack;
     }
 
+    //  taller for investigative charts
+    const style = (type !== 'mosaic') ?
+      { height: '2500px', padding: '100px 0' } : {};
+
     return (
       <div
         ref={(el) => this.chart = el}
         className={classes.chart}
+        style={style}
       >
         {tasks.map(renderFn.bind(this))}
         {renderedTooltip}

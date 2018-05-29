@@ -1,4 +1,6 @@
+/* eslint camelcase: 0 */
 import { scaleLinear } from 'd3-scale';
+import { Map, List } from 'immutable';
 
 export function getTemperature(video) {
   const { likes, dislikes } = video;
@@ -46,14 +48,13 @@ export function getVideoThumbnail(url) {
 }
 
 export function getGcpSentiment(video) {
-  const { sentiment_magnitude, sentiment_score } = video;
+  const { sentiment_magnitude } = video;
   return 100 - sentiment_magnitude * 100;
 }
 
 export function getSentiment(video) {
   //  add up the cap, punctionation, gcp temperature and
-  const { caps_sentiment, punctuation_sentiment,
-    sentiment_magnitude, sentiment_score } = video;
+  const { caps_sentiment, punctuation_sentiment, sentiment_score } = video;
   const temperature = getTemperature(video);
 
   //  just take absolute value (any sentiment is good)
@@ -65,4 +66,37 @@ export function getSentiment(video) {
   // clamped it to 0 -> 100
   totalSentiment = Math.min(100, Math.max(0, totalSentiment));
   return totalSentiment;
+}
+
+export function sumByProp(list, propName) {
+  return list.reduce((acc, x) => {
+    const value = x.get(propName, 0);
+    const number = (isNaN(value)) ? 0 : value;
+    return acc + number;
+  }, 0);
+}
+
+export function getProfileResults(videos) {
+  const metrics = List(['temperature', 'pollution', 'noise']);
+
+  const videoLen = videos.size;
+  return metrics.reduce((acc, metric) => {
+    //  get sumByProp
+    const sum = sumByProp(videos, metric);
+    const avg = sum / videoLen;
+    return acc.set(metric, avg);
+  }, Map());
+}
+
+export function getRaceResults(videos) {
+  const profiles = videos.map((vids, i) => {
+    const results = getProfileResults(vids);
+
+    //  key is converted to string for some reason, so convert it back to number
+    return results.set('id', +i);
+  }).toList();
+
+  const totals = getProfileResults(profiles);
+
+  return Map({ totals, profiles });
 }

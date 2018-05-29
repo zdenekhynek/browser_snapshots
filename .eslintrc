@@ -14,5 +14,11 @@
       "object-curly-spacing": [2, "always"],
 
       "no-return-assign": 2,
+  },
+  "globals": {
+    "WebSocket": true,
+    "describe": true,
+    "it": true,
+    "xit": true,
   }
 }

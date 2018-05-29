@@ -108,13 +108,14 @@ class RaceChart extends Component {
     //  get active metric
     const activeMetric = metrics.find((m) => m.get('active'), null, Map()).get('id');
 
+    //  <Link className={classes.link} to={'/viz'}>Start a session</Link>
+    //  <Link className={classes.link} to={backLink}>See the archive</Link>
+    //  {this.renderMetrics(metrics)}
+
     return (
       <div className={classes.raceChart}>
-        <Link className={classes.link} to={'/viz'}>Start a session</Link>
-        <Link className={classes.link} to={backLink}>See the archive</Link>
         <h2>{label}</h2>
         <div className={classes.viz}>
-          {this.renderMetrics(metrics)}
           <SnakeChart type="mosaic" tasks={tasks} metric={activeMetric} />
           <SnakeChart type="stack" tasks={tasks} metric={activeMetric} />
           <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
@@ -139,8 +140,9 @@ export function sum(collection, key) {
   }, 0);
 }
 
-export function mapStateToProps({ agents, metrics, races }) {
-  const activeRace = races.find((r) => r.get('isActive', false), null, Map());
+export function mapStateToProps({ agents, metrics, races }, { raceId }) {
+  const activeRace = races.find((r) => r.get('id', '') === +raceId, null, Map());
+
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();
 

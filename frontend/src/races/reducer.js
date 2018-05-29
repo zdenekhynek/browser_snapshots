@@ -11,24 +11,43 @@ import {
   getEngagementRatio,
   getGcpSentiment,
   getSentiment,
+  getRaceResults,
 } from './utils';
 
 export const WAITING_STATUS = 'WAITING_STATUS';
 export const IN_PROGRESS_STATUS = 'IN_PROGRESS_STATUS';
 export const FINISHED_STATUS = 'FINISHED_STATUS';
 
+export const NUM_STEPS = 20;
+
 export function getInitialState() {
   return List();
 }
 
-export function reduceCreateRace(state, raceId) {
+export function reduceCreateRace(state, raceId, keyword) {
   const newRace = Map({
     id: raceId,
+    keyword,
     isActive: false,
     tasks: List(),
   });
 
   return state.push(newRace);
+}
+
+export function calculateProgress(tasks) {
+  if (!tasks) {
+    return 0;
+  }
+
+  const progress = tasks.size / NUM_STEPS;
+  const clamped = Math.min(1, Math.max(0, progress));
+  return clamped;
+}
+
+export function calculateRaceProgress(raceTasks) {
+  const profilesProgress = raceTasks.map((t) => calculateProgress(t));
+  return profilesProgress.max();
 }
 
 export function addMetrics(tasks) {
@@ -40,9 +59,9 @@ export function addMetrics(tasks) {
 
     const temperature = getTemperature(tObj);
 
-    let avgTemperature = 36;
+    let avgTemperature = 0;
 
-    if (!Number.isNaN(temperature)) {
+    if (!isNaN(temperature)) {
       //  calculate total temperature
 
       sumTemperature += temperature;
@@ -75,19 +94,28 @@ export function sortAgents(a, b) {
 }
 
 export function reduceUpdateRace(state, raceId, response) {
-  const tasks = response.tasks;
+  let newState = state;
+
+  const { tasks } = response;
   const list = fromJS(tasks);
   const grouped = list.groupBy((t) => t.get('agent_id')).sortBy((v, k) => k, sortAgents);
 
-  return state.map((r) => {
-    if (r.get('id') === raceId) {
-      return r.set('tasks', grouped.map((group) => addMetrics(group)))
-        .set('keyword', response.keyword)
-        .set('created_at', response.created_at);
-    }
+  let raceIndex = state.findIndex((r) => r.get('id') === raceId);
 
-    //  return original copy
-    return r;
+  if (raceIndex === -1) {
+    newState = reduceCreateRace(newState, raceId);
+    raceIndex = newState.size - 1;
+  }
+
+  return newState.update(raceIndex, (r) => {
+    const groupedTasks = grouped.map((group) => addMetrics(group));
+    const results = getRaceResults(groupedTasks);
+
+    return r.set('tasks', groupedTasks)
+      .set('keyword', response.keyword)
+      .set('created_at', response.created_at)
+      .set('progress', calculateRaceProgress(groupedTasks))
+      .set('results', results);
   });
 }
 
@@ -109,7 +137,8 @@ export default function(state = getInitialState(), action) {
   switch (action.type) {
     case RECEIVE_CREATE_RACE:
       const raceId = action.response.id;
-      const newRaces = reduceCreateRace(state, raceId);
+      const keyword = action.response.keyword;
+      const newRaces = reduceCreateRace(state, raceId, keyword);
       return changeActiveRace(newRaces, raceId);
     case RECEIVE_UPDATE_RACE:
       return reduceUpdateRace(state, action.raceId, action.response);
