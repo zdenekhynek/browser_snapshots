@@ -24,18 +24,27 @@ class CreateSnapshotView(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
+        print('perform_create')
         """Save the post data when creating a new snaphost."""
         snapshot = serializer.save(owner=self.request.user)
+
+        print('parse_snapshot')
 
         # parse the snaphost video straight away so that
         # the video stats are immediately available (e.g. for race)
         parse_snapshot(snapshot)
 
+        print('get_sentiment')
+
         # parse all the sentiment analysis
         get_sentiment(snapshot)
 
+        print('store_fakebox')
+
         # parse fakebox sentiment
         store_fakebox(snapshot)
+
+        print('snapshot !!!', snapshot.id)
 
         snapshot_created_signal.send(sender=Snapshot)
 

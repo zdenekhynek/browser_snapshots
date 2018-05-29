@@ -81,6 +81,7 @@ def get_fakebox(title):
 
 
 def store_fakebox(snapshot):
+    print('store_fakebox !!')
     s, created = Sentiment.objects.get_or_create(snapshot=snapshot)
 
     # get fakebox sentiment

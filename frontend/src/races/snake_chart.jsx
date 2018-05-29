@@ -211,11 +211,10 @@ class Chart extends Component {
         <li>Dislikes: {formatter(tooltip.get('dislikes'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
         <li>Avg Temperature: {formatter(tooltip.get('avgTemperature'))}</li>
-        <li>Sum Temperature: {formatter(tooltip.get('sumTemperature'))}</li>
         <li>Sentiment magnitude (Google): {ratioFormatter(tooltip.get('sentiment_magnitude'))}</li>
         <li>Sentiment score (Google): {ratioFormatter(tooltip.get('sentiment_score'))}</li>
-        <li>Watson Tone (IBM): {tone}</li>
-        <li>Faces API (Microsoft): {facesString}</li>
+        <li>Fakebox Title Decision: {tooltip.get('fakebox_title_decision')}</li>
+        <li>Fakebox Title Score: {tooltip.get('fakebox_title_score')}</li>
       </ul>
     );
   }
