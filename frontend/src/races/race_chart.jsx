@@ -9,6 +9,7 @@ import { scaleLinear } from 'd3-scale';
 import { line } from 'd3-shape';
 import { axisLeft, axisBottom } from 'd3-axis';
 import { min, max } from 'd3-array';
+import DatGui, { DatSelect } from 'react-dat-gui';
 
 import Chart, { COLORS } from './chart';
 import RadialChart from './radial_chart';
@@ -40,10 +41,23 @@ export function renderMetricDropdownOption(metric) {
 class RaceChart extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      data: {
+        package: 'react-dat-gui',
+        metric: 'temparature',
+      },
+    };
+
+    this.onGuiUpdate = this.onGuiUpdate.bind(this);
   }
 
   onMetricChange(evt) {
     this.props.setActiveMetric(evt.target.value);
+  }
+
+  onGuiUpdate(data) {
+    this.setState({ data });
   }
 
   renderMetrics(metrics) {
@@ -90,8 +104,23 @@ class RaceChart extends Component {
     );
   }
 
+  renderGui() {
+    const { data } = this.state;
+
+    return (
+      <DatGui data={data} onUpdate={this.onGuiUpdate}>
+        <DatSelect
+          path='metric'
+          label='metric'
+          options={['noise', 'pollution']}
+        />
+      </DatGui>
+    );
+  }
+
   render() {
     const { activeRace, metrics, tasks } = this.props;
+    const { data } = this.state;
 
     const backLink = `/viz/archive/`;
 
@@ -112,11 +141,17 @@ class RaceChart extends Component {
     //  <Link className={classes.link} to={backLink}>See the archive</Link>
     //  {this.renderMetrics(metrics)}
 
+    const gui = this.renderGui();
+
     return (
       <div className={classes.raceChart}>
         <h2>{label}</h2>
         <div className={classes.viz}>
-          <SnakeChart type="mosaic" tasks={tasks} metric={activeMetric} />
+          <SnakeChart
+            type="mosaic"
+            tasks={tasks}
+            metric={data.metric}
+          />
           <SnakeChart type="stack" tasks={tasks} metric={activeMetric} />
           <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
           <SnakeChart type="grid" tasks={tasks} metric={activeMetric} />
@@ -124,6 +159,7 @@ class RaceChart extends Component {
           <Chart tasks={tasks} />
           <RadialChart tasks={tasks} />
           {this.renderAgents()}
+          {gui}
         </div>
       </div>
     );

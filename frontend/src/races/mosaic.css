@@ -39,7 +39,7 @@
   right: 0;
   bottom: 0;
   box-sizing: border-box;
-  background-color: purple;
+  background-color: #ff00fa;
 }
 
 .imageWrapRight {
@@ -86,7 +86,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  filter: grayscale(0%) !important;
+  filter: grayscale(0%);
   background-color: red;
   opacity: 0; /* temp disable */
 }

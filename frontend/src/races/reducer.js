@@ -12,6 +12,7 @@ import {
   getGcpSentiment,
   getSentiment,
   getNoise,
+  getPollution,
   getRaceResults,
 } from './utils';
 
@@ -60,6 +61,7 @@ export function addMetrics(tasks) {
 
     const temperature = getTemperature(tObj);
     const noise = getNoise(tObj);
+    const pollution = getPollution(tObj);
 
     let avgTemperature = 0;
 
@@ -78,6 +80,7 @@ export function addMetrics(tasks) {
     return t
       .set('temperature', temperature)
       .set('noise', noise)
+      .set('pollution', pollution)
       .set('sumTemperature', sumTemperature)
       .set('avgTemperature', avgTemperature)
       .set('gcpSentiment', getGcpSentiment(tObj))

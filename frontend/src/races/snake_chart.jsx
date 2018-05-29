@@ -73,7 +73,7 @@ class Chart extends Component {
     const sizeMap = (d) => sizeScale(sizeValue(d));
 
     let colorIndex = -1;
-    const colorScale = interpolateLab('#ffffff', '#fe08f9');
+    const colorScale = interpolateLab('#ffffff', '#ff00fa');
     const colorMap = (d) => {
       if (typeof d.index !== 'undefined') {
         return COLORS[d.index];
@@ -204,9 +204,12 @@ class Chart extends Component {
 
     return (
       <ul className={classes.tooltip} style={style}>
-        <li>Title: {tooltip.get('title')}</li>
         <li>Noise: {formatter(tooltip.get('noise'))}</li>
         <li>Temperature: {formatter(tooltip.get('temperature'))}</li>
+        <li>Pollution: {formatter(tooltip.get('pollution'))}</li>
+        <li>--------------</li>
+        <li>--------------</li>
+        <li>Title: {tooltip.get('title')}</li>
         <li>Fakebox Title Decision: {tooltip.get('fakebox_title_decision')}</li>
         <li>Fakebox Title Score: {tooltip.get('fakebox_title_score')}</li>
         <li>Views: {formatter(tooltip.get('views'))}</li>

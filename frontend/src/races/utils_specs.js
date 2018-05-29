@@ -10,6 +10,7 @@ import {
   getGcpSentiment,
   getSentiment,
   getNoise,
+  getPollution,
   getProfileResults,
   getRaceResults,
 } from './utils';
@@ -160,6 +161,43 @@ describe('Races utils', () => {
       };
 
       expect(getNoise(video)).to.eq(0);
+    });
+  });
+
+  describe('getPollution', () => {
+    it('should calculate pollution', () => {
+      console.log('get pollution');
+      let video = {
+        fakebox_title_decision: 'bias',
+        fakebox_title_score: 0,
+      };
+
+      expect(getPollution(video)).to.eq(50);
+
+      video = {
+        fakebox_title_decision: 'bias',
+        fakebox_title_score: 0.5,
+      };
+      expect(getPollution(video)).to.eq(100);
+
+      video = {
+        fakebox_title_decision: 'bias',
+        fakebox_title_score: 1,
+      };
+      expect(getPollution(video)).to.eq(100);
+
+      video = {
+        fakebox_title_decision: 'unsure',
+        fakebox_title_score: 1,
+      };
+      expect(getPollution(video)).to.eq(50);
+
+
+      video = {
+        fakebox_title_decision: 'unsure',
+        fakebox_title_score: 0.5,
+      };
+      expect(getPollution(video)).to.eq(25);
     });
   });
 

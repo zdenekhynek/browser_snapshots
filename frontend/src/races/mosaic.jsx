@@ -47,6 +47,10 @@ class Pizza extends Component {
 
     const thumbUrl = getVideoThumbnail(t.get('url'));
     const backgroundImage = `url(${thumbUrl})`;
+
+    const tObj = t.toJS();
+    const temparature = tObj.temperature;
+    const filter = `grayscale(${100 - temparature}%)`;
     const imageStyle = { backgroundImage };
 
     const even = i % 2 === 0;
@@ -57,9 +61,9 @@ class Pizza extends Component {
     const titleClass = (even) ? classes.title : classes.titleRight;
     const overlayClass = (even) ? classes.overlay : classes.overlayRight;
 
-    const tObj = t.toJS();
     const color = colorMap(tObj);
     const backgroundColor = color;
+
     const overlayStyle = { backgroundColor };
 
     return (

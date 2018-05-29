@@ -5,7 +5,7 @@ import { Map, List } from 'immutable';
 export function getTemperature(video) {
   const { likes, dislikes } = video;
   const total = likes + dislikes;
-  const engagement = 1 - Math.abs((likes - dislikes) / total);
+  const engagement = 1 - Math.abs((likes - dislikes * 2) / total);
 
   return engagement * 100;
 }
@@ -104,6 +104,24 @@ export function getNoise(video) {
   //  clamped noise
   noise = Math.min(100, Math.max(0, noise));
   return noise;
+}
+
+export function getPollution(video) {
+  const { fakebox_title_decision, fakebox_title_score } = video;
+
+  let pollution = 0;
+
+  if (fakebox_title_decision === 'bias') {
+    pollution = 50;
+    pollution += 100 * fakebox_title_score;
+  } else if (fakebox_title_decision === 'unsure') {
+    pollution = 50 * fakebox_title_score;
+  }
+
+  //  clamped pollution
+  pollution = Math.min(100, Math.max(0, pollution));
+
+  return pollution;
 }
 
 export function sumByProp(list, propName) {
