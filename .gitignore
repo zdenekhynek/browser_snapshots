@@ -17,5 +17,6 @@ dist
 .tmp_dist
 
 static
+!viz/static
 
 .pytest_cache/
