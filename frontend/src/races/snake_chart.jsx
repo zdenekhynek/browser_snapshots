@@ -15,6 +15,7 @@ import Grid from './grid';
 import Pizza from './pizza';
 import Mosaic from './mosaic';
 import Stack from './stack';
+import Tree from './tree';
 
 import classes from './snake_chart.css';
 
@@ -305,6 +306,22 @@ class Chart extends Component {
     );
   }
 
+  renderTree(t, i) {
+    return (
+      <div className={classes.col}>
+        <div className={classes.innerCol}>
+          <Tree
+            index={i}
+            tasks={t.reverse()}
+            onMouseOver={this.onMouseOver.bind(this)}
+            onMouseOut={this.onMouseOut.bind(this)}
+            {...this.state}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { tasks, type } = this.props;
     const { tooltip } = this.state;
@@ -321,6 +338,8 @@ class Chart extends Component {
       renderFn = this.renderMossaic;
     } else if (type === 'stack') {
       renderFn = this.renderStack;
+    } else if (type === 'tree') {
+      renderFn = this.renderTree;
     }
 
     //  taller for investigative charts

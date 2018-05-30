@@ -140,6 +140,19 @@ class RaceChart extends Component {
     //  <Link className={classes.link} to={'/viz'}>Start a session</Link>
     //  <Link className={classes.link} to={backLink}>See the archive</Link>
     //  {this.renderMetrics(metrics)}
+    //
+    //  <SnakeChart
+    //    type="mosaic"
+    //    tasks={tasks}
+    //    metric={data.metric}
+    //  />
+    //  <SnakeChart type="stack" tasks={tasks} metric={activeMetric} />
+    //  <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
+    //  <SnakeChart type="grid" tasks={tasks} metric={activeMetric} />
+    //  <SnakeChart tasks={tasks} metric={activeMetric} />
+    //  <Chart tasks={tasks} />
+    //  <RadialChart tasks={tasks} />
+    //  {this.renderAgents()}
 
     const gui = this.renderGui();
 
@@ -147,18 +160,9 @@ class RaceChart extends Component {
       <div className={classes.raceChart}>
         <h2>{label}</h2>
         <div className={classes.viz}>
-          <SnakeChart
-            type="mosaic"
-            tasks={tasks}
-            metric={data.metric}
-          />
-          <SnakeChart type="stack" tasks={tasks} metric={activeMetric} />
-          <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
-          <SnakeChart type="grid" tasks={tasks} metric={activeMetric} />
-          <SnakeChart tasks={tasks} metric={activeMetric} />
-          <Chart tasks={tasks} />
-          <RadialChart tasks={tasks} />
-          {this.renderAgents()}
+
+          <SnakeChart type="tree" tasks={tasks} metric={activeMetric} />
+
           {gui}
         </div>
       </div>
