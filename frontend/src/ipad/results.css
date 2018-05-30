@@ -1,0 +1,25 @@
+.ipadResults {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  color: black;
+}
+
+.btn {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #666;
+  text-align: center;
+  font: inherit;
+  text-decoration: none;
+  border: 1px solid #666;
+  box-sizing: border-box;
+}
