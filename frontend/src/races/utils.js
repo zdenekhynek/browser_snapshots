@@ -4,7 +4,7 @@ import { Map, List } from 'immutable';
 
 export function getTemperature(video) {
   const { likes, dislikes } = video;
-  const total = likes + dislikes;
+  const total = likes + (dislikes * 2);
   const engagement = 1 - Math.abs((likes - dislikes * 2) / total);
 
   return engagement * 100;

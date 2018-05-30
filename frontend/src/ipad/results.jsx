@@ -15,7 +15,7 @@ const Results = ({ className }) => {
           sendSocketMessage('restart');
         }}
       >
-        Restart
+        Yes, please!
       </button>
     </div>
   );

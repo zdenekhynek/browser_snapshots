@@ -19,7 +19,7 @@ describe('Races utils', () => {
   describe('getTemperature', () => {
     it('should calculate temperature correctly', () => {
       let video = {
-        views: 1000, likes: 100, dislikes: 100,
+        views: 1000, likes: 100, dislikes: 10,
       };
       let result = getTemperature(video);
       expect(result).to.be.eq(100);
