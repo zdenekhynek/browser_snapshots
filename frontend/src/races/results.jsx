@@ -1,44 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
+import { format } from 'd3-format';
 
-export function renderLine(r, k) {
-  return (<li key={k}>{k}: {r}</li>);
+import classes from './results.css';
+
+export const formatter = format(',.2f');
+
+export function renderLine(k, r) {
+  return (
+    <li
+      className={classes.item}
+      key={k}
+    >
+      <div className={classes.innerItem}>
+        <h4 className={classes.lineTitle}>{k}</h4>
+        <span>{formatter(r)}</span>
+      </div>
+    </li>
+  );
 }
 
 export function displayResults(title, results) {
-  return (
-    <div key={title}>
-      <h3>{title}</h3>
-      <ul>
-        {results.toSeq().map(renderLine)}
+ const className = (title === 'totals') ?
+  classes.totalTable : classes.table;
+
+ return (
+    <div key={title} className={className}>
+      <h3 className={classes.tableTitle}>{title}</h3>
+      <ul className={classes.list}>
+        {renderLine('temperature', results.get('temperature'))}
+        {renderLine('noise', results.get('noise'))}
+        {renderLine('pollution', results.get('pollution'))}
       </ul>
     </div>
   );
 }
 
 const Results = ({ keyword, results }) => {
-  const totalResults = displayResults('totals', results.get('totals', Map()));
+  const totalResults = displayResults('Totals', results.get('totals', Map()));
   const profileResults = results.get('profiles', Map()).map((r) => {
-    const title = `Profile: ${r.get('id')}`;
-    return displayResults(title, r.delete('id'));
+    return displayResults(r.get('gmail'), r.delete('id'));
   });
 
   const formattedKeyword = (keyword) ?
-    `&ldquo;${keyword}&rdquo` : 'something ';
+    `"${keyword}"` : 'something';
 
   return (
-    <div>
-      <h1>Results</h1>
-      {totalResults}
-      <div>
-        {profileResults}
+    <div className={classes.results}>
+      <div className={classes.prompt}>
+        <h2>
+          Why don&apos;t you try searching for {formattedKeyword} on your YouTube?
+        </h2>
       </div>
-      <h2>
-        Why don&apos;t you try searching for {formattedKeyword}
-        on your YouTube?
-      </h2>
+      <div className={classes.numbers}>
+        <div className={classes.totalResults}>
+          {totalResults}
+        </div>
+        <div className={classes.profileResults}>
+          {profileResults}
+        </div>
+      </div>
     </div>
   );
 };
@@ -47,9 +70,18 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
   const activeRace = races.find((r) => r.get('id', '') === +raceId, null, Map());
   const results = activeRace.get('results', Map());
 
+  const profilesWithResults = results.get('profiles', List()).map((profile) => {
+    const id = profile.get('id');
+    const agent = agents
+      .get('available')
+      .find((a) => a.get('id') === id, null, Map());
+
+    return profile.merge(agent);
+  });
+
   return {
     keyword: activeRace.get('keyword'),
-    results,
+    results: results.set('profiles', profilesWithResults),
   };
 }
 

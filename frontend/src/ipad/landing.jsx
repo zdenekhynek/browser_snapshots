@@ -25,7 +25,7 @@ class Landing extends Component {
   constructor(props) {
     super(props);
 
-    const list = fromJS(AGENTS[AGENTS_LIST]);
+    const list = AGENTS[AGENTS_LIST].map((a) => a.id);
     this.state = { mode: 'random', keyword: '', currentAgents: list };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -36,8 +36,8 @@ class Landing extends Component {
   }
 
   onSubmit(keyword) {
-    const { agentIds } = this.state;
-    this.props.createRace(keyword, agentIds);
+    const { currentAgents } = this.state;
+    this.props.createRace(keyword, currentAgents);
     sendSocketMessage('session_start');
   }
 

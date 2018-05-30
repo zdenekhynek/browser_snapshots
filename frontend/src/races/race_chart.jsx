@@ -45,7 +45,7 @@ class RaceChart extends Component {
     this.state = {
       data: {
         package: 'react-dat-gui',
-        metric: 'temparature',
+        metric: 'temperature',
       },
     };
 
