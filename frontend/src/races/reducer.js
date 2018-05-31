@@ -1,4 +1,5 @@
-import { fromJS, List, Map } from 'immutable';
+/* global AGENTS_LIST */
+import { fromJS, List, Map, OrderedMap } from 'immutable';
 
 import {
   RECEIVE_CREATE_RACE,
@@ -15,6 +16,7 @@ import {
   getPollution,
   getRaceResults,
 } from './utils';
+import { AGENTS } from './form';
 
 export const WAITING_STATUS = 'WAITING_STATUS';
 export const IN_PROGRESS_STATUS = 'IN_PROGRESS_STATUS';
@@ -26,12 +28,25 @@ export function getInitialState() {
   return List();
 }
 
+export function getInitialTasks() {
+  //  dummy tasks for three profiles
+  const list = AGENTS[AGENTS_LIST];
+
+  //  create OrderedMap
+  let orderedMap = OrderedMap();
+  list.forEach((agent) => {
+    orderedMap = orderedMap.set(agent.id, List());
+  }, {});
+
+  return orderedMap;
+}
+
 export function reduceCreateRace(state, raceId, keyword) {
   const newRace = Map({
     id: raceId,
     keyword,
     isActive: false,
-    tasks: List(),
+    tasks: getInitialTasks(),
   });
 
   return state.push(newRace);
@@ -105,6 +120,10 @@ export function addMetrics(tasks) {
   return enhancedTasks;
 }
 
+export function sortKey(v, k) {
+  return k;
+}
+
 export function sortAgents(a, b) {
   if (a > b) {
     return 1;
@@ -115,12 +134,19 @@ export function sortAgents(a, b) {
   return 0;
 }
 
+export function groupAgents(t) {
+  return t.get('agent_id');
+}
+
 export function reduceUpdateRace(state, raceId, response) {
   let newState = state;
 
   const { tasks } = response;
   const list = fromJS(tasks);
-  const grouped = list.groupBy((t) => t.get('agent_id')).sortBy((v, k) => k, sortAgents);
+
+  const grouped = list
+    .groupBy(groupAgents)
+    .sortBy(sortKey, sortAgents);
 
   let raceIndex = state.findIndex((r) => r.get('id') === raceId);
 
@@ -130,13 +156,17 @@ export function reduceUpdateRace(state, raceId, response) {
   }
 
   return newState.update(raceIndex, (r) => {
-    const groupedTasks = grouped.map((group) => addMetrics(group));
-    const results = getRaceResults(groupedTasks);
+    // merge the new tasks with the existing tasks
+    const oldTasks = r.get('tasks', List());
+    const newGoupedTasks = grouped.map((group) => addMetrics(group));
 
-    return r.set('tasks', groupedTasks)
+    const mergedTasks = oldTasks.merge(newGoupedTasks);
+    const results = getRaceResults(mergedTasks);
+
+    return r.set('tasks', mergedTasks)
       .set('keyword', response.keyword)
       .set('created_at', response.created_at)
-      .set('progress', calculateRaceProgress(groupedTasks))
+      .set('progress', calculateRaceProgress(mergedTasks))
       .set('results', results);
   });
 }

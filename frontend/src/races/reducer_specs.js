@@ -6,10 +6,31 @@ import {
   calculateProgress,
   calculateRaceProgress,
   reduceUpdateRace,
+  reduceCreateRace,
   NUM_STEPS,
 } from './reducer';
 
 describe('Races reducer', () => {
+  beforeEach(() => {
+    global.AGENTS_LIST = 'development';
+  });
+
+  describe('reduceCreateRace', () => {
+    it('should have the original agents', () => {
+      let result = reduceCreateRace(List());
+      //  expect(result.getIn([0, 'tasks'].size)).to.eq(3);
+      expect(result.getIn([0, 'tasks', 1])).to.exist;
+      expect(result.getIn([0, 'tasks', 7])).to.exist;
+      expect(result.getIn([0, 'tasks', 8])).to.exist;
+
+      global.AGENTS_LIST = 'staging';
+      result = reduceCreateRace(List());
+      expect(result.getIn([0, 'tasks', 4])).to.exist;
+      expect(result.getIn([0, 'tasks', 5])).to.exist;
+      expect(result.getIn([0, 'tasks', 6])).to.exist;
+    });
+  });
+
   describe('reduceUpdateRace', () => {
     it('should reduce races', () => {
       const state = List();
@@ -25,6 +46,28 @@ describe('Races reducer', () => {
       const races = reduceUpdateRace(state, raceId, response);
       expect(races.size).to.eq(1);
       expect(races.getIn([0, 'id'])).to.equal(23);
+    });
+
+    it('should have preserved the agents', () => {
+      const raceId = 23;
+      const state = reduceCreateRace(List(), raceId);
+      const response = {
+        created_at: '2018-05-27 00:35:09.873226',
+        id: 23,
+        keyword: 'fox news',
+        message: 'race_update',
+        tasks: [
+          { id: 4000, agent_id: 7 },
+          { id: 4001, agent_id: 1 },
+        ],
+        type: 'chat_message',
+      };
+      const races = reduceUpdateRace(state, raceId, response);
+
+      expect(races.size).to.eq(1);
+      expect(races.getIn([0, 'tasks', 1])).to.exist;
+      expect(races.getIn([0, 'tasks', 7])).to.exist;
+      expect(races.getIn([0, 'tasks', 8])).to.exist;
     });
 
     it('should calculate progress correctly', () => {

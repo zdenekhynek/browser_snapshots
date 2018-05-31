@@ -7,6 +7,7 @@ import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
 import { line, curveBasis } from 'd3-shape';
 import { min, max } from 'd3-array';
+import { transition } from 'd3-transition';
 
 import Thumb from './thumb';
 import Profile from './profile';
@@ -33,6 +34,11 @@ class Tree extends Component {
 
     this.chart = null;
     this.svg = null;
+    this.els = {
+      temperature: [],
+      pollution: [],
+      noise: [],
+    };
   }
 
   onMouseOver(t, i) {
@@ -44,8 +50,44 @@ class Tree extends Component {
     this.props.onMouseOut();
   }
 
+  componentDidMount() {
+    this.updateData();
+  }
+
+  componentDidUpdate() {
+    this.updateData();
+  }
+
+  updateData() {
+    Object.keys(this.els).forEach((key) => {
+      const el = this.els[key];
+      this.updatePath(el.flipped, key);
+      this.updatePath(el['not-flipped'], key);
+    });
+  }
+
+  updatePath(el, metric) {
+    const { areaFn, tasks, index } = this.props;
+
+    //  double it
+    let points = tasks.toJS();
+    points = points.reduce((acc, data) => {
+      data.metric = data[metric];
+      acc.push(data);
+      return acc;
+    }, []);
+
+    const pathString = areaFn(points);
+    const selection = select(el).selectAll(`.${classes.progress}`)
+      .data(points);
+
+    selection.transition().attr('d', (d) => {
+      return pathString;
+    });
+  }
+
   renderPath(task, index, metric = 'temperature', flipped = false) {
-    const { areaFn, yMap, xMap } = this.props;
+    const { areaFn } = this.props;
 
     //  double it
     let points = task.toJS();
@@ -73,16 +115,18 @@ class Tree extends Component {
       style = { fill };
     }
 
-    console.log('style', style);
+    const flippedKey = (flipped)? 'flipped' : 'not-flipped';
+
+    console.log('metric', metric);
 
     return (
       <svg className={svgClass}>
         {getAreaChartDefs(index, COLORS[index])}
-        <g>
+        <g ref={(el) => { this.els[metric][flippedKey] = el; }}>
           <path
             className={classes.progress}
             style={style}
-            d={pathString}
+
           />
         </g>
       </svg>
@@ -120,6 +164,7 @@ class Tree extends Component {
 
     return (
       <div
+        key={i}
         className={itemClass}
         onMouseOver={() => {
           this.onMouseOver(t, i);
@@ -129,7 +174,7 @@ class Tree extends Component {
       >
         <div className={classes.itemCol}>
           <img src={thumbUrl} className={classes.image} />
-          <p className={classes.title}>{tObj.title}</p>
+          <span className={classes.title}>{tObj.title}</span>
         </div>
         <div className={classes.itemCol}>
           <div className={classes.graphics}>
@@ -140,22 +185,6 @@ class Tree extends Component {
         <div className={classes.itemCol} />
       </div>
     );
-
-    //    <span className={classes.line} />
-    //        <span className={classes.number}>{i}</span>
-
-    // return (
-    //   <Thumb
-    //     key={i}
-    //     index={i}
-    //     data={t}
-    //     xMap={xMap}
-    //     yMap={yMap}
-    //     sizeMap={sizeMap}
-    //     onMouseOver={this.onMouseOver.bind(this)}
-    //     onMouseOut={this.onMouseOut.bind(this)}
-    //   />
-    // );
   }
 
   renderThumbnails(tasks, i) {
@@ -176,9 +205,7 @@ class Tree extends Component {
   }
 
   render() {
-    console.log('render');
     const { tasks, index } = this.props;
-
     const color = COLORS[index];
 
     return (

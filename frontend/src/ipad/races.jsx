@@ -32,7 +32,7 @@ class Races extends Component {
 
     if (!prevState.raceFinish) {
       //  projected race finished
-      const raceFinish = moment(race.get('created_at')).add(2, 'minutes');
+      const raceFinish = moment(race.get('created_at')).add(1, 'minutes');
 
       return {
         now: prevState.now,

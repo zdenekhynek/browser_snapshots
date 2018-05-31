@@ -21,15 +21,6 @@ import classes from './race_chart.css';
 export const formatter = format(',');
 export const ratioFormatter = format('.3f');
 
-export function calculateRatio(d) {
-  const likes = d.get('likes');
-  const dislikes = d.get('dislikes');
-  const total = likes + dislikes;
-  //  1 should be if likes dislikes the same
-  //  0 should be if one of them 0
-  return 1 - Math.abs((likes - dislikes) / total);
-}
-
 export function renderMetricDropdownOption(metric) {
   return (
     <option key={metric.get('id')} value={metric.get('id')}>
@@ -52,56 +43,8 @@ class RaceChart extends Component {
     this.onGuiUpdate = this.onGuiUpdate.bind(this);
   }
 
-  onMetricChange(evt) {
-    this.props.setActiveMetric(evt.target.value);
-  }
-
   onGuiUpdate(data) {
     this.setState({ data });
-  }
-
-  renderMetrics(metrics) {
-    const activeMetric = metrics.find((m) => m.get('active', false));
-
-    return (
-      <div>
-        <select
-          value={activeMetric.get('id')}
-          onChange={this.onMetricChange.bind(this)}
-        >
-          {metrics.map(renderMetricDropdownOption)}
-        </select>
-      </div>
-    );
-  }
-
-  renderAgent(agent, i) {
-    const totals = agent.get('totals');
-
-    const backgroundColor = COLORS[i];
-    const style = { backgroundColor };
-
-    return (
-      <li key={agent.get('name')} className={classes.agent} style={style}>
-        <h3>{agent.get('name')}: {agent.get('gmail')}</h3>
-        <ul>
-          <li>Views: {formatter(totals.get('views'))}</li>
-          <li>Likes: {formatter(totals.get('likes'))}</li>
-          <li>Dislikes: {formatter(totals.get('dislikes'))}</li>
-          <li>Ratio: {ratioFormatter(totals.get('ratio'))}</li>
-        </ul>
-      </li>
-    );
-  }
-
-  renderAgents() {
-    const { agents } = this.props;
-
-    return (
-      <ul className={classes.agents}>
-        {agents.map(this.renderAgent)}
-      </ul>
-    );
   }
 
   renderGui() {
@@ -135,24 +78,7 @@ class RaceChart extends Component {
       `Searched for ${raceKeyword}` : activeRace.get('label');
 
     //  get active metric
-    const activeMetric = data.metric;//  metrics.find((m) => m.get('active'), null, Map()).get('id');
-
-    //  <Link className={classes.link} to={'/viz'}>Start a session</Link>
-    //  <Link className={classes.link} to={backLink}>See the archive</Link>
-    //  {this.renderMetrics(metrics)}
-    //
-    //  <SnakeChart
-    //    type="mosaic"
-    //    tasks={tasks}
-    //    metric={data.metric}
-    //  />
-    //  <SnakeChart type="stack" tasks={tasks} metric={activeMetric} />
-    //  <SnakeChart type="pizza" tasks={tasks} metric={activeMetric} />
-    //  <SnakeChart type="grid" tasks={tasks} metric={activeMetric} />
-    //  <SnakeChart tasks={tasks} metric={activeMetric} />
-    //  <Chart tasks={tasks} />
-    //  <RadialChart tasks={tasks} />
-    //  {this.renderAgents()}
+    const activeMetric = data.metric;
 
     //{gui}
 
@@ -190,32 +116,17 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();
 
-  let raceAgents = agents.get('available').filter((a) => {
+  const raceAgents = agents.get('available', List()).filter((a) => {
     return agentsIds.includes(a.get('id'));
   });
 
   //  convert from id based orderedmap to normal list
   const flattenedTasks = tasks.reduce((acc, t) => {
-    const newT = t.map((d) => d.set('ratio', calculateRatio(d)));
-
-    //  want the oldest first
-    const reversedTasks = newT;
-    return acc.push(reversedTasks);
+    return acc.push(t);
   }, List());
 
-  const totals = flattenedTasks.map((t) => {
-    const total = new Map({
-      views: sum(t, 'views'),
-      likes: sum(t, 'likes'),
-      dislikes: sum(t, 'dislikes'),
-      ratio: sum(t, 'ratio') / t.size,
-    });
-    return total;
-  }, List());
-
-  raceAgents = raceAgents.map((a, i) => {
-    return a.set('totals', totals.get(i));
-  });
+  console.log('state', agents, races);
+  console.log('tasks', flattenedTasks);
 
   return {
     activeRace,

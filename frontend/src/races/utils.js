@@ -2,6 +2,8 @@
 import { scaleLinear } from 'd3-scale';
 import { Map, List } from 'immutable';
 
+import thumb from '../assets/images/thumb.jpg';
+
 export function getTemperature(video) {
   const { likes, dislikes } = video;
   const total = likes + (dislikes * 2);
@@ -51,7 +53,8 @@ export function getIdFromUrl(url) {
 
 export function getVideoThumbnail(url) {
   const videoId = getIdFromUrl(url);
-  return `https://img.youtube.com/vi/${videoId}/0.jpg`;
+  return thumb;
+  //  return `https://img.youtube.com/vi/${videoId}/0.jpg`;
   //  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 }
 
@@ -133,6 +136,10 @@ export function getPollution(video) {
 }
 
 export function sumByProp(list, propName) {
+  if (!list) {
+    return 0;
+  }
+
   return list.reduce((acc, x) => {
     const value = x.get(propName, 0);
     const number = (isNaN(value)) ? 0 : value;
@@ -143,7 +150,7 @@ export function sumByProp(list, propName) {
 export function getProfileResults(videos) {
   const metrics = List(['temperature', 'pollution', 'noise']);
 
-  const videoLen = videos.size;
+  const videoLen = (videos) ? videos.size : 1;
   return metrics.reduce((acc, metric) => {
     //  get sumByProp
     const sum = sumByProp(videos, metric);

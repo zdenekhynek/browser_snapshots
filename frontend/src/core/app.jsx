@@ -40,6 +40,23 @@ export function App(props, { store }) {
             //  no ws on this route so request data manually
             store.dispatch(updateRace(+raceId));
 
+            let limit = 0;
+            let interval;
+
+            interval = setInterval(() => {
+              if (limit < 30) {
+                limit += 3;
+              } else {
+                limit = 0;
+              }
+
+              // if (limit > 100) {
+              //   clearInterval(interval);
+              // }
+
+              store.dispatch(updateRace(+raceId, limit));
+            }, 3000);
+
             return (<Races raceId={+raceId} />);
           }}
           />

@@ -1,6 +1,7 @@
 /* global WebSocket */
 
 let socket;
+let reconnectInterval;
 
 export function getSocketServer(window, group) {
   const { host } = window.location;
@@ -28,8 +29,21 @@ export function addSocketCallbacks(socket, onMessage) {
     onMessage(JSON.parse(e.data));
   };
 
+  socket.onopen = (e) => {
+    //  got the connection, clear any pending intervals
+    clearInterval(reconnectInterval);
+  };
+
   socket.onclose = (e) => {
     console.error('Chat socket closed unexpectedly');
+
+    //  try to reconnect
+    initSocket(onMessage);
+
+    //  setup interval trying to reconnect
+    reconnectInterval = setInterval(() => {
+      initSocket(onMessage);
+    }, 1000);
   };
 }
 

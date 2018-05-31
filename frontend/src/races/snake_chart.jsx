@@ -10,11 +10,6 @@ import { line, area, curveBasis } from 'd3-shape';
 import { min, max } from 'd3-array';
 
 import { getVideoThumbnail } from './utils';
-import Snake from './snake';
-import Grid from './grid';
-import Pizza from './pizza';
-import Mosaic from './mosaic';
-import Stack from './stack';
 import Tree from './tree';
 import { NUM_STEPS } from './reducer';
 
@@ -56,7 +51,6 @@ class Chart extends Component {
 
     // setup x
     const xProp = nextProps.metric || 'temperature';
-    console.log('xProp', xProp, chartHeight, 'width', width);
     const xValue = (d) => {
       //  return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
       return (d.metric && !Number.isNaN(d.metric)) ? d.metric : 0;
@@ -129,8 +123,6 @@ class Chart extends Component {
 
     //  find out if we need to translate
     const isNewRace = (prevState.raceId !== nextProps.raceId);
-    console.log('prevState.raceId', prevState.raceId, 'nextProps.raceId', nextProps.raceId);
-    console.log('isNewRace', isNewRace);
 
     return {
       raceId: nextProps.raceId,
@@ -249,7 +241,7 @@ class Chart extends Component {
 
   renderTree(t, i) {
     return (
-      <div className={classes.col}>
+      <div key={i} className={classes.col}>
         <div className={classes.innerCol}>
           <Tree
             index={i}
@@ -278,8 +270,6 @@ class Chart extends Component {
 
     const transform = (isNewRace) ? 'translate(0, 0)' : 'translate(0, 0)';
     const style = { transform };
-
-    console.log('transform', transform);
 
     return (
       <div

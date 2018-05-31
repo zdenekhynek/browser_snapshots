@@ -40,9 +40,9 @@ class Desktop extends Component {
     } else if (message === 'race_update') {
       this.props.receiveUpdateRace(socketData.id, socketData);
     } else if (message === 'race_finished') {
-      const finishLink = `/viz/desktop/races/${socketData.id}/results`;
-      history.push(finishLink);
-      this.props.receiveUpdateRace(socketData.id, socketData);
+      // const finishLink = `/viz/desktop/races/${socketData.id}/results`;
+      // history.push(finishLink);
+      // this.props.receiveUpdateRace(socketData.id, socketData);
     } else if (message === 'display_highlights') {
       const highlightLink = `/viz/desktop/highlights/`;
       history.push(highlightLink);
