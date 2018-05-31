@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
   baseUrl: 'http://localhost:8080/',
@@ -22,6 +23,9 @@ module.exports = {
       API_URL: JSON.stringify('http://127.0.0.1:8000/'),
       AGENTS_LIST: JSON.stringify('development'),
     }),
+    new CopyWebpackPlugin([
+      { from: 'frontend/src/assets', to: 'assets' },
+    ]),
   ],
   module: {
     rules: [

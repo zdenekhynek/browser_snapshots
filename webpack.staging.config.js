@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
   baseUrl: 'https://browser-extension-uploads.s3.amazonaws.com/static/dist/',
@@ -22,6 +23,9 @@ module.exports = {
       API_URL: JSON.stringify('https://browser-snapshots.herokuapp.com/'),
       AGENTS_LIST: JSON.stringify('staging'),
     }),
+    new CopyWebpackPlugin([
+      { from: 'frontend/src/assets', to: 'assets' },
+    ]),
   ],
   module: {
     rules: [

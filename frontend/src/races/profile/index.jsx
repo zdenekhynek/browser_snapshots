@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import classes from './profile.css';
 
-import donaldImage from '../../assets/donald.png';
-import gwynethImage from '../../assets/gwyneth.png';
-import julianImage from '../../assets/julian.png';
+import donaldImage from '../../assets/images/donald.png';
+import gwynethImage from '../../assets/images/gwyneth.png';
+import julianImage from '../../assets/images/julian.png';
 
 export const IMAGES = [donaldImage, gwynethImage, julianImage];
 
