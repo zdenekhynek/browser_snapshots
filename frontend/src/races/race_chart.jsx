@@ -135,7 +135,7 @@ class RaceChart extends Component {
       `Searched for ${raceKeyword}` : activeRace.get('label');
 
     //  get active metric
-    const activeMetric = metrics.find((m) => m.get('active'), null, Map()).get('id');
+    const activeMetric = data.metric;//  metrics.find((m) => m.get('active'), null, Map()).get('id');
 
     //  <Link className={classes.link} to={'/viz'}>Start a session</Link>
     //  <Link className={classes.link} to={backLink}>See the archive</Link>
@@ -160,9 +160,7 @@ class RaceChart extends Component {
       <div className={classes.raceChart}>
         <h2>{label}</h2>
         <div className={classes.viz}>
-
           <SnakeChart type="tree" tasks={tasks} metric={activeMetric} />
-
           {gui}
         </div>
       </div>

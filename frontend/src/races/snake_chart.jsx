@@ -60,7 +60,7 @@ class Chart extends Component {
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
-    const xScale = scaleLinear().range([0, chartWidth / 8]);
+    const xScale = scaleLinear().range([0, chartWidth / 10]);
     const xMap = (d) => xScale(xValue(d));
 
     // setup y

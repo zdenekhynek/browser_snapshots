@@ -19,8 +19,8 @@ export const ratioFormatter = format('.3f');
 
 export const COLORS = [
   '#FF5822',
-  '#D9E2DA',
   '#05ACB4',
+  '#D9E2DA',
 ];
 
 export const MARGIN = { top: 20, right: 20, bottom: 30, left: 40 };
@@ -48,12 +48,6 @@ class Tree extends Component {
     //  double it
     const points = task.toJS();
 
-    // console.log('yValue', task);
-    // points.forEach((p, i) => {
-    //   console.log('p', p, p.title, p.temperature, i);
-    //   console.log('y', yMap(p, i), 'x', xMap(p));
-    // });
-
     // points = points.reduce((acc, data) => {
     //   acc.push(data);
     //   acc.push(data);
@@ -61,7 +55,6 @@ class Tree extends Component {
     // }, []);
 
     const pathString = areaFn(points);
-
     const fill = COLORS[index];
 
     const svgClass = (flipped) ? classes.svgFlipped : classes.svg;
@@ -158,8 +151,6 @@ class Tree extends Component {
 
   render() {
     const { tasks, index } = this.props;
-
-    console.log('index', index);
 
     return (
       <div className={classes.tree}>

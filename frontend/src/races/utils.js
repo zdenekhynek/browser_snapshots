@@ -7,6 +7,10 @@ export function getTemperature(video) {
   const total = likes + (dislikes * 2);
   const engagement = 1 - Math.abs((likes - dislikes * 2) / total);
 
+  if (isNaN(engagement)) {
+    return 0;
+  }
+
   return engagement * 100;
 }
 
