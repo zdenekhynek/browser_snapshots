@@ -154,6 +154,8 @@ class RaceChart extends Component {
     //  <RadialChart tasks={tasks} />
     //  {this.renderAgents()}
 
+    //{gui}
+
     const gui = this.renderGui();
 
     return (
@@ -161,7 +163,7 @@ class RaceChart extends Component {
         <h2>{label}</h2>
         <div className={classes.viz}>
           <SnakeChart type="tree" tasks={tasks} metric={activeMetric} />
-          {gui}
+
         </div>
       </div>
     );

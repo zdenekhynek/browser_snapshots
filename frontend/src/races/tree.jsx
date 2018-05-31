@@ -43,17 +43,16 @@ class Tree extends Component {
     this.props.onMouseOut();
   }
 
-  renderPath(task, index, flipped = false) {
+  renderPath(task, index, metric = 'temperature', flipped = false) {
     const { areaFn, yMap, xMap } = this.props;
 
     //  double it
-    const points = task.toJS();
-
-    // points = points.reduce((acc, data) => {
-    //   acc.push(data);
-    //   acc.push(data);
-    //   return acc;
-    // }, []);
+    let points = task.toJS();
+    points = points.reduce((acc, data) => {
+      data.metric = data[metric];
+      acc.push(data);
+      return acc;
+    }, []);
 
     const pathString = areaFn(points);
     const fill = COLORS[index];
@@ -150,6 +149,15 @@ class Tree extends Component {
     );
   }
 
+  renderPaths(tasks, index, metric = 'temperature') {
+    return (
+      <div className={classes.svgWrapper}>
+        {this.renderPath(tasks, index, metric)}
+        {this.renderPath(tasks, index, metric, true)}
+      </div>
+    );
+  }
+
   render() {
     const { tasks, index } = this.props;
 
@@ -159,10 +167,9 @@ class Tree extends Component {
       <div className={classes.tree}>
         <Profile index={index} color={color} />
         <div className={classes.viz}>
-          <div className={classes.svgWrapper}>
-            {this.renderPath(tasks, index)}
-            {this.renderPath(tasks, index, true)}
-          </div>
+          {this.renderPaths(tasks, index, 'temperature')}
+          {this.renderPaths(tasks, index, 'noise')}
+          {this.renderPaths(tasks, index, 'pollution')}
           <div>
             {this.renderThumbnails(tasks)}
           </div>

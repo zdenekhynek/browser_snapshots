@@ -58,7 +58,8 @@ class Chart extends Component {
     const xProp = nextProps.metric || 'temperature';
     console.log('xProp', xProp, chartHeight, 'width', width);
     const xValue = (d) => {
-      return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
+      //  return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
+      return (d.metric && !Number.isNaN(d.metric)) ? d.metric : 0;
     };
     const xScale = scaleLinear().range([0, chartWidth / 10]);
     const xMap = (d) => xScale(xValue(d));
