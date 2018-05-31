@@ -3,6 +3,9 @@
   width: 100%;
   height: 90vh;
   overflow: hidden;
+  transition: 60s;
+  transform: translatate(0, 86vh);
+  transition-timing-function: linear;
 }
 
 .col {

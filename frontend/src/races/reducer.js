@@ -56,7 +56,7 @@ export function addMetrics(tasks) {
   let sumTemperature = 0;
   let numTemperatures = 0;
 
-  const newTasks = tasks.map((t, i) => {
+  let newTasks = tasks.map((t, i) => {
     const tObj = t.toJS();
 
     const temperature = getTemperature(tObj);
@@ -88,6 +88,9 @@ export function addMetrics(tasks) {
       .set('engagementRatio', getEngagementRatio(tObj))
       .set('sentiment', getSentiment(tObj));
   });
+
+  //  slice the tasks
+  //  newTasks = newTasks.slice(0, 3);
 
   //   limit the amount of steps
   const slicedTasks = newTasks.slice(0, NUM_STEPS);

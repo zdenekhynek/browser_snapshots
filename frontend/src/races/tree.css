@@ -121,4 +121,5 @@
 .progress {
   fill: #FBB03B;
   fill-opacity: .3;
+  stroke-dasharray: 10,10;
 }

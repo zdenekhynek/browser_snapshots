@@ -12,6 +12,7 @@ import Thumb from './thumb';
 import Profile from './profile';
 import { NUM_STEPS } from './reducer';
 import { getVideoThumbnail } from './utils';
+import { getAreaChartDefs } from './patterns.jsx';
 
 import classes from './tree.css';
 
@@ -55,16 +56,32 @@ class Tree extends Component {
     }, []);
 
     const pathString = areaFn(points);
-    const fill = COLORS[index];
-
     const svgClass = (flipped) ? classes.svgFlipped : classes.svg;
+
+    let style = {};
+    let stroke = '';
+    let fill = 'none';
+
+    if (metric === 'pollution') {
+      stroke = COLORS[index];
+      style = { stroke, fill };
+    } else if (metric === 'temperature') {
+      fill = `url(#diagonalHatch-${index})`;
+      style = { fill };
+    } else {
+      fill = COLORS[index];
+      style = { fill };
+    }
+
+    console.log('style', style);
 
     return (
       <svg className={svgClass}>
+        {getAreaChartDefs(index, COLORS[index])}
         <g>
           <path
             className={classes.progress}
-            style={{ fill }}
+            style={style}
             d={pathString}
           />
         </g>
@@ -159,6 +176,7 @@ class Tree extends Component {
   }
 
   render() {
+    console.log('render');
     const { tasks, index } = this.props;
 
     const color = COLORS[index];

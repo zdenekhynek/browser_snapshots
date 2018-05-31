@@ -162,8 +162,12 @@ class RaceChart extends Component {
       <div className={classes.raceChart}>
         <h2>{label}</h2>
         <div className={classes.viz}>
-          <SnakeChart type="tree" tasks={tasks} metric={activeMetric} />
-
+          <SnakeChart
+            raceId={raceId}
+            type="tree"
+            tasks={tasks}
+            metric={activeMetric}
+          />
         </div>
       </div>
     );

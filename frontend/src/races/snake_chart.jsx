@@ -69,6 +69,9 @@ class Chart extends Component {
     const yScale = scaleLinear().range([0, chartHeight]); // value -> display
     const yMap = (d) => yScale(yValue(d));
 
+    const transformScale = scaleLinear().range([0, 85]);
+    transformScale.domain([0, NUM_STEPS]);
+
     const sizeValue = (d) => {
       return 150;
       //  return (d.views && !Number.isNaN(d.views)) ? d.views : 150;
@@ -124,7 +127,14 @@ class Chart extends Component {
       .y1(xMap)
       .curve(curveBasis);
 
+    //  find out if we need to translate
+    const isNewRace = (prevState.raceId !== nextProps.raceId);
+    console.log('prevState.raceId', prevState.raceId, 'nextProps.raceId', nextProps.raceId);
+    console.log('isNewRace', isNewRace);
+
     return {
+      raceId: nextProps.raceId,
+      isNewRace,
       xMap,
       yMap,
       sizeMap,
@@ -139,6 +149,7 @@ class Chart extends Component {
 
     this.state = {
       tooltip: null,
+      raceId: null,
     };
 
     this.chart = null;
@@ -254,15 +265,27 @@ class Chart extends Component {
 
   render() {
     const { tasks, type } = this.props;
-    const { tooltip } = this.state;
+    const { isNewRace, tooltip } = this.state;
 
     const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
     const renderFn = this.renderTree;
+
+    if (isNewRace) {
+      setTimeout(() => {
+        this.setState({ isNewRace: false });
+      }, 750);
+    }
+
+    const transform = (isNewRace) ? 'translate(0, 0)' : 'translate(0, 0)';
+    const style = { transform };
+
+    console.log('transform', transform);
 
     return (
       <div
         ref={(el) => this.chart = el}
         className={classes.chart}
+        style={style}
       >
         {tasks.map(renderFn.bind(this))}
         {renderedTooltip}
