@@ -53,8 +53,9 @@ export function getIdFromUrl(url) {
 
 export function getVideoThumbnail(url) {
   const videoId = getIdFromUrl(url);
-  return thumb;
-  //  return `https://img.youtube.com/vi/${videoId}/0.jpg`;
+
+  //  return thumb;
+  return `https://img.youtube.com/vi/${videoId}/0.jpg`;
   //  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 }
 

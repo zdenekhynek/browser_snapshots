@@ -10,6 +10,7 @@
 
 .col {
   flex: 33% 0 0;
+  width: 33%;
 }
 
 .innerCol {

@@ -38,24 +38,20 @@ export function App(props, { store }) {
             const { raceId } = params;
 
             //  no ws on this route so request data manually
-            store.dispatch(updateRace(+raceId));
+            store.dispatch(updateRace(+raceId, 1000));
 
-            let limit = 0;
-            let interval;
+            // let limit = 0;
+            // let interval;
 
-            interval = setInterval(() => {
-              if (limit < 30) {
-                limit += 3;
-              } else {
-                limit = 0;
-              }
+            // interval = setInterval(() => {
+            //   if (limit < 30) {
+            //     limit += 3;
+            //   } else {
+            //     limit = 0;
+            //   }
 
-              // if (limit > 100) {
-              //   clearInterval(interval);
-              // }
-
-              store.dispatch(updateRace(+raceId, limit));
-            }, 3000);
+            //   store.dispatch(updateRace(+raceId, limit));
+            // }, 3000);
 
             return (<Races raceId={+raceId} />);
           }}

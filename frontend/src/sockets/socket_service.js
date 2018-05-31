@@ -39,6 +39,7 @@ export function addSocketCallbacks(socket, onMessage) {
 
     //  try to reconnect
     initSocket(onMessage);
+    clearInterval(reconnectInterval);
 
     //  setup interval trying to reconnect
     reconnectInterval = setInterval(() => {

@@ -63,10 +63,8 @@ export function updateRace(raceId, limit = 0) {
     dispatch(requestUpdateRace());
     dao.updateRace(raceId)
       .then((response) => {
-        console.log('response', response);
         //  TEMP
-        response.tasks = response.tasks.slice(0, limit);
-        console.log('response new', response);
+        //  response.tasks = response.tasks.slice(0, limit);
 
         dispatch(receiveUpdateRace(raceId, response || {}));
       })

@@ -268,7 +268,7 @@ class Chart extends Component {
       }, 750);
     }
 
-    const transform = (isNewRace) ? 'translate(0, 0)' : 'translate(0, 0)';
+    const transform = (isNewRace) ? 'translate(0, 88vh)' : 'translate(0, 0)';
     const style = { transform };
 
     return (

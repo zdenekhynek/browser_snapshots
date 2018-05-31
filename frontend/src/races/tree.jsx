@@ -8,6 +8,7 @@ import { scaleLinear } from 'd3-scale';
 import { line, curveBasis } from 'd3-shape';
 import { min, max } from 'd3-array';
 import { transition } from 'd3-transition';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Thumb from './thumb';
 import Profile from './profile';
@@ -81,7 +82,7 @@ class Tree extends Component {
     const selection = select(el).selectAll(`.${classes.progress}`)
       .data(points);
 
-    selection.transition().attr('d', (d) => {
+    selection.transition().duration(1000).attr('d', (d) => {
       return pathString;
     });
   }
@@ -115,9 +116,7 @@ class Tree extends Component {
       style = { fill };
     }
 
-    const flippedKey = (flipped)? 'flipped' : 'not-flipped';
-
-    console.log('metric', metric);
+    const flippedKey = (flipped) ? 'flipped' : 'not-flipped';
 
     return (
       <svg className={svgClass}>
@@ -126,7 +125,6 @@ class Tree extends Component {
           <path
             className={classes.progress}
             style={style}
-
           />
         </g>
       </svg>
@@ -190,7 +188,20 @@ class Tree extends Component {
   renderThumbnails(tasks, i) {
     return (
       <div key={i} className={classes.thumbs}>
-        {tasks.map(this.renderThumbnail.bind(this))}
+        <ReactCSSTransitionGroup
+          transitionName={{
+            enter: classes.exampleEnter,
+            enterActive: classes.exampleEnterActive,
+            leave: classes.exampleLeave,
+            leaveActive: classes.exampleLeaveActive,
+            appear: 'appear',
+            appearActive: 'appearActive',
+          }}
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
+          {tasks.map(this.renderThumbnail.bind(this))}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

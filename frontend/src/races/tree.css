@@ -54,11 +54,15 @@
 
 .title {
   display: block;
-  width: 100px;
+  width: 100%;
   margin-top: 0px;
   font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
-
 
 .graphics {
   position: relative;
@@ -126,3 +130,35 @@
   fill-opacity: .3;
   stroke-dasharray: 10,10;
 }
+
+/**
+ * TRANSITIONS
+ */
+
+.exampleEnter {
+  opacity: 0.01;
+}
+
+.exampleEnter.exampleEnterActive {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.exampleLeaveActive {
+  opacity: 1;
+}
+
+.exampleLeave.exampleLeaveActive {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+/*
+.exampleEnter .itemCol {
+  transition: 50s all;
+  transform: translate(100px, 0);
+}
+
+.exampleEnterActive .itemCol {
+  transform: translate(0, 0);
+}
+*/
