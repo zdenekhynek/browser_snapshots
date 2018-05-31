@@ -1,7 +1,8 @@
 .chart {
   display: flex;
   width: 100%;
-  height: 200vh;
+  height: 60vh;
+  overflow: hidden;
 }
 
 .col {
@@ -11,8 +12,7 @@
 .innerCol {
   width: 100%;
   height: 100%;
-  min-width: 600px;
-  padding: 0 150px;
+  padding: 0 15%;
   box-sizing: border-box;
 }
 

@@ -5,7 +5,7 @@ import sizeMe from 'react-sizeme';
 import { select, event } from 'd3-selection';
 import { format } from 'd3-format';
 import { scaleLinear } from 'd3-scale';
-import { line } from 'd3-shape';
+import { line, curveBasis } from 'd3-shape';
 import { min, max } from 'd3-array';
 
 import Thumb from './thumb';
@@ -42,6 +42,39 @@ class Tree extends Component {
     this.props.onMouseOut();
   }
 
+  renderPath(task, flipped = false) {
+    const { areaFn, areaFn2 } = this.props;
+
+    //  double it
+    const points = task.toJS();
+
+    // points = points.reduce((acc, data) => {
+    //   acc.push(data);
+    //   acc.push(data);
+    //   return acc;
+    // }, []);
+
+    const pathString = areaFn(points);
+
+    //  const stroke = COLORS[i];
+
+    const svgClass = (flipped) ? classes.svgFlipped : classes.svg;
+
+    console.log('svgClass', svgClass, flipped);
+
+    return (
+      <svg className={svgClass}>
+        <g>
+          <path
+            className={classes.progress}
+            /* style={{ stroke }} */
+            d={pathString}
+          />
+        </g>
+      </svg>
+    );
+  }
+
   renderThumbnail(t, i) {
     const { xMap, yMap, sizeMap, colorMap } = this.props;
 
@@ -74,7 +107,7 @@ class Tree extends Component {
         <div className={classes.itemCol}>
           <div className={classes.graphics}>
             <span className={lineClass} />
-            <span className={classes.number}>{i}</span>
+            <span className={classes.number}>{i + 1}</span>
           </div>
         </div>
         <div className={classes.itemCol} />
@@ -99,10 +132,9 @@ class Tree extends Component {
   }
 
   renderThumbnails(tasks, i) {
-    const tasksLen = tasks.size;
     return (
       <div key={i} className={classes.thumbs}>
-        {tasks.map((t, i) => this.renderThumbnail(t, tasksLen - i))}
+        {tasks.map(this.renderThumbnail.bind(this))}
       </div>
     );
   }
@@ -112,7 +144,13 @@ class Tree extends Component {
 
     return (
       <div className={classes.tree}>
-        {this.renderThumbnails(tasks.reverse())}
+        <div className={classes.svgWrapper}>
+          {this.renderPath(tasks)}
+          {this.renderPath(tasks, true)}
+        </div>
+        <div>
+          {this.renderThumbnails(tasks.reverse())}
+        </div>
       </div>
     );
   }

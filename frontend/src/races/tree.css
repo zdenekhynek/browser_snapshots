@@ -8,12 +8,7 @@
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column-reverse;
-}
-
-.progress {
-  stroke: gray;
-  fill: none;
+  flex-direction: column;
 }
 
 .item {
@@ -96,3 +91,28 @@
   font-size: 20px;
 }
 
+.svgWrapper {
+  position: absolute;
+  width: 10000px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+}
+
+.svgFlipped {
+  composes: svg;
+  transform: rotate(90deg) scaleY(-1);
+}
+
+.progress {
+  fill: #FBB03B;
+}
