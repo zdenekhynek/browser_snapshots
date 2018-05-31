@@ -18,10 +18,9 @@ export const formatter = format(',');
 export const ratioFormatter = format('.3f');
 
 export const COLORS = [
-  '#AA3939',
-  '#AA6C39',
-  '#226666',
-  '#2D882D',
+  '#FF5822',
+  '#D9E2DA',
+  '#05ACB4',
 ];
 
 export const MARGIN = { top: 20, right: 20, bottom: 30, left: 40 };
@@ -43,7 +42,7 @@ class Tree extends Component {
     this.props.onMouseOut();
   }
 
-  renderPath(task, flipped = false) {
+  renderPath(task, index, flipped = false) {
     const { areaFn, yMap, xMap } = this.props;
 
     //  double it
@@ -63,7 +62,7 @@ class Tree extends Component {
 
     const pathString = areaFn(points);
 
-    //  const stroke = COLORS[i];
+    const fill = COLORS[index];
 
     const svgClass = (flipped) ? classes.svgFlipped : classes.svg;
 
@@ -72,7 +71,7 @@ class Tree extends Component {
         <g>
           <path
             className={classes.progress}
-            /* style={{ stroke }} */
+            style={{ fill }}
             d={pathString}
           />
         </g>
@@ -158,13 +157,15 @@ class Tree extends Component {
   }
 
   render() {
-    const { tasks } = this.props;
+    const { tasks, index } = this.props;
+
+    console.log('index', index);
 
     return (
       <div className={classes.tree}>
         <div className={classes.svgWrapper}>
-          {this.renderPath(tasks)}
-          {this.renderPath(tasks, true)}
+          {this.renderPath(tasks, index)}
+          {this.renderPath(tasks, index, true)}
         </div>
         <div>
           {this.renderThumbnails(tasks)}

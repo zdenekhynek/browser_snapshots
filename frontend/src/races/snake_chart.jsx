@@ -30,7 +30,7 @@ export const COLORS = [
   '#2D882D',
 ];
 
-export const MARGIN = { top: 0, right: 150, bottom: 0, left: 150 };
+export const MARGIN = { top: 0, right: 0, bottom: 0, left: 0 };
 
 export function getWidth(width) {
   return (width / 3);
@@ -56,11 +56,11 @@ class Chart extends Component {
 
     // setup x
     const xProp = nextProps.metric || 'temperature';
-    console.log('xProp', xProp, chartHeight);
+    console.log('xProp', xProp, chartHeight, 'width', width);
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
-    const xScale = scaleLinear().range([0, chartWidth / 4]);
+    const xScale = scaleLinear().range([0, chartWidth / 8]);
     const xMap = (d) => xScale(xValue(d));
 
     // setup y
@@ -236,7 +236,6 @@ class Chart extends Component {
   }
 
   renderTree(t, i) {
-    console.log('t!!', t);
     return (
       <div className={classes.col}>
         <div className={classes.innerCol}>
