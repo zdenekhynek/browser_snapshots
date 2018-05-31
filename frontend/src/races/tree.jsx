@@ -9,6 +9,7 @@ import { line, curveBasis } from 'd3-shape';
 import { min, max } from 'd3-array';
 
 import Thumb from './thumb';
+import { NUM_STEPS } from './reducer';
 import { getVideoThumbnail } from './utils';
 
 import classes from './tree.css';
@@ -43,10 +44,16 @@ class Tree extends Component {
   }
 
   renderPath(task, flipped = false) {
-    const { areaFn, areaFn2 } = this.props;
+    const { areaFn, yMap, xMap } = this.props;
 
     //  double it
     const points = task.toJS();
+
+    // console.log('yValue', task);
+    // points.forEach((p, i) => {
+    //   console.log('p', p, p.title, p.temperature, i);
+    //   console.log('y', yMap(p, i), 'x', xMap(p));
+    // });
 
     // points = points.reduce((acc, data) => {
     //   acc.push(data);
@@ -59,8 +66,6 @@ class Tree extends Component {
     //  const stroke = COLORS[i];
 
     const svgClass = (flipped) ? classes.svgFlipped : classes.svg;
-
-    console.log('svgClass', svgClass, flipped);
 
     return (
       <svg className={svgClass}>
@@ -76,7 +81,18 @@ class Tree extends Component {
   }
 
   renderThumbnail(t, i) {
-    const { xMap, yMap, sizeMap, colorMap } = this.props;
+    const { xMap, yMap, sizeMap, colorMap, size } = this.props;
+
+    //  check if it's bogus first or last point
+    if (!t.has('id')) {
+      // point there just for an area chart
+      return '';
+    }
+
+    //  get height of the thumbnail
+    const height = size.height / (NUM_STEPS / 1.25);
+    const marginBottom = `-${height / 4}px`;
+    const style = { height, marginBottom };
 
     const thumbUrl = getVideoThumbnail(t.get('url'));
     const backgroundImage = `url(${thumbUrl})`;
@@ -86,8 +102,8 @@ class Tree extends Component {
     const imageStyle = { backgroundImage };
 
     const even = i % 2 === 0;
-    const itemClass = (even) ? classes.item : classes.itemRight;
-    const lineClass = (even) ? classes.line : classes.lineRight;
+    const itemClass = (!even) ? classes.item : classes.itemRight;
+    const lineClass = (!even) ? classes.line : classes.lineRight;
     const titleClass = classes.title;// (even) ? classes.title : classes.titleRight;
 
     const color = colorMap(tObj);
@@ -100,14 +116,16 @@ class Tree extends Component {
           this.onMouseOver(t, i);
         }}
         onMouseOut={this.onMouseOut.bind(this)}
+        style={style}
       >
         <div className={classes.itemCol}>
           <img src={thumbUrl} className={classes.image} />
+          <p className={classes.title}>{tObj.title}</p>
         </div>
         <div className={classes.itemCol}>
           <div className={classes.graphics}>
             <span className={lineClass} />
-            <span className={classes.number}>{i + 1}</span>
+            <span className={classes.number}>{i}</span>
           </div>
         </div>
         <div className={classes.itemCol} />
@@ -149,7 +167,7 @@ class Tree extends Component {
           {this.renderPath(tasks, true)}
         </div>
         <div>
-          {this.renderThumbnails(tasks.reverse())}
+          {this.renderThumbnails(tasks)}
         </div>
       </div>
     );

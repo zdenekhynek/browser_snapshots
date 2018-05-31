@@ -16,6 +16,7 @@ import Pizza from './pizza';
 import Mosaic from './mosaic';
 import Stack from './stack';
 import Tree from './tree';
+import { NUM_STEPS } from './reducer';
 
 import classes from './snake_chart.css';
 
@@ -36,100 +37,6 @@ export function getWidth(width) {
 }
 
 class Chart extends Component {
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   const { tasks, size } = nextProps;
-  //   const { width, height } = size;
-
-  //   const data = tasks.reduce((acc, t, i) => {
-  //     const newT = t.map((d) => {
-  //       return d.set('index', i);
-  //     });
-
-  //     acc.push(newT.toJS());
-  //     return acc;
-  //   }, []);
-
-  //   //  just width of the columns
-  //   const chartWidth = getWidth(width) - MARGIN.left - MARGIN.right;
-  //   const chartHeight = height - MARGIN.top - MARGIN.bottom;
-
-  //   // setup x
-  //   const xProp = nextProps.metric || 'temperature';
-  //   const xValue = (d) => {
-  //     return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
-  //   };
-  //   const xScale = scaleLinear().range([0, chartWidth]);
-  //   const xMap = (d) => xScale(xValue(d));
-
-  //   // setup y
-  //   const yValue = (d, i) => i;
-  //   const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
-  //   const yMap = (d, i) => yScale(yValue(d, i));
-
-  //   const sizeValue = (d) => {
-  //     return 150;
-  //     //  return (d.views && !Number.isNaN(d.views)) ? d.views : 150;
-  //   };
-  //   const sizeScale = scaleLog().range([60, 180]);
-  //   const sizeMap = (d) => sizeScale(sizeValue(d));
-
-  //   let colorIndex = -1;
-  //   const colorScale = interpolateLab('#ffffff', '#ff00fa');
-  //   const colorMap = (d) => {
-  //     if (typeof d.index !== 'undefined') {
-  //       return COLORS[d.index];
-  //     }
-
-  //     const x = xMap(d);
-  //     const portion = x / chartWidth;
-
-  //     return colorScale(portion);
-  //   };
-
-  //   // don't want dots overlapping axis, so add in buffer to data domain
-  //   const flattenedData = data.reduce((acc, d) => {
-  //     return acc.concat(d);
-  //   }, []);
-  //   const dataLens = data.map((d) => {
-  //     return d.length;
-  //   });
-
-  //   xScale.domain([
-  //     //  just hardcode when using custom ration
-  //     0,
-  //     100,
-  //     //  min(flattenedData, yValue),
-  //     //  max(flattenedData, yValue),
-  //   ]);
-
-  //   //  yScale.domain([-1, max(dataLens) + 1]);
-  //   //  hardcoded y-value domain
-  //   yScale.domain([-1, 22]);
-
-  //   sizeScale.domain([
-  //     min(flattenedData, sizeValue) - 1,
-  //     max(flattenedData, sizeValue) + 1,
-  //   ]);
-
-  //   const lineFn = line()
-  //     .x(xMap)
-  //     .y(yMap);
-
-  //   const areaFn = area()
-  //     .x(yMap)
-  //     .y0(0)
-  //     .y1(xMap);
-
-  //   return {
-  //     xMap,
-  //     yMap,
-  //     sizeMap,
-  //     colorMap,
-  //     lineFn,
-  //     areaFn,
-  //   };
-  // }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     const { tasks, size } = nextProps;
     const { width, height } = size;
@@ -149,6 +56,7 @@ class Chart extends Component {
 
     // setup x
     const xProp = nextProps.metric || 'temperature';
+    console.log('xProp', xProp, chartHeight);
     const xValue = (d) => {
       return (d[xProp] && !Number.isNaN(d[xProp])) ? d[xProp] : 0;
     };
@@ -156,9 +64,9 @@ class Chart extends Component {
     const xMap = (d) => xScale(xValue(d));
 
     // setup y
-    const yValue = (d, i) => i;
-    const yScale = scaleLinear().range([chartHeight, 0]); // value -> display
-    const yMap = (d, i) => yScale(yValue(d, i));
+    const yValue = (d) => d.index;
+    const yScale = scaleLinear().range([0, chartHeight]); // value -> display
+    const yMap = (d) => yScale(yValue(d));
 
     const sizeValue = (d) => {
       return 150;
@@ -198,7 +106,7 @@ class Chart extends Component {
 
     //  yScale.domain([-1, max(dataLens) + 1]);
     //  hardcoded y-value domain
-    yScale.domain([-1, 20]);
+    yScale.domain([-0.5, NUM_STEPS - 0.5]);
 
     sizeScale.domain([
       min(flattenedData, sizeValue) - 1,
@@ -327,93 +235,14 @@ class Chart extends Component {
     );
   }
 
-  renderSnake(t, i) {
-    return (
-      <div className={classes.col}>
-        <div className={classes.innerCol}>
-          <Snake
-            index={i}
-            tasks={t.reverse()}
-            onMouseOver={this.onMouseOver.bind(this)}
-            onMouseOut={this.onMouseOut.bind(this)}
-            {...this.state}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  renderGrid(t, i) {
-    return (
-      <div className={classes.col}>
-        <div className={classes.innerCol}>
-          <Grid
-            index={i}
-            tasks={t.reverse()}
-            onMouseOver={this.onMouseOver.bind(this)}
-            onMouseOut={this.onMouseOut.bind(this)}
-            {...this.state}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  renderPizza(t, i) {
-    return (
-      <div className={classes.col}>
-        <div className={classes.innerCol}>
-          <Pizza
-            index={i}
-            tasks={t.reverse()}
-            onMouseOver={this.onMouseOver.bind(this)}
-            onMouseOut={this.onMouseOut.bind(this)}
-            {...this.state}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  renderMossaic(t, i) {
-    return (
-      <div className={classes.col}>
-        <div className={classes.innerCol}>
-          <Mosaic
-            index={i}
-            tasks={t}
-            onMouseOver={this.onMouseOver.bind(this)}
-            onMouseOut={this.onMouseOut.bind(this)}
-            {...this.state}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  renderStack(t, i) {
-    return (
-      <div className={classes.col}>
-        <div className={classes.innerCol}>
-          <Stack
-            index={i}
-            tasks={t.reverse()}
-            onMouseOver={this.onMouseOver.bind(this)}
-            onMouseOut={this.onMouseOut.bind(this)}
-            {...this.state}
-          />
-        </div>
-      </div>
-    );
-  }
-
   renderTree(t, i) {
+    console.log('t!!', t);
     return (
       <div className={classes.col}>
         <div className={classes.innerCol}>
           <Tree
             index={i}
-            tasks={t.reverse()}
+            tasks={t}
             onMouseOver={this.onMouseOver.bind(this)}
             onMouseOut={this.onMouseOut.bind(this)}
             {...this.state}
@@ -428,26 +257,12 @@ class Chart extends Component {
     const { tooltip } = this.state;
 
     const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
-
-    let renderFn = this.renderSnake;
-
-    if (type === 'grid') {
-      renderFn = this.renderGrid;
-    } else if (type === 'pizza') {
-      renderFn = this.renderPizza;
-    } else if (type === 'mosaic') {
-      renderFn = this.renderMossaic;
-    } else if (type === 'stack') {
-      renderFn = this.renderStack;
-    } else if (type === 'tree') {
-      renderFn = this.renderTree;
-    }
+    const renderFn = this.renderTree;
 
     return (
       <div
         ref={(el) => this.chart = el}
         className={classes.chart}
-        style={style}
       >
         {tasks.map(renderFn.bind(this))}
         {renderedTooltip}

@@ -20,7 +20,7 @@ export const WAITING_STATUS = 'WAITING_STATUS';
 export const IN_PROGRESS_STATUS = 'IN_PROGRESS_STATUS';
 export const FINISHED_STATUS = 'FINISHED_STATUS';
 
-export const NUM_STEPS = 20;
+export const NUM_STEPS = 12;
 
 export function getInitialState() {
   return List();
@@ -56,7 +56,7 @@ export function addMetrics(tasks) {
   let sumTemperature = 0;
   let numTemperatures = 0;
 
-  return tasks.map((t) => {
+  const newTasks = tasks.map((t, i) => {
     const tObj = t.toJS();
 
     const temperature = getTemperature(tObj);
@@ -78,6 +78,7 @@ export function addMetrics(tasks) {
     }
 
     return t
+      .set('index', i)
       .set('temperature', temperature)
       .set('noise', noise)
       .set('pollution', pollution)
@@ -87,6 +88,18 @@ export function addMetrics(tasks) {
       .set('engagementRatio', getEngagementRatio(tObj))
       .set('sentiment', getSentiment(tObj));
   });
+
+  //   limit the amount of steps
+  const slicedTasks = newTasks.slice(0, NUM_STEPS);
+
+  //  insert bogus first point
+  const firstPoint = Map({ index: -0.5 });
+  const lastPoint = Map({ index: NUM_STEPS - 0.5 });
+
+  let enhancedTasks = slicedTasks.unshift(firstPoint);
+  enhancedTasks = enhancedTasks.push(lastPoint);
+
+  return enhancedTasks;
 }
 
 export function sortAgents(a, b) {

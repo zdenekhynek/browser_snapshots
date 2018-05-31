@@ -31,6 +31,10 @@ export function getEngagementRatio(video) {
 }
 
 export function getIdFromUrl(url) {
+  if (!url) {
+    return '';
+  }
+
   let videoId = url.split('v=')[1];
   const ampersandPosition = videoId.indexOf('&');
 
