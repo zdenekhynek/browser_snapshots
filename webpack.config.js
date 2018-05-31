@@ -52,6 +52,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(jpe?g|png|svg|ico|gif)$/i,
+        loader: 'file-loader?name=assets/images/[name].[ext]',
+      },
     ],
   },
   resolve: {

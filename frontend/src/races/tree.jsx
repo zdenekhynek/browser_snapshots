@@ -9,6 +9,7 @@ import { line, curveBasis } from 'd3-shape';
 import { min, max } from 'd3-array';
 
 import Thumb from './thumb';
+import Profile from './profile';
 import { NUM_STEPS } from './reducer';
 import { getVideoThumbnail } from './utils';
 
@@ -82,7 +83,7 @@ class Tree extends Component {
     }
 
     //  get height of the thumbnail
-    const height = size.height / (NUM_STEPS / 1.25);
+    const height = (size.height - 128) / (NUM_STEPS / 1.25);
     const marginBottom = `-${height / 4}px`;
     const style = { height, marginBottom };
 
@@ -152,14 +153,19 @@ class Tree extends Component {
   render() {
     const { tasks, index } = this.props;
 
+    const color = COLORS[index];
+
     return (
       <div className={classes.tree}>
-        <div className={classes.svgWrapper}>
-          {this.renderPath(tasks, index)}
-          {this.renderPath(tasks, index, true)}
-        </div>
-        <div>
-          {this.renderThumbnails(tasks)}
+        <Profile index={index} color={color} />
+        <div className={classes.viz}>
+          <div className={classes.svgWrapper}>
+            {this.renderPath(tasks, index)}
+            {this.renderPath(tasks, index, true)}
+          </div>
+          <div>
+            {this.renderThumbnails(tasks)}
+          </div>
         </div>
       </div>
     );

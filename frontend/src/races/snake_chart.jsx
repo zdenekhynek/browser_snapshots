@@ -30,7 +30,7 @@ export const COLORS = [
   '#2D882D',
 ];
 
-export const MARGIN = { top: 0, right: 0, bottom: 0, left: 0 };
+export const MARGIN = { top: 0, right: 0, bottom: 128, left: 0 };
 
 export function getWidth(width) {
   return (width / 3);
