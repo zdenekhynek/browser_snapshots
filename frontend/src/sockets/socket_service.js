@@ -2,6 +2,7 @@
 
 let socket;
 let reconnectInterval;
+let group;
 
 export function getSocketServer(window, group) {
   const { host } = window.location;
@@ -16,7 +17,8 @@ export function closeSocket(socket) {
   }
 }
 
-export function initSocket(group, onMessage) {
+export function initSocket(groupRef, onMessage) {
+  group = groupRef;
   closeSocket(socket);
 
   const url = getSocketServer(window, group);
@@ -38,13 +40,13 @@ export function addSocketCallbacks(socket, onMessage) {
     console.error('Chat socket closed unexpectedly');
 
     //  try to reconnect
-    initSocket(onMessage);
+    initSocket(group, onMessage);
     clearInterval(reconnectInterval);
 
     //  setup interval trying to reconnect
     reconnectInterval = setInterval(() => {
-      initSocket(onMessage);
-    }, 1000);
+      initSocket(group, onMessage);
+    }, 2000);
   };
 }
 
