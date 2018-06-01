@@ -19,8 +19,8 @@ class Desktop extends Component {
   constructor(props) {
     super(props);
 
-    //  subscribe to the ipad group
-    initSocket('desktop', this.onSocketMessage.bind(this));
+    //  subscribe to the desktop group
+    initSocket(this.onSocketMessage.bind(this));
   }
 
   onSocketMessage(socketData) {

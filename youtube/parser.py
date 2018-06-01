@@ -217,7 +217,7 @@ def parse_snapshot(snapshot):
     url = snapshot.url
     source = snapshot.source_code
 
-    html = BeautifulSoup(source, 'html.parser')
+    # html = BeautifulSoup(source, 'html.parser')
 
     url = snapshot.url
 

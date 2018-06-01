@@ -37,7 +37,7 @@ class CreateSnapshotView(generics.ListCreateAPIView):
         # parse fakebox sentiment
         store_fakebox(snapshot)
 
-        # snapshot_created_signal.send(sender=Snapshot)
+        snapshot_created_signal.send(sender=Snapshot)
 
 
 class DetailsSnapshotView(generics.RetrieveUpdateDestroyAPIView):

@@ -20,7 +20,7 @@ class Ipad extends Component {
     super(props);
 
     //  subscribe to the ipad group
-    initSocket('ipad', this.onSocketMessage.bind(this));
+    initSocket(this.onSocketMessage.bind(this));
   }
 
   onSocketMessage(socketData) {

@@ -29,10 +29,7 @@ class ChatConsumer(WebsocketConsumer):
         # Send message to both groups
         self.send_message_to_groups(text_data_json)
 
-    def send_message_to_groups(self, data, groups=['ipad', 'desktop', 'extension']):
-        print('send_message_to_groups')
-        print(data)
-
+    def send_message_to_groups(self, data, groups=['race']):
         for group in groups:
             async_to_sync(self.channel_layer.group_send)(
                 group,
@@ -44,8 +41,6 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from room group
     def chat_message(self, event):
-        print('chat_message')
-        print(event)
         data = event['data']
 
         # Send message to WebSocket
