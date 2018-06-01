@@ -26,13 +26,21 @@ class Landing extends Component {
     super(props);
 
     const list = AGENTS[AGENTS_LIST].map((a) => a.id);
-    this.state = { mode: 'random', keyword: '', currentAgents: list };
+    this.state = {
+      mode: 'random',
+      keyword: '',
+      customKeyword: '',
+      currentAgents: list,
+    };
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.onCustomKeywordSubmit = this.onCustomKeywordSubmit.bind(this);
+    this.onCustomKeywordClick = this.onCustomKeywordClick.bind(this);
     this.onHighlightLink = this.onHighlightLink.bind(this);
     this.onBackLink = this.onBackLink.bind(this);
     this.onKeywordsLink = this.onKeywordsLink.bind(this);
     this.onKeyword = this.onKeyword.bind(this);
+    this.onKeywordChange = this.onKeywordChange.bind(this);
   }
 
   onSubmit(keyword) {
@@ -50,12 +58,24 @@ class Landing extends Component {
     this.onSubmit(keyword);
   }
 
+  onKeywordChange(evt) {
+    this.setState({ customKeyword: evt.target.value });
+  }
+
   onKeywordsLink() {
     this.setState({ mode: 'keywords' });
   }
 
   onBackLink() {
     this.setState({ mode: 'random' });
+  }
+
+  onCustomKeywordSubmit(evt) {
+    evt.preventDefault();
+  }
+
+  onCustomKeywordClick() {
+    this.onSubmit(this.state.customKeyword);
   }
 
   renderRandomButton() {
@@ -96,6 +116,25 @@ class Landing extends Component {
         <div className={classes.keywords}>
           {KEYWORDS.map(this.renderKeyword.bind(this))}
         </div>
+        <form
+          className={classes.form}
+          onSubmit={this.onCustomKeywordSubmit}
+        >
+          <input
+            type="text"
+            className={classes.input}
+            value={this.state.customKeyword}
+            onChange={this.onKeywordChange}
+            placeholder="Type in keyword"
+          />
+          <button
+            className={classes.link}
+            type="submit"
+            onClick={this.onCustomKeywordClick}
+          >
+            Search for yours
+          </button>
+        </form>
         <button
           className={classes.link}
           onClick={this.onBackLink}

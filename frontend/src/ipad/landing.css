@@ -25,6 +25,17 @@
   box-sizing: border-box;
 }
 
+.form {
+  margin: 50px auto;
+  text-align: center;
+}
+
+.input {
+  width: 260px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
 .highlightLink {
   composes: link;
   background-color: black;
