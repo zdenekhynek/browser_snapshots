@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
+import newrelic.agent
 
 from agents.models import Agent
 from agents.serializers import AgentSerializer
@@ -23,6 +24,7 @@ class CreateSnapshotView(generics.ListCreateAPIView):
     serializer_class = SnapshotSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    @newrelic.agent.background_task()
     def perform_create(self, serializer):
         """Save the post data when creating a new snaphost."""
         snapshot = serializer.save(owner=self.request.user)
