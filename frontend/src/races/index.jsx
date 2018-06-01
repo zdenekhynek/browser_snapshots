@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import RaceChart from './race_chart';
 
-const Races = ({ className, raceId }) => {
+const Races = ({ className, raceId, noAnimation }) => {
   return (
     <div>
-      <RaceChart raceId={raceId} />
+      <RaceChart raceId={raceId} noAnimation={noAnimation} />
     </div>
   );
 };

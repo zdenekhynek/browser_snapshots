@@ -256,7 +256,7 @@ class Chart extends Component {
   }
 
   render() {
-    const { tasks, type } = this.props;
+    const { tasks, type, noAnimation } = this.props;
     const { isNewRace, tooltip } = this.state;
 
     const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
@@ -268,7 +268,8 @@ class Chart extends Component {
       }, 750);
     }
 
-    const transform = (isNewRace) ? 'translate(0, 88vh)' : 'translate(0, 0)';
+    const transform = (isNewRace && !noAnimation) ?
+      'translate(0, 88vh)' : 'translate(0, 0)';
     const style = { transform };
 
     return (

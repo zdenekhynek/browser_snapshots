@@ -62,7 +62,7 @@ class RaceChart extends Component {
   }
 
   render() {
-    const { activeRace, metrics, tasks } = this.props;
+    const { activeRace, metrics, tasks, noAnimation } = this.props;
     const { data } = this.state;
 
     const backLink = `/viz/archive/`;
@@ -93,6 +93,7 @@ class RaceChart extends Component {
             type="tree"
             tasks={tasks}
             metric={activeMetric}
+            noAnimation={noAnimation}
           />
         </div>
       </div>
@@ -110,7 +111,7 @@ export function sum(collection, key) {
   }, 0);
 }
 
-export function mapStateToProps({ agents, metrics, races }, { raceId }) {
+export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimation = false }) {
   const activeRace = races.find((r) => r.get('id', '') === +raceId, null, Map());
 
   const tasks = activeRace.get('tasks', List());
@@ -125,14 +126,12 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
     return acc.push(t);
   }, List());
 
-  console.log('state', agents, races);
-  console.log('tasks', flattenedTasks);
-
   return {
     activeRace,
     agents: raceAgents,
     metrics,
     tasks: flattenedTasks,
+    noAnimation,
   };
 }
 
