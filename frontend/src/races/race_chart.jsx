@@ -111,7 +111,7 @@ export function sum(collection, key) {
   }, 0);
 }
 
-export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimation = false }) {
+export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimation = true }) {
   const activeRace = races.find((r) => r.get('id', '') === +raceId, null, Map());
 
   const tasks = activeRace.get('tasks', List());

@@ -29,15 +29,15 @@ class CreateSnapshotView(generics.ListCreateAPIView):
 
         # parse the snaphost video straight away so that
         # the video stats are immediately available (e.g. for race)
-        # parse_snapshot(snapshot)
+        parse_snapshot(snapshot)
 
         # parse all the sentiment analysis
         # get_sentiment(snapshot)
 
         # parse fakebox sentiment
-        # store_fakebox(snapshot)
+        store_fakebox(snapshot)
 
-        snapshot_created_signal.send(sender=Snapshot)
+        # snapshot_created_signal.send(sender=Snapshot)
 
 
 class DetailsSnapshotView(generics.RetrieveUpdateDestroyAPIView):
