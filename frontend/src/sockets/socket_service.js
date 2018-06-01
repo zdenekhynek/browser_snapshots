@@ -18,6 +18,7 @@ export function closeSocket(socket) {
 }
 
 export function initSocket(groupRef, onMessage) {
+  console.log('initSocket');
   group = groupRef;
   closeSocket(socket);
 
@@ -38,14 +39,24 @@ export function addSocketCallbacks(socket, onMessage) {
 
   socket.onclose = (e) => {
     console.error('Chat socket closed unexpectedly');
+    //  disable for now
+    return false;
 
     //  try to reconnect
     initSocket(group, onMessage);
     clearInterval(reconnectInterval);
 
     //  setup interval trying to reconnect
+    let numTries = 0;
     reconnectInterval = setInterval(() => {
       initSocket(group, onMessage);
+
+      numTries += 1;
+
+      if (numTries > 10) {
+        //  too many tries, give up
+        clearInterval(reconnectInterval);
+      }
     }, 2000);
   };
 }

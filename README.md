@@ -25,6 +25,10 @@ python manage.py delete_duplicates --race_id=96 --override=True
 # https://channels.readthedocs.io/en/latest/tutorial/part_2.html
 ```docker run -p 6379:6379 -d redis:2.8```
 
+
+## Run MachineBox locally
+docker run -p 8081:8080 -e "MB_KEY=$MB_KEY" machinebox/fakebox
+
 ## Routes
 
 /viz
