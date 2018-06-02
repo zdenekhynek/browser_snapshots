@@ -41,8 +41,8 @@ class Desktop extends Component {
       this.props.receiveUpdateRace(socketData.id, socketData);
     } else if (message === 'race_finished') {
       const finishLink = `/viz/desktop/races/${socketData.id}/results`;
-      // history.push(finishLink);
-      // this.props.receiveUpdateRace(socketData.id, socketData);
+      history.push(finishLink);
+      this.props.receiveUpdateRace(socketData.id, socketData);
     } else if (message === 'display_highlights') {
       const highlightLink = `/viz/desktop/highlights/`;
       history.push(highlightLink);
@@ -75,7 +75,7 @@ class Desktop extends Component {
             const { params } = match;
             const { raceId } = params;
 
-            return (<Results raceId={+raceId} noAnimation={false} />);
+            return (<Races raceId={+raceId} showResults={true} />);
           }}
         />
         <Route exact path="/viz/desktop/highlights/" component={Highlights} />

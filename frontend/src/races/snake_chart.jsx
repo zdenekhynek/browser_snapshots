@@ -263,14 +263,15 @@ class Chart extends Component {
     const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
     const renderFn = this.renderTree;
 
-    if (isNewRace) {
-      setTimeout(() => {
-        this.setState({ isNewRace: false });
-      }, 1000);
-    }
+    // if (isNewRace) {
+    //   setTimeout(() => {
+    //     this.setState({ isNewRace: false });
+    //   }, 1000);
+    // }
+    // const transform = (isNewRace && !noAnimation) ?
+    //   `translate(0, ${height}px)` : 'translate(0, 0)';
 
-    const transform = (isNewRace && !noAnimation) ?
-      `translate(0, ${height}px)` : 'translate(0, 0)';
+    const transform = 'translate(0, 0)';
     const style = { transform };
 
     return (

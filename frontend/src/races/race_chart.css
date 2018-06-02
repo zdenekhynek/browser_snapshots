@@ -6,6 +6,12 @@
   right: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+
+.label {
+  text-align: center;
+  font-size: 36px;
 }
 
 .viz {
@@ -13,6 +19,13 @@
   padding-top: 125px;
   width: 100%;
   height: 100%;
+  opacity: 1;
+  transition: .5s opacity;
+}
+
+.vizResults {
+  composes: viz;
+  opacity: .5;
 }
 
 .agents {

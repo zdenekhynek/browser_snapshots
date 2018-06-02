@@ -65,7 +65,7 @@ export function App(props, { store }) {
             //  no ws on this route so request data manually
             store.dispatch(updateRace(+raceId));
 
-            return (<Results raceId={+raceId} />);
+            return (<Races raceId={+raceId} showResults={true} />);
           }}
           />
           <Route exact path="/viz/archive" render={() => {

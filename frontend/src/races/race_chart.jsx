@@ -62,7 +62,14 @@ class RaceChart extends Component {
   }
 
   render() {
-    const { activeRace, metrics, tasks, noAnimation, size } = this.props;
+    const {
+      activeRace,
+      metrics,
+      tasks,
+      noAnimation,
+      size,
+      showResults,
+    } = this.props;
     const { data } = this.state;
 
     const backLink = `/viz/archive/`;
@@ -74,20 +81,28 @@ class RaceChart extends Component {
     const raceDate = (raceId > -1) ?
       `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}` : '';
 
-    const label = (raceId > -1) ?
-      `Searched for ${raceKeyword}` : activeRace.get('label');
+    let label = activeRace.get('label');
+
+    if (raceId > -1) {
+      if (showResults) {
+        label = `Try searching for "${raceKeyword}" on your Youtube.`;
+      } else {
+        label = `Watching videos about "${raceKeyword}"`;
+      }
+    }
 
     //  get active metric
     const activeMetric = data.metric;
 
     //{gui}
+    //  const gui = this.renderGui();
 
-    const gui = this.renderGui();
+    const vizClassName = (showResults)? classes.vizResults : classes.viz;
 
     return (
       <div className={classes.raceChart}>
-        <h2>{label}</h2>
-        <div className={classes.viz}>
+        <h2 className={classes.label}>{label}</h2>
+        <div className={vizClassName}>
           <SnakeChart
             raceId={raceId}
             type="tree"

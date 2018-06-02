@@ -48,11 +48,15 @@ class Profiles extends Component {
     let transitionDuration = '1s';
     let offset = 0;
 
-    if (mode === 'race' && !shouldAnimateRace) {
-      offset = height / 2;
-    } else if ((mode === 'race' && shouldAnimateRace) || mode === 'results') {
-      transitionDuration = '60s';
-      offset = -(height / 2 - 130);
+    // if (mode === 'race' && !shouldAnimateRace) {
+    //   offset = height / 2;
+    // } else if ((mode === 'race' && shouldAnimateRace) || mode === 'results') {
+    //   transitionDuration = '60s';
+    //   offset = -(height / 2 - 130);
+    // }
+
+    if (mode === 'race' || mode === 'results') {
+      offset = -(height / 2 - 160);
     }
 
     const transform = `translate(0, ${offset}px)`;
