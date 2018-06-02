@@ -62,7 +62,7 @@ class Profiles extends Component {
       renderRadialChart(index) : null;
 
     return (
-      <div className={classes.col}>
+      <div key={index} className={classes.col}>
         <div className={classes.chart} style={style}>
           <div className={classes.profile}>
             <Profile index={index} />

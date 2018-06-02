@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { easeLinear, easeCubic } from 'd3-ease';
+import { select } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { radialArea, curveCardinal } from 'd3-shape';
 
@@ -10,7 +12,45 @@ import { getAreaChartDefs } from '../patterns';
 import classes from './radial_chart.css';
 
 class RadialChart extends Component {
-  renderPath(colorIndex, metric) {
+  constructor(props) {
+    super(props);
+
+    this.els = {
+      temperature: null,
+      pollution: null,
+      noise: null,
+    };
+
+    this.state = { random: 0 };
+
+    setInterval(() => {
+      this.setState({ random: Math.random() });
+    }, 1500);
+  }
+
+  componentDidMount() {
+    this.updateData();
+
+    setTimeout(() => {
+      this.setState({ random: Math.random() });
+    }, 25);
+  }
+
+  componentDidUpdate() {
+    this.updateData();
+  }
+
+  updateData() {
+    Object.keys(this.els).forEach((key) => {
+      const el = this.els[key];
+
+      if (el) {
+        this.updatePath(el, key);
+      }
+    });
+  }
+
+  updatePath(el, metric) {
     const numPoints = 20;
     const angleScale = scaleLinear().domain([0, numPoints]).range([0, 360]);
     const radiusScale = scaleLinear().domain([0, 20]).range([0, 60]);
@@ -21,14 +61,12 @@ class RadialChart extends Component {
       data.push({
         x: i,
         y0: innerRadius,
-        y: Math.round(Math.random() * 20),
+        y: 2 + Math.round(Math.random() * 15),
       });
     }
 
     //  just repeat first point at the end of an array
     data.push(data[0]);
-
-    const style = getMetricStyle(metric, colorIndex);
 
     const areaFn = radialArea()
       .curve(curveCardinal)
@@ -42,14 +80,30 @@ class RadialChart extends Component {
         return radiusScale(d.y0 + d.y);
       });
 
+    const pathString = areaFn(data);
+
+    const selection = select(el).selectAll(`.${classes.path}`)
+      .data(data);
+
+    selection.transition().duration(1500).ease(easeLinear).attr('d', (d) => {
+      return pathString;
+    });
+  }
+
+  renderPath(colorIndex, metric) {
+    const style = getMetricStyle(metric, colorIndex);
+
     return (
-      <svg className={classes.svg}>
+      <svg key={metric} className={classes.svg}>
         {getAreaChartDefs(colorIndex, COLORS[colorIndex])}
-        <path
-          className={classes.path}
-          style={style}
-          d={areaFn(data)}
-        />
+        <g
+          ref={(el) => { this.els[metric] = el; }}
+        >
+          <path
+            className={classes.path}
+            style={style}
+          />
+        </g>
       </svg>
     );
   }
@@ -57,7 +111,7 @@ class RadialChart extends Component {
   render() {
     const { index } = this.props;
     const arr = ['temperature', 'noise'];
-    const renderedPaths = arr.map((d) => renderPath(index, d));
+    const renderedPaths = arr.map((d) => this.renderPath(index, d));
 
     return (
       <div className={classes.radialChart}>

@@ -5,9 +5,7 @@ import classes from './landing.css';
 
 const Landing = (props) => {
   return (
-    <div className={classes.landing}>
-      Landing
-    </div>
+    <div className={classes.landing} />
   );
 };
 
