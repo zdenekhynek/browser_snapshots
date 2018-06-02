@@ -12,7 +12,6 @@ import { min, max } from 'd3-array';
 import DatGui, { DatSelect } from 'react-dat-gui';
 
 import Chart, { COLORS } from './chart';
-import RadialChart from './radial_chart';
 import SnakeChart from './snake_chart';
 import { setActiveMetric } from '../metrics/action_creators';
 

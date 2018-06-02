@@ -4,6 +4,12 @@
   height: 100%;
 }
 
+.chart {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+}
+
 .viz {
   position: relative;
   height: calc(100% - 130px);
@@ -129,6 +135,20 @@
   fill: #FBB03B;
   fill-opacity: .3;
   stroke-dasharray: 10,10;
+  stroke-width: 2;
+}
+
+
+.profile {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.radialChart {
+  width: 100%;
+  height: 100%;
 }
 
 /**

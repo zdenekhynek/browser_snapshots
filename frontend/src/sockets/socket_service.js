@@ -1,4 +1,4 @@
-/* global WebSocket */
+/* global WebSocket, confirm */
 
 let socket;
 let reconnectInterval;
@@ -37,7 +37,14 @@ export function addSocketCallbacks(socket, onMessage) {
 
   socket.onclose = (e) => {
     console.error('Chat socket closed unexpectedly');
-    //  disable for now
+    const shouldReconnect = confirm('Disconnected. Try to reconnect?');
+
+    if (shouldReconnect) {
+      //  trying reconnecting
+      initSocket(onMessage);
+    }
+
+    //  disable the rest for now
     return false;
 
     //  try to reconnect

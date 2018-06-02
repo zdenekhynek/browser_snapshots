@@ -65,7 +65,7 @@ class Desktop extends Component {
             const { params } = match;
             const { raceId } = params;
 
-            return (<Races raceId={+raceId} />);
+            return (<Races raceId={+raceId} noAnimation={false} />);
           }}
         />
         <Route
