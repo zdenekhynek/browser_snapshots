@@ -1,7 +1,8 @@
-/* global WebSocket, confirm */
+/* global WebSocket */
 
 let socket;
 let reconnectInterval;
+let numReconnectTries = 0;
 
 export function getSocketServer(window) {
   const { host } = window.location;
@@ -17,7 +18,6 @@ export function closeSocket(socket) {
 }
 
 export function initSocket(onMessage) {
-  console.log('initSocket');
   closeSocket(socket);
 
   const url = getSocketServer(window);
@@ -33,36 +33,32 @@ export function addSocketCallbacks(socket, onMessage) {
   socket.onopen = (e) => {
     //  got the connection, clear any pending intervals
     clearInterval(reconnectInterval);
+    numReconnectTries = 0;
   };
 
   socket.onclose = (e) => {
-    console.error('Chat socket closed unexpectedly');
-    const shouldReconnect = confirm('Disconnected. Try to reconnect?');
-
-    if (shouldReconnect) {
-      //  trying reconnecting
-      initSocket(onMessage);
-    }
-
-    //  disable the rest for now
-    return false;
+    console.error('Chat socket closed unexpectedly', numReconnectTries);
 
     //  try to reconnect
-    // initSocket(group, onMessage);
-    // clearInterval(reconnectInterval);
+    clearInterval(reconnectInterval);
 
-    // //  setup interval trying to reconnect
-    // let numTries = 0;
-    // reconnectInterval = setInterval(() => {
-    //   initSocket(group, onMessage);
+    //  setup interval trying to reconnect
+    reconnectInterval = setInterval(() => {
+      initSocket(onMessage);
 
-    //   numTries += 1;
+      numReconnectTries += 1;
 
-    //   if (numTries > 10) {
-    //     //  too many tries, give up
-    //     clearInterval(reconnectInterval);
-    //   }
-    // }, 2000);
+      if (numReconnectTries > 50) {
+        //  too many tries, give up
+        //  wait for manual promp for reconnecting
+        clearInterval(reconnectInterval);
+        const shouldReconnect = window.confirm('Disconnected. Try to reconnect?');
+        if (shouldReconnect) {
+          //  trying reconnecting
+          initSocket(onMessage);
+        }
+      }
+    }, 2000);
   };
 }
 

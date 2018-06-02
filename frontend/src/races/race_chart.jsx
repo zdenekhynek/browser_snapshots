@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import sizeMe from 'react-sizeme';
 import { List, Map } from 'immutable';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -61,7 +62,7 @@ class RaceChart extends Component {
   }
 
   render() {
-    const { activeRace, metrics, tasks, noAnimation } = this.props;
+    const { activeRace, metrics, tasks, noAnimation, size } = this.props;
     const { data } = this.state;
 
     const backLink = `/viz/archive/`;
@@ -144,4 +145,11 @@ RaceChart.defaultProps = {
   tasks: List(),
 };
 
-export default connect(mapStateToProps, { setActiveMetric })(RaceChart);
+
+// Create the config
+const config = { monitorHeight: true, monitorWidth: true };
+
+// Call SizeMe with the config to get back the HOC.
+const sizeMeHOC = sizeMe(config);
+
+export default connect(mapStateToProps, { setActiveMetric })(sizeMeHOC(RaceChart));

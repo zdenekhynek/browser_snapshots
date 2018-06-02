@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import COLORS from '../colors';
+import COLORS from '../../races/colors';
 
 import classes from './profile.css';
 import donaldImage from '../../assets/images/donald.png';

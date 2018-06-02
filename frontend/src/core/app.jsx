@@ -6,6 +6,7 @@ import { Map, List } from 'immutable';
 
 import Home from '../home';
 import Races from '../races';
+import Profiles from '../desktop/profiles';
 import Results from '../races/results';
 import Archive from '../archive';
 import Desktop from '../desktop/';
@@ -31,7 +32,8 @@ export function App(props, { store }) {
   return (
     <div className={classes.app}>
       <Router>
-        <Switch>
+        <div className={classes.inner}>
+          <Profiles />
           <Route exact path="/viz" component={Home} />
           <Route exact path="/viz/races/:raceId" render={({ match }) => {
             const { params } = match;
@@ -73,7 +75,7 @@ export function App(props, { store }) {
           />
           <Route path="/viz/desktop/" component={Desktop} />
           <Route path="/viz/ipad/" component={Ipad} />
-        </Switch>
+        </div>
       </Router>
     </div>
   );

@@ -11,8 +11,6 @@ import { transition } from 'd3-transition';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import Thumb from './thumb';
-import Profile from './profile';
-import RadialChart from './radial_chart/index.jsx';
 import { NUM_STEPS } from './reducer';
 import { getVideoThumbnail } from './utils';
 import { getAreaChartDefs } from './patterns.jsx';
@@ -221,14 +219,6 @@ class Tree extends Component {
 
     return (
       <div className={classes.tree}>
-        <div className={classes.chart}>
-          <div className={classes.profile}>
-            <Profile index={index} />
-          </div>
-          <div className={classes.radialChart}>
-            <RadialChart index={index} />
-          </div>
-        </div>
         <div className={classes.viz}>
           {this.renderPaths(tasks, index, 'temperature')}
           {this.renderPaths(tasks, index, 'noise')}

@@ -5,9 +5,7 @@ import RaceChart from './race_chart';
 
 const Races = ({ className, raceId, noAnimation }) => {
   return (
-    <div>
-      <RaceChart raceId={raceId} noAnimation={noAnimation} />
-    </div>
+    <RaceChart raceId={raceId} noAnimation={noAnimation} />
   );
 };
 
