@@ -57,6 +57,10 @@ module.exports = {
         ],
       },
       {
+        test: /\.(ttf|otf|woff(2)?)(\?[a-z0-9]+)?$/,
+        loader: 'file-loader?name=assets/fonts/[name].[ext]',
+      },
+      {
         test: /\.(jpe?g|png|svg|ico|gif)$/i,
         loader: 'file-loader?name=assets/images/[name].[ext]',
       },
