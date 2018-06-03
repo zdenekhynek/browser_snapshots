@@ -29,18 +29,11 @@ class Landing extends Component {
     this.state = {
       mode: 'random',
       keyword: '',
-      customKeyword: '',
       currentAgents: list,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.onCustomKeywordSubmit = this.onCustomKeywordSubmit.bind(this);
-    this.onCustomKeywordClick = this.onCustomKeywordClick.bind(this);
     this.onHighlightLink = this.onHighlightLink.bind(this);
-    this.onBackLink = this.onBackLink.bind(this);
-    this.onKeywordsLink = this.onKeywordsLink.bind(this);
-    this.onKeyword = this.onKeyword.bind(this);
-    this.onKeywordChange = this.onKeywordChange.bind(this);
   }
 
   onSubmit(keyword) {
@@ -78,92 +71,57 @@ class Landing extends Component {
     this.onSubmit(this.state.customKeyword);
   }
 
-  renderRandomButton() {
-    return (
-      <div>
-        <button
-          className={classes.highlightLink}
-          onClick={this.onHighlightLink}
-        >
-          Measure temperature
-        </button>
-        <button
-          className={classes.link}
-          onClick={this.onKeywordsLink}
-        >
-          Explore keywords
-        </button>
-      </div>
-    );
-  }
-
-  renderKeyword(keyword) {
-    return (
-      <div
-        className={classes.keyword}
-        onClick={() => {
-          this.onKeyword(keyword);
-        }}
-      >
-          {keyword}
-      </div>
-    );
-  }
-
-  renderExploreKeywords() {
-    return (
-      <div>
-        <div className={classes.keywords}>
-          {KEYWORDS.map(this.renderKeyword.bind(this))}
-        </div>
-        <form
-          className={classes.form}
-          onSubmit={this.onCustomKeywordSubmit}
-        >
-          <input
-            type="text"
-            className={classes.input}
-            value={this.state.customKeyword}
-            onChange={this.onKeywordChange}
-            placeholder="Type in keyword"
-          />
-          <button
-            className={classes.link}
-            type="submit"
-            onClick={this.onCustomKeywordClick}
-          >
-            Search for yours
-          </button>
-        </form>
-        <button
-          className={classes.link}
-          onClick={this.onBackLink}
-        >
-          Back to basics
-        </button>
-      </div>
-    );
-  }
-
   render() {
     const { agents } = this.props;
-    const { mode } = this.state;
-
-    const renderedSection = (mode === 'random') ?
-      this.renderRandomButton() : this.renderExploreKeywords();
 
     return (
       <div className={classes.landing}>
-        {renderedSection}
-        <Link
-          className={classes.link}
-          to={'/viz/ipad/highlights/'}
-          onClick={() => {
-            sendSocketMessage('display_highlights');
-          }}
-        >
-          See the highlights
-        </Link>
+        <div>
+          <h1 className={classes.title}>
+            Watch what YouTube serves to our volunteers
+          </h1>
+          <h2 className={classes.subtitle}>
+            Over the last month, they’ve consumed hundreds hours of content
+          relevant to their interests.
+          </h2>
+        </div>
+        <div>
+          <button
+            className={classes.highlightLink}
+            onClick={this.onHighlightLink}
+          >
+            Let’s watch
+          </button>
+          <Link
+            className={classes.link}
+            to={'/viz/ipad/topics/'}
+            onClick={() => {
+              sendSocketMessage('display_topics');
+            }}
+          >
+            Choose a topic
+          </Link>
+          <Link
+            className={classes.link}
+            to={'/viz/ipad/highlights/'}
+            onClick={() => {
+              sendSocketMessage('display_highlights');
+            }}
+          >
+            See the highlights
+          </Link>
+        </div>
+        <div>
+          <Link
+            className={classes.textLink}
+            to={'/viz/ipad/about/'}
+            onClick={() => {
+              sendSocketMessage('display_about');
+            }}
+          >
+            What is this?
+          </Link>
+        </div>
       </div>
     );
   }

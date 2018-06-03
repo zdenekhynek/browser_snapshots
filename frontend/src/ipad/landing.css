@@ -16,6 +16,17 @@
   color: black;
 }
 
+.title {
+  max-width: 500px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  max-width: 500px;
+  text-align: center;
+}
+
 .link {
   display: block;
   width: 300px;
@@ -28,6 +39,7 @@
   text-decoration: none;
   border: 1px solid #666;
   box-sizing: border-box;
+  background-color: white;
 }
 
 .form {
@@ -43,9 +55,17 @@
 
 .highlightLink {
   composes: link;
-  background-color: black;
-  border: 1px solid black;
+  font-size: 30px;
+  background-color: #FF5822;
+  border: 1px solid #FF5822;
   color: white;
+}
+
+.textLink {
+  padding-bottom: 2px;
+  color: #666;
+  text-decoration: none;
+  border-bottom: 1px solid #666;
 }
 
 .keywords {
