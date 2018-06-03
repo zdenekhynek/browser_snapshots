@@ -20,7 +20,7 @@ const Results = ({ race }) => {
           {label}
         </h1>
         <h2>
-          To find out, what’s up next for you.
+          To find out, what’s next up for you.
         </h2>
       </div>
       <button

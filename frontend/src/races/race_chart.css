@@ -25,7 +25,7 @@
 
 .vizResults {
   composes: viz;
-  opacity: .5;
+  opacity: 1;
 }
 
 .agents {

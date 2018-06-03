@@ -16,7 +16,7 @@
   text-transform: uppercase;
   text-align: center;
   line-height: 0.8;
-  opacity: .6;
+  opacity: 0;
   mix-blend-mode: overlay;
   transform: translate(0, -300px);
 }
