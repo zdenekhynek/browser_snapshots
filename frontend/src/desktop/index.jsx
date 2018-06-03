@@ -43,9 +43,6 @@ class Desktop extends Component {
       const finishLink = `/viz/desktop/races/${socketData.id}/results`;
       history.push(finishLink);
       this.props.receiveUpdateRace(socketData.id, socketData);
-    } else if (message === 'display_highlights') {
-      const highlightLink = `/viz/desktop/highlights/`;
-      history.push(highlightLink);
     } else if (message === 'display_highlight') {
       const { raceId } = socketData;
       const highlightLink = `/viz/desktop/highlights/${raceId}/`;

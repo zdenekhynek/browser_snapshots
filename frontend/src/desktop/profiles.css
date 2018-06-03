@@ -26,7 +26,16 @@
   width: 240px;
   height: 240px;
   transition: 1s transform;
-  transition-timing-function: linear;
+  /*transition-timing-function: cubic-bezier(0.305, -0.350, 0.655, 1.395);*/
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.col:nth-child(2) .chart {
+  transition-delay: .1s;
+}
+
+.col:nth-child(3) .chart {
+  transition-delay: .2s;
 }
 
 .chartRace {
