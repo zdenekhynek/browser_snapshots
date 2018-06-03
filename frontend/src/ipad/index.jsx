@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
 import IpadLanding from './landing';
+import IpadTopics from './keyword_selection';
 import IpadRaces from './races';
 import IpadResults from './results';
 import IpadHighlights from './highlights';
@@ -33,6 +34,9 @@ class Ipad extends Component {
     } else if (message === 'restart') {
       const landingLink = '/viz/ipad/landing/';
       history.push(landingLink);
+    } else if (message === 'display_topics') {
+      const topicsLink = '/viz/ipad/topics/';
+      history.push(topicsLink);
     } else if (message === 'race_started') {
       const raceLink = `/viz/ipad/races/${socketData.id}`;
       history.push(raceLink);
@@ -50,6 +54,7 @@ class Ipad extends Component {
     return (
       <Fragment>
         <Route exact path="/viz/ipad/landing" component={IpadLanding} />
+        <Route exact path="/viz/ipad/topics" component={IpadTopics} />
         <Route exact path="/viz/ipad/races/" component={IpadRaces} />
         <Route
           exact

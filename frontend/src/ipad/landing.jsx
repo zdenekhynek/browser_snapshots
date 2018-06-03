@@ -47,30 +47,6 @@ class Landing extends Component {
     this.onSubmit(keyword);
   }
 
-  onKeyword(keyword) {
-    this.onSubmit(keyword);
-  }
-
-  onKeywordChange(evt) {
-    this.setState({ customKeyword: evt.target.value });
-  }
-
-  onKeywordsLink() {
-    this.setState({ mode: 'keywords' });
-  }
-
-  onBackLink() {
-    this.setState({ mode: 'random' });
-  }
-
-  onCustomKeywordSubmit(evt) {
-    evt.preventDefault();
-  }
-
-  onCustomKeywordClick() {
-    this.onSubmit(this.state.customKeyword);
-  }
-
   render() {
     const { agents } = this.props;
 

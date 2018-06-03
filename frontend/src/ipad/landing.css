@@ -22,6 +22,11 @@
   text-transform: uppercase;
 }
 
+.keywordTitle {
+  composes: title;
+  max-width: 550px;
+}
+
 .subtitle {
   max-width: 500px;
   text-align: center;
@@ -43,14 +48,19 @@
 }
 
 .form {
+  max-width: 300px;
   margin: 50px auto;
   text-align: center;
+  border-bottom: 1px solid #666;
 }
 
 .input {
   width: 260px;
   margin: 0 auto;
-  padding: 10px 20px;
+  padding: 10px 0px;
+  border: 0;
+  font-size: 16px;
+  outline: 0;
 }
 
 .highlightLink {
@@ -68,15 +78,27 @@
   border-bottom: 1px solid #666;
 }
 
+.formWrapper {
+  width: 100%;
+}
+
 .keywords {
   display: flex;
   flex-flow: column wrap;
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   height: 200px;
+  margin: 0 auto;
+  text-decoration: underline;
 }
 
 .keyword {
   margin-bottom: 10px;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
 }
