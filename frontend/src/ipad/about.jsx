@@ -17,12 +17,12 @@ const About = ({ className }) => {
         </p>
         <p>
           The three profiles are:
-          <ul>
-            <li>boy.from.queens@gmail.com</li>
-            <li>healthy.bunny.guru@gmail.com</li>
-            <li>transparency.hacker.pirate@gmail.com</li>
-          </ul>
         </p>
+        <ul>
+          <li>boy.from.queens@gmail.com</li>
+          <li>healthy.bunny.guru@gmail.com</li>
+          <li>transparency.hacker.pirate@gmail.com</li>
+        </ul>
         <p>
           One live session is profiles searching for a keyword on YouTube,
           clicking first search result and then clicking "Up next" video

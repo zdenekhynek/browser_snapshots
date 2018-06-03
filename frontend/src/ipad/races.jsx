@@ -86,14 +86,6 @@ class Races extends Component {
         <h1>&ldquo;{race.get('keyword')}&rdquo;</h1>
         {renderedCountDown}
         {renderedDots}
-        <button
-          className={classes.restartBtn}
-          onClick={() => {
-            sendSocketMessage('restart');
-          }}
-        >
-          Restart
-        </button>
       </div>
     );
   };

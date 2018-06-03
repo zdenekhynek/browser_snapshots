@@ -1,0 +1,31 @@
+.ipad {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+}
+
+/**
+ * TRANSITIONS
+ */
+
+.exampleEnter {
+  opacity: 0.01;
+}
+
+.exampleEnter.exampleEnterActive {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+  transition-delay: 150ms;
+}
+
+.exampleLeaveActive {
+  opacity: 1;
+}
+
+.exampleLeave.exampleLeaveActive {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: space-around;
   height: 100%;
+  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
 }
 
 .progressDot {

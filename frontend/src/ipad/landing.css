@@ -47,6 +47,12 @@
   background-color: white;
 }
 
+.link:active {
+  border: 1px solid #FF5822;
+  background-color: #FF5822;
+  color: white;
+}
+
 .form {
   max-width: 300px;
   margin: 50px auto;
@@ -65,9 +71,15 @@
 
 .highlightLink {
   composes: link;
-  font-size: 30px;
+  padding: 20px 20px;
   background-color: #FF5822;
   border: 1px solid #FF5822;
+  color: white;
+}
+
+.highlightLink:active {
+  border: 1px solid #05ACB4;
+  background-color: #05ACB4;
   color: white;
 }
 
@@ -96,6 +108,10 @@
   margin-bottom: 10px;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.iconLink {
+  border: 0;
 }
 
 .icon {
