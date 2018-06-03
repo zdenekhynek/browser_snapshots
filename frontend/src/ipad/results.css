@@ -15,16 +15,10 @@
   color: black;
 }
 
-.btn {
-  display: block;
-  width: 300px;
-  margin: 0 auto;
-  margin-top: 20px;
-  padding: 10px 20px;
-  color: #666;
+.title {
+  max-width: 500px;
   text-align: center;
-  font: inherit;
-  text-decoration: none;
-  border: 1px solid #666;
-  box-sizing: border-box;
+  text-transform: uppercase;
+  margin: 0 auto;
+  margin-bottom: 50px;
 }
