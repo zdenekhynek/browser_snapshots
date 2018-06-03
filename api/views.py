@@ -120,8 +120,17 @@ class DetailsTasksView(generics.RetrieveUpdateDestroyAPIView):
 
 class CreateRacesView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
-    queryset = Race.objects.all()
     serializer_class = RaceSerializer
+
+    def get_queryset(self):
+        queryset = Race.objects.all()
+
+        # filter by status
+        highlightedOnly = self.request.query_params.get('highlightedOnly', None)
+        if highlightedOnly is not None and highlightedOnly == 'true':
+            queryset = queryset.filter(is_highlighted=True)
+
+        return queryset
 
     def perform_create(self, serializer):
         """Save the post data when creating a new race."""

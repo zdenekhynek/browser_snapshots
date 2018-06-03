@@ -78,7 +78,11 @@ class Desktop extends Component {
             return (<Races raceId={+raceId} showResults={true} />);
           }}
         />
-        <Route exact path="/viz/desktop/highlights/" component={Highlights} />
+        <Route
+          exact
+          path="/viz/desktop/highlights/"
+          component={Highlights}
+        />
         <Route
           exact
           path="/viz/desktop/highlights/:raceId"
@@ -86,7 +90,7 @@ class Desktop extends Component {
             const { params } = match;
             const { raceId } = params;
 
-            return (<Races raceId={+raceId} />);
+            return (<Races raceId={+raceId} showResults={true}/>);
           }}
         />
       </Fragment>

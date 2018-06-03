@@ -58,7 +58,6 @@ export function receiveUpdateRace(raceId, response) {
 }
 
 export function updateRace(raceId, limit = 0) {
-  console.log('limit', limit);
   return (dispatch, getState) => {
     dispatch(requestUpdateRace());
     dao.updateRace(raceId)
@@ -91,10 +90,10 @@ export function receiveRaces(response) {
   };
 }
 
-export function getRaces() {
+export function getRaces(highlightedOnly = false) {
   return (dispatch, getState) => {
     dispatch(requestRaces());
-    dao.getRace()
+    dao.getRace(highlightedOnly)
       .then((response) => {
         dispatch(receiveRaces(response));
       })

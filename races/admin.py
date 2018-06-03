@@ -9,9 +9,8 @@ class TaskInline(admin.TabularInline):
     model = RaceTask
 
 class RacesAdmin(admin.ModelAdmin):
-    inlines = [
-        AgentInline, TaskInline,
-    ]
+    model = Race
+    list_filter = ('is_highlighted',)
 
 # Register your models here.
 admin.site.register(Race, RacesAdmin)

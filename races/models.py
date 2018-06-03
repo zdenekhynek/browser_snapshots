@@ -18,12 +18,14 @@ class Race(models.Model):
     """This class represents the scenario model."""
     status = models.ForeignKey(RaceStatus, on_delete=models.CASCADE, default=1)
     keyword = models.CharField(max_length=255, blank=True, null=True)
+    is_highlighted = models.BooleanField(default=False)
+    description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return "%s" % (self.id,)
+        return "%s - %s" % (self.id, self.description,)
 
 
 class RaceAgent(models.Model):

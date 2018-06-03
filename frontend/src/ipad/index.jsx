@@ -80,7 +80,7 @@ class Ipad extends Component {
           exact
           path="/viz/ipad/highlights"
           render={({ match }) => {
-            this.props.getRaces();
+            this.props.getRaces(true);
             return (<IpadHighlights />);
           }}
         />

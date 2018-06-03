@@ -24,12 +24,13 @@ export function updateRace(raceId) {
   return daoFetch(completeUrl, options);
 }
 
-export function getRace(keyword, agents) {
+export function getRace(highlightedOnly = false) {
   const endpointUrl = 'races/';
 
   const method = 'GET';
   const options = { method };
+  const params = (highlightedOnly) ? { highlightedOnly } : {};
 
-  const url = formatUrl(endpointUrl);
+  const url = formatUrl(endpointUrl, null, params);
   return daoFetch(url, options);
 }

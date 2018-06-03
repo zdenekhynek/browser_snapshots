@@ -12,7 +12,7 @@ class RaceSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class to map serializer's fields with the model fields."""
         model = Race
-        fields = ('id', 'keyword', 'created_at')
+        fields = ('id', 'keyword', 'is_highlighted', 'description', 'created_at')
 
     def create(self, validated_data):
         keyword = validated_data['keyword']

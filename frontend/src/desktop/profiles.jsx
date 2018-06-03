@@ -55,14 +55,14 @@ class Profiles extends Component {
     //   offset = -(height / 2 - 130);
     // }
 
-    if (mode === 'race' || mode === 'results') {
+    if (mode === 'race' || mode === 'results' || mode === 'highlights') {
       offset = -(height / 2 - 160);
     }
 
     const transform = `translate(0, ${offset}px)`;
     const style = { transitionDuration, transform };
 
-    const renderedRadialChart = (mode !== 'race') ?
+    const renderedRadialChart = (mode === 'landing') ?
       renderRadialChart(index) : null;
 
     return (
@@ -122,6 +122,8 @@ export function mapStateToProps(state, ownProps) {
     mode = 'landing';
   } else if (pathname.indexOf('results') > -1) {
     mode = 'results';
+  } else if (pathname.indexOf('highlights') > -1) {
+    mode = 'highlights';
   }
 
   return { mode, raceId };
