@@ -57,7 +57,11 @@ export function calculateProgress(tasks) {
     return 0;
   }
 
-  const progress = tasks.size / NUM_STEPS;
+  //  decrease size by two if there some. there are dummy points
+  //  for smoother chart
+  const taskSize = (tasks.size > 0)? tasks.size - 2 : 0;
+
+  const progress = taskSize / NUM_STEPS;
   const clamped = Math.min(1, Math.max(0, progress));
   return clamped;
 }

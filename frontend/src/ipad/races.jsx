@@ -63,9 +63,12 @@ class Races extends Component {
     const { now, raceFinish } = this.state;
     const duration = moment(raceFinish.diff(now));
 
+    const formattedDuration = (duration._i > 0) ?
+      duration.format('mm:ss') : '00:00';
+
     return (
       <div className={classes.countDown}>
-        {duration.format('mm:ss')}
+        {formattedDuration}
       </div>
     );
   }
@@ -80,7 +83,7 @@ class Races extends Component {
 
     return (
       <div className={classes.races}>
-        <h1>Searched for &ldquo;{race.get('keyword')}&rdquo;</h1>
+        <h1>&ldquo;{race.get('keyword')}&rdquo;</h1>
         {renderedCountDown}
         {renderedDots}
         <button
