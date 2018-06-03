@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Route } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
@@ -14,6 +15,8 @@ import {
   receiveUpdateRace,
   updateRace,
 } from '../races/action_creators';
+
+import classes from './desktop.css';
 
 class Desktop extends Component {
   constructor(props) {
@@ -52,45 +55,62 @@ class Desktop extends Component {
   }
 
   render() {
+    const { location } = this.props;
+
     return (
-      <Fragment>
-        <Route exact path="/viz/desktop/landing" component={Landing} />
-        <Route
-          exact
-          path="/viz/desktop/races/:raceId"
-          render={({ match }) => {
-            const { params } = match;
-            const { raceId } = params;
+      <div className={classes.desktop}>
+        <TransitionGroup>
+          <CSSTransition
+              key={location.key}
+              classNames={{
+               enter: classes.exampleEnter,
+               enterActive: classes.exampleEnterActive,
+               exit: classes.exampleLeave,
+               exitActive: classes.exampleLeaveActive,
+              }}
+              timeout={450}
+          >
+            <Switch location={location}>
+              <Route exact path="/viz/desktop/landing" component={Landing} />
+              <Route
+                exact
+                path="/viz/desktop/races/:raceId"
+                render={({ match }) => {
+                  const { params } = match;
+                  const { raceId } = params;
 
-            return (<Races raceId={+raceId} noAnimation={false} />);
-          }}
-        />
-        <Route
-          exact
-          path="/viz/desktop/races/:raceId/results"
-          render={({ match }) => {
-            const { params } = match;
-            const { raceId } = params;
+                  return (<Races raceId={+raceId} noAnimation={false} />);
+                }}
+              />
+              <Route
+                exact
+                path="/viz/desktop/races/:raceId/results"
+                render={({ match }) => {
+                  const { params } = match;
+                  const { raceId } = params;
 
-            return (<Races raceId={+raceId} showResults={true} />);
-          }}
-        />
-        <Route
-          exact
-          path="/viz/desktop/highlights/"
-          component={Highlights}
-        />
-        <Route
-          exact
-          path="/viz/desktop/highlights/:raceId"
-          render={({ match }) => {
-            const { params } = match;
-            const { raceId } = params;
+                  return (<Races raceId={+raceId} showResults={true} />);
+                }}
+              />
+              <Route
+                exact
+                path="/viz/desktop/highlights/"
+                component={Highlights}
+              />
+              <Route
+                exact
+                path="/viz/desktop/highlights/:raceId"
+                render={({ match }) => {
+                  const { params } = match;
+                  const { raceId } = params;
 
-            return (<Races raceId={+raceId} showResults={true}/>);
-          }}
-        />
-      </Fragment>
+                  return (<Races raceId={+raceId} showResults={true}/>);
+                }}
+              />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+      </div>
     );
   }
 }

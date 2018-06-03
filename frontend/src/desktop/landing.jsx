@@ -5,7 +5,9 @@ import classes from './landing.css';
 
 const Landing = (props) => {
   return (
-    <div className={classes.landing} />
+    <div className={classes.landing}>
+      <h1 className={classes.title}>Find out what is next up</h1>
+    </div>
   );
 };
 

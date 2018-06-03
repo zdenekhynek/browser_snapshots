@@ -11,3 +11,17 @@
   color: #666;
 }
 
+.title {
+  max-width: 800px;
+  font-size: 120px;
+  letter-spacing: -14px;
+  text-transform: uppercase;
+  /* color: #000; */
+  transform: translate(0, -250px);
+  text-align: center;
+  line-height: 0.8;
+  opacity: .2;
+  /* opacity: .03; */
+  mix-blend-mode: overlay;
+  transform: translate(0, -300px);
+}
