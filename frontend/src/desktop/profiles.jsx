@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import sizeMe from 'react-sizeme';
 import { withRouter } from 'react-router';
@@ -9,6 +10,7 @@ import Profile from './profile';
 import RadialChart from '../races/radial_chart';
 
 import classes from './profiles.css';
+import desktopClasses from './desktop.css';
 
 export function renderRadialChart(index) {
   return (
@@ -64,6 +66,7 @@ class Profiles extends Component {
 
     const renderedRadialChart = (mode === 'landing') ?
       renderRadialChart(index) : null;
+    const chartAnimationKey = (mode === 'landing') ? 'chart' : 'no-chart';
 
     return (
       <div key={index} className={classes.col}>
@@ -71,7 +74,20 @@ class Profiles extends Component {
           <div className={classes.profile}>
             <Profile index={index} />
           </div>
-          {renderedRadialChart}
+          <TransitionGroup>
+            <CSSTransition
+                key={chartAnimationKey}
+                classNames={{
+                 enter: desktopClasses.exampleEnter,
+                 enterActive: desktopClasses.exampleEnterActive,
+                 exit: desktopClasses.exampleLeave,
+                 exitActive: desktopClasses.exampleLeaveActive,
+                }}
+                timeout={450}
+            >
+              {renderedRadialChart}
+            </CSSTransition>
+          </TransitionGroup>
         </div>
       </div>
     );
