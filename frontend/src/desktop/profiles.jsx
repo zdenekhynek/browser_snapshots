@@ -65,7 +65,7 @@ class Profiles extends Component {
     const style = { transitionDuration, transform };
 
     const renderedRadialChart = (mode === 'landing') ?
-      renderRadialChart(index) : null;
+      renderRadialChart(index) : <span />;
     const chartAnimationKey = (mode === 'landing') ? 'chart' : 'no-chart';
 
     return (
@@ -74,7 +74,7 @@ class Profiles extends Component {
           <div className={classes.profile}>
             <Profile index={index} />
           </div>
-          <TransitionGroup>
+          <TransitionGroup className={classes.radialChartTransition}>
             <CSSTransition
                 key={chartAnimationKey}
                 classNames={{
@@ -83,6 +83,7 @@ class Profiles extends Component {
                  exit: desktopClasses.exampleLeave,
                  exitActive: desktopClasses.exampleLeaveActive,
                 }}
+                className={classes.radialChartTransition}
                 timeout={450}
             >
               {renderedRadialChart}
