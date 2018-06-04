@@ -81,7 +81,7 @@ class Tree extends Component {
     const selection = select(el).selectAll(`.${classes.progress}`)
       .data(points);
 
-    selection.transition().duration(1000).attr('d', (d) => {
+    selection.transition().delay(500).duration(1000).attr('d', (d) => {
       return pathString;
     });
   }
@@ -215,6 +215,7 @@ class Tree extends Component {
   }
 
   render() {
+    console.log('tree render');
     const { tasks, index } = this.props;
 
     return (

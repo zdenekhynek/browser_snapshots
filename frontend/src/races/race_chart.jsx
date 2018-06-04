@@ -12,7 +12,6 @@ import { axisLeft, axisBottom } from 'd3-axis';
 import { min, max } from 'd3-array';
 import DatGui, { DatSelect } from 'react-dat-gui';
 
-import Chart, { COLORS } from './chart';
 import SnakeChart from './snake_chart';
 import { setActiveMetric } from '../metrics/action_creators';
 
@@ -21,13 +20,6 @@ import classes from './race_chart.css';
 export const formatter = format(',');
 export const ratioFormatter = format('.3f');
 
-export function renderMetricDropdownOption(metric) {
-  return (
-    <option key={metric.get('id')} value={metric.get('id')}>
-      {metric.get('title')}
-    </option>
-  );
-}
 
 class RaceChart extends Component {
   constructor(props) {
@@ -140,6 +132,11 @@ export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimatio
   const flattenedTasks = tasks.reduce((acc, t) => {
     return acc.push(t);
   }, List());
+
+  console.log('race', activeRace);
+  console.log('tasks', tasks);
+
+  console.log('flattenedTasks', flattenedTasks);
 
   return {
     activeRace,

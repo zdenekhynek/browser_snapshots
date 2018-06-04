@@ -260,6 +260,8 @@ class Chart extends Component {
     const { height } = size;
     const { isNewRace, tooltip } = this.state;
 
+    console.log('tasks', tasks);
+
     const renderedTooltip = (tooltip) ? this.renderTooltip(tooltip) : null;
     const renderFn = this.renderTree;
 

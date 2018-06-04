@@ -9,8 +9,8 @@
 }
 
 .col {
-  flex: 33% 0 0;
-  width: 33%;
+  flex: 33.333333333% 0 0;
+  width: 33.33333333%;
 }
 
 .innerCol {

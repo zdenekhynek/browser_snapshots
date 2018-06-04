@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from races.models import Race, RaceAgent, RaceTask
+from races.models import Race, RaceAgent, RaceTask, Keyword
 
 class AgentInline(admin.TabularInline):
     model = RaceAgent
@@ -14,3 +14,4 @@ class RacesAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Race, RacesAdmin)
+admin.site.register(Keyword)

@@ -48,6 +48,25 @@ class RaceTask(models.Model):
         return "%s" % (self.race)
 
 
+class KeywordType(models.Model):
+    """This class represents the scenario status model."""
+    name = models.CharField(max_length=255, blank=False)
+
+    def __str__(self):
+        return self.name;
+
+
+class Keyword(models.Model):
+    """This class represents the keyword model."""
+    keyword = models.CharField(max_length=255, blank=True, null=True)
+    has_been_selected = models.BooleanField(default=False)
+    type = models.ForeignKey(KeywordType, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return "%s" % (self.keyword)
+
+
 def get_race_data(race_id):
     race = Race.objects.get(pk=race_id)
 

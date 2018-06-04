@@ -17,6 +17,7 @@ import {
   getRaceResults,
 } from './utils';
 import { AGENTS } from './form';
+import { } from './reducer';
 
 export const WAITING_STATUS = 'WAITING_STATUS';
 export const IN_PROGRESS_STATUS = 'IN_PROGRESS_STATUS';
@@ -32,10 +33,16 @@ export function getInitialTasks() {
   //  dummy tasks for three profiles
   const list = AGENTS[AGENTS_LIST];
 
+  //  have some points so that we render something
+  const initialList = fromJS([
+    { index: -0.5 },
+    { index: NUM_STEPS - 0.5 },
+  ]);
+
   //  create OrderedMap
   let orderedMap = OrderedMap();
   list.forEach((agent) => {
-    orderedMap = orderedMap.set(agent.id, List());
+    orderedMap = orderedMap.set(agent.id, initialList);
   }, {});
 
   return orderedMap;

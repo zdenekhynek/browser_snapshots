@@ -2,9 +2,19 @@ from django.core.management import call_command
 
 from rest_framework import serializers
 
-from .models import Race, RaceAgent, RaceTask
+from .models import Race, RaceAgent, RaceTask, Keyword
 from agents.models import Agent
 from tasks.models import Task
+
+
+class KeywordSerializer(serializers.ModelSerializer):
+    """Serializer to map the Model instance into JSON format."""
+
+    class Meta:
+        """Meta class to map serializer's fields with the model fields."""
+        model = Keyword
+        fields = ('id', 'name', 'type')
+
 
 class RaceSerializer(serializers.ModelSerializer):
     """Serializer to map the Model instance into JSON format."""

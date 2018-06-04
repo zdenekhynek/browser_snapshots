@@ -12,7 +12,7 @@ module.exports = {
     './frontend/src/index.jsx',
   ],
   output: {
-    path: __dirname + '/static/dist',
+    path: __dirname + '/browser_snapshots/static/dist',
     publicPath: config.baseUrl,
     filename: 'bundle.js',
   },

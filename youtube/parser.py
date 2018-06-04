@@ -223,6 +223,7 @@ def parse_snapshot(snapshot):
 
 
     # get video meta
+    # make sure you get only one video
     video, created = Video.objects.get_or_create(url=url)
 
     yt_id = get_id_from_url(url)
