@@ -40,6 +40,12 @@ class Profiles extends Component {
     this.state = { raceId: false, isNewRace: false, shouldAnimateRace: false };
   }
 
+  renderTotals() {
+    return (
+      <span>totals</span>
+    )
+  }
+
   renderChart(index) {
     const { mode, size } = this.props;
     const { height } = size;
@@ -64,7 +70,7 @@ class Profiles extends Component {
     const transform = `translate(0, ${offset}px)`;
     const style = { transitionDuration, transform };
 
-    const renderedRadialChart = (mode === 'landing') ?
+    const renderedRadialChart = (mode === 'landing' || mode === 'summary') ?
       renderRadialChart(index) : <span />;
     const chartAnimationKey = (mode === 'landing') ? 'chart' : 'no-chart';
 
@@ -141,6 +147,8 @@ export function mapStateToProps(state, ownProps) {
     mode = 'results';
   } else if (pathname.indexOf('highlights') > -1) {
     mode = 'highlights';
+  } else if (pathname.indexOf('summary') > -1) {
+    mode = 'summary';
   }
 
   return { mode, raceId };

@@ -15,33 +15,71 @@ export class Results extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { mode: 'summary' };
+
     this.onRestartClick = this.onRestartClick.bind(this);
+    this.onSessionClick = this.onSessionClick.bind(this);
+    this.onSummaryClick = this.onSummaryClick.bind(this);
+
     this.restartTimeout = null;
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     this.restartTimeout = setTimeout(() => {
       this.onRestartClick();
     }, TIMEOUT);
   }
 
   componentDidUnmount() {
-    console.log('componentDidUnmount');
     clearTimeout(restartTimeout);
   }
 
   onRestartClick() {
-    console.log('onRestartClick');
     sendSocketMessage('restart');
+  }
+
+  onSessionClick() {
+    sendSocketMessage('display_race_results');
+    this.setState({ mode: 'results' });
+  }
+
+  onSummaryClick() {
+    sendSocketMessage('display_race_summary');
+    this.setState({ mode: 'summary' });
+  }
+
+  renderBackToSummary() {
+    return (
+      <button
+        className={landingClasses.link}
+        onClick={this.onSummaryClick}
+      >
+        Back to summary
+      </button>
+    )
+  }
+
+  renderBackToResults() {
+    return (
+      <button
+        className={landingClasses.link}
+        onClick={this.onSessionClick}
+      >
+        Back to session
+      </button>
+    );
   }
 
   render() {
     const { race } = this.props;
+    const { mode } = this.state;
 
     const keyword = (race && race.get('keyword'))?
       race.get('keyword') : 'something';
     const label = `Try searching for "${keyword}" on your YouTube.`;
+
+    const renderedBtn = (mode === 'summary') ?
+      this.renderBackToResults() : this.renderBackToSummary();
 
     return (
       <div className={classes.ipadResults}>
@@ -49,16 +87,19 @@ export class Results extends Component {
           <h1 className={landingClasses.title}>
             {label}
           </h1>
-          <h2>
-            To find out, what’s next up for you.
+          <h2 className={classes.subtitle}>
+            To find out, who you are.
           </h2>
         </div>
-        <button
-          className={landingClasses.link}
-          onClick={this.onRestartClick}
-        >
-          Start over
-        </button>
+        <div>
+          {renderedBtn}
+          <button
+            className={landingClasses.link}
+            onClick={this.onRestartClick}
+          >
+            Start over
+          </button>
+        </div>
       </div>
     );
   }

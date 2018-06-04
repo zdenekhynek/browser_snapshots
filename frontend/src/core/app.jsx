@@ -68,6 +68,16 @@ export function App(props, { store }) {
             return (<Races raceId={+raceId} showResults={true} />);
           }}
           />
+          <Route exact path="/viz/races/:raceId/summary" render={({ match }) => {
+            const { params } = match;
+            const { raceId } = params;
+
+            //  no ws on this route so request data manually
+            store.dispatch(updateRace(+raceId));
+
+            return (<Results raceId={+raceId} showResults={true} />);
+          }}
+          />
           <Route exact path="/viz/archive" render={() => {
             store.dispatch(getRaces());
             return (<Archive />);
