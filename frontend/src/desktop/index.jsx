@@ -24,6 +24,8 @@ class Desktop extends Component {
 
     //  subscribe to the desktop group
     initSocket(this.onSocketMessage.bind(this));
+
+    this.lastSocketId = null;
   }
 
   onSocketMessage(socketData) {
@@ -47,16 +49,22 @@ class Desktop extends Component {
       history.push(finishLink);
       this.props.receiveUpdateRace(socketData.id, socketData);
     } else if (message === 'display_race_results') {
-      const resultsLink = `/viz/desktop/races/${socketData.id}/results`;
+      //  display race results
+      const resultsLink = `/viz/desktop/races/${this.lastSocketId}/results`;
       history.push(resultsLink);
     } else if (message === 'display_race_summary') {
-      const summaryLink = `/viz/desktop/races/${socketData.id}/summary`;
+      //  display race summary
+      const summaryLink = `/viz/desktop/races/${this.lastSocketId}/summary`;
       history.push(summaryLink);
     } else if (message === 'display_highlight') {
       const { raceId } = socketData;
       const highlightLink = `/viz/desktop/highlights/${raceId}/`;
       history.push(highlightLink);
       this.props.updateRace(+raceId);
+    }
+
+    if (socketData.id) {
+      this.lastSocketId = socketData.id;
     }
   }
 

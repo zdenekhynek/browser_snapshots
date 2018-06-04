@@ -8,9 +8,16 @@ import { Map } from 'immutable'
 
 import Profile from './profile';
 import RadialChart from '../races/radial_chart';
+import COLORS from '../races/colors';
 
 import classes from './profiles.css';
 import desktopClasses from './desktop.css';
+
+export const EMAILS = [
+  'boy.from.queens@gmail.com',
+  'healthy.bunny.guru@gmail.com',
+  'transparency.hacker.pirate@gmail.com',
+];
 
 export function renderRadialChart(index) {
   return (
@@ -46,6 +53,18 @@ class Profiles extends Component {
     )
   }
 
+  renderEmail(index) {
+    const email = EMAILS[index].replace('@gmail.com', '');
+    const color = COLORS[index];
+    const style = { color };
+
+    return (
+      <div>
+        <h4 className={classes.email} style={style}>{email}</h4>
+      </div>
+    )
+  }
+
   renderChart(index) {
     const { mode, size } = this.props;
     const { height } = size;
@@ -65,6 +84,8 @@ class Profiles extends Component {
 
     if (mode === 'race' || mode === 'results' || mode === 'highlights') {
       offset = -(height / 2 - 160);
+    } else if (mode === 'summary') {
+      offset = -50;
     }
 
     const transform = `translate(0, ${offset}px)`;
@@ -74,9 +95,28 @@ class Profiles extends Component {
       renderRadialChart(index) : <span />;
     const chartAnimationKey = (mode === 'landing') ? 'chart' : 'no-chart';
 
+    const renderedEmail = (mode === 'summary') ?
+      this.renderEmail(index) : <span />;
+    const emailAnimationKey = (mode === 'summary') ? 'email' : 'no-email';
+
     return (
       <div key={index} className={classes.col}>
         <div className={classes.chart} style={style}>
+          <TransitionGroup className={classes.radialChartTransition}>
+            <CSSTransition
+                key={emailAnimationKey}
+                classNames={{
+                 enter: desktopClasses.exampleEnter,
+                 enterActive: desktopClasses.exampleEnterActive,
+                 exit: desktopClasses.exampleLeave,
+                 exitActive: desktopClasses.exampleLeaveActive,
+                }}
+                className={classes.radialChartTransition}
+                timeout={450}
+            >
+              {renderedEmail}
+            </CSSTransition>
+          </TransitionGroup>
           <div className={classes.profile}>
             <Profile index={index} />
           </div>

@@ -1,5 +1,7 @@
 import requests
 
+import isodate
+
 from django.conf import settings
 from youtube.get_id_from_url import get_id_from_url
 from youtube.models import VideoCategory
@@ -43,14 +45,6 @@ def amend_video(yt_id, url, video, metadata):
       video.description = snippet['description']
       video.channel = snippet['channelTitle']
 
-      if 'statistics' in item:
-        statistics = item['statistics']
-        video.views = statistics['viewCount'] if 'viewCount' in statistics else 0
-        video.likes = statistics['likeCount'] if 'likeCount' in statistics else 0
-        video.dislikes = statistics['dislikeCount'] if 'dislikeCount' in statistics else 0
-        video.favorites = statistics['favoriteCount'] if 'favoriteCount' in statistics else 0
-        video.comment_count = statistics['commentCount'] if 'commentCount' in statistics else 0
-
       # try getting category
       try:
         category = VideoCategory.objects.get(category_id=snippet['categoryId'])
@@ -58,6 +52,27 @@ def amend_video(yt_id, url, video, metadata):
       except VideoCategory.DoesNotExist:
         # couldn't find category
         pass
+
+    if 'statistics' in item:
+      statistics = item['statistics']
+      video.views = statistics['viewCount'] if 'viewCount' in statistics else 0
+      video.likes = statistics['likeCount'] if 'likeCount' in statistics else 0
+      video.dislikes = statistics['dislikeCount'] if 'dislikeCount' in statistics else 0
+      video.favorites = statistics['favoriteCount'] if 'favoriteCount' in statistics else 0
+      video.comment_count = statistics['commentCount'] if 'commentCount' in statistics else 0
+
+    if 'contentDetails' in item:
+      contentDetails = item['contentDetails']
+
+      duration = 0
+      try:
+        iso_duration = contentDetails['duration']
+        duration = isodate.parse_duration(iso_duration)
+      except:
+        # couldn't pass duration
+        pass
+
+      video.duration = duration
 
   video.code = yt_id
   video.url = url

@@ -1,33 +1,50 @@
 .results {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
   width: 100%;
   height: 100%;
-  padding: 50px;
   box-sizing: border-box;
 }
 
-.totalResults {
+/*.totalResults {
   width: 350px;
   margin: 0 auto;
   color: #666;
 }
+*/
 
 .profileResults {
-  composes: totalResults;
+  width: 100%;
+  height: 100%;
+}
+
+.profileCol {
   display: flex;
-  min-width: 1200px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex: 33.3333% 0 0;
+  width: 33.3333%;
 }
 
-.table {
-  flex: 33% 0 0;
-  padding-top: 50px;
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  transform: translate(0, 150px);
 }
 
-.totalTable {
-
+.raceTable {
+  display: none;
 }
+
+.totalTable {}
 
 .tableTitle {
   text-align: center;
@@ -65,6 +82,8 @@
   text-align: center;
 }
 
-.numbers {
-  flex: 50% 0 0;
+.totalContent {
+  max-width: 300px;
+  font-size: 24px;
+  text-align: center;
 }

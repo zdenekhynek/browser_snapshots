@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4c726fde4e933e3043eaa36eb4d437a182b8e4aafe56e528b4d1707d35bab7e2"
+            "sha256": "30ccc8abcb7790e4714529d4efde50c318088b9ea01be854d4771c6643811dc5"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -99,17 +99,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:19d479abad241512051b11f681b93f37b1e6b03d8f2907daae94b4ca8d0da738",
-                "sha256:38a811f3335b08690182fdbddb07f0cb5e8f0b5bccbcf9ef606ed2a2508a9fd7"
+                "sha256:d5f4a060c8b82c61f47b84afd08fb15d0d28591e4577c0f60fd5dbcc8ab4418d",
+                "sha256:28ea099b76d6b18210109cb8f7d5452a4ba48992e85696fa0ede33793af5ba69"
             ],
-            "version": "==1.7.30"
+            "version": "==1.7.31"
         },
         "botocore": {
             "hashes": [
-                "sha256:8dac26094f3dbebd2849c0774f050daad3f1abf1b35fad7525916a36372fe009",
-                "sha256:1f6d0a135c9505e0840b675e6bd6b556c85df2e63212ac6850f77edf9f68311a"
+                "sha256:43ed488d083e4f47d14a73ded5483c466e8823e27d8712d527039a6157f76672",
+                "sha256:5e35278d27c5640c0ef3aec19cc846e4580c467057997d5428a10109105b9f10"
             ],
-            "version": "==1.10.30"
+            "version": "==1.10.31"
         },
         "bs4": {
             "hashes": [
@@ -237,10 +237,10 @@
         },
         "django": {
             "hashes": [
-                "sha256:26b34f4417aa38d895b6b5307177b51bc3f4d53179d8696a5c19dcb50582523c",
-                "sha256:71d1a584bb4ad2b4f933d07d02c716755c1394feaac1ce61ce37843ac5401092"
+                "sha256:69ff89fa3c3a8337015478a1a0744f52a9fef5d12c1efa01a01f99bcce9bf10c",
+                "sha256:3eb25c99df1523446ec2dc1b00e25eb2ecbdf42c9d8b0b8b32a204a8db9011f8"
             ],
-            "version": "==2.0.5"
+            "version": "==2.0.6"
         },
         "django-cors-headers": {
             "hashes": [
@@ -388,6 +388,13 @@
                 "sha256:7b751696aaf36eebfab537e458929e194460051ccad279c72b755a167eebd4b3"
             ],
             "version": "==17.5.0"
+        },
+        "isodate": {
+            "hashes": [
+                "sha256:aa4d33c06640f5352aca96e4b81afd8ab3b47337cc12089822d6f322ac772c81",
+                "sha256:2e364a3d5759479cdb2d37cce6b9376ea504db2ff90252a2e5b7cc89cc9ff2d8"
+            ],
+            "version": "==0.6.0"
         },
         "jmespath": {
             "hashes": [

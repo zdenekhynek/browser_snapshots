@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
 import { format } from 'd3-format';
 
+import COLORS from './colors';
+
 import classes from './results.css';
 
 export const formatter = format(',.2f');
@@ -22,45 +24,55 @@ export function renderLine(k, r) {
   );
 }
 
-export function displayResults(title, results) {
- const className = (title === 'totals') ?
-  classes.totalTable : classes.table;
+export function displayResults(title, results, index) {
+  const color = COLORS[index];
+  const style = { color };
 
- return (
-    <div key={title} className={className}>
-      <h3 className={classes.tableTitle}>{title}</h3>
-      <ul className={classes.list}>
-        {renderLine('temperature', results.get('temperature'))}
-        {renderLine('noise', results.get('noise'))}
-        {renderLine('pollution', results.get('pollution'))}
-      </ul>
+  return (
+    <div className={classes.profileCol} style={style}>
+      <div className={classes.profileWrapper}>
+        <div key={title} className={classes.raceTable}>
+          <h3 className={classes.tableTitle}>{title}</h3>
+          <ul className={classes.list}>
+            {renderLine('temperature', results.get('temperature'))}
+            {renderLine('noise', results.get('noise'))}
+            {renderLine('pollution', results.get('pollution'))}
+          </ul>
+        </div>
+        <div>
+          <h4 className={classes.totalContent}>
+            Watched 23,000 hours of content over the last month.
+          </h4>
+        </div>
+      </div>
     </div>
   );
 }
 
 const Results = ({ keyword, results }) => {
   const totalResults = displayResults('Totals', results.get('totals', Map()));
-  const profileResults = results.get('profiles', Map()).map((r) => {
-    return displayResults(r.get('gmail'), r.delete('id'));
+  const profileResults = results.get('profiles', Map()).map((r, i) => {
+    return displayResults(r.get('gmail'), r.delete('id'), i);
   });
 
   const formattedKeyword = (keyword) ?
     `"${keyword}"` : 'something';
 
+  /*<div className={classes.prompt}>
+    <h2>
+      Why don&apos;t you try searching for {formattedKeyword} on your YouTube?
+    </h2>
+  </div>
+
+
+  <div className={classes.totalResults}>
+    {totalResults}
+  </div>*/
+
   return (
     <div className={classes.results}>
-      <div className={classes.prompt}>
-        <h2>
-          Why don&apos;t you try searching for {formattedKeyword} on your YouTube?
-        </h2>
-      </div>
-      <div className={classes.numbers}>
-        <div className={classes.totalResults}>
-          {totalResults}
-        </div>
-        <div className={classes.profileResults}>
-          {profileResults}
-        </div>
+      <div className={classes.profileResults}>
+        {profileResults}
       </div>
     </div>
   );

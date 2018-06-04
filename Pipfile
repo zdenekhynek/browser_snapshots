@@ -6,11 +6,11 @@ verify_ssl = true
 
 [packages]
 
-Django = "*"
+django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 django-extra-fields = "*"
-Pillow = "*"
+pillow = "*"
 python-dateutil = "*"
 pytest-django = "*"
 "beautifulsoup4" = "*"
@@ -33,7 +33,8 @@ google-cloud-language = "*"
 pytest = "*"
 pytest-watch = "*"
 channels = "*"
-channels_redis = "*"
+channels-redis = "*"
+isodate = "*"
 
 
 [dev-packages]
