@@ -39,3 +39,19 @@
 .restartBtn {
   padding: 10px 20px;
 }
+
+.image {
+  display: none;
+  width: 150px;
+  height: auto;
+}
+
+.tutorial {
+  position: relative;
+}
+
+.metrics {}
+
+.tutorialMetric {
+  position: absolute;
+}

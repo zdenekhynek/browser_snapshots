@@ -51,7 +51,7 @@ class Ipad extends Component {
     } else if (message === 'race_update') {
       this.props.receiveUpdateRace(socketData.id, socketData);
     } else if (message === 'race_finished') {
-      const finishLink = `/viz/ipad/races/${socketData.id}/results`;
+      const finishLink = `/viz/ipad/races/${socketData.id}/summary`;
       history.push(finishLink);
       this.props.receiveUpdateRace(socketData.id, socketData);
     }
@@ -90,7 +90,7 @@ class Ipad extends Component {
               />
               <Route
                 exact
-                path="/viz/ipad/races/:raceId/results"
+                path="/viz/ipad/races/:raceId/summary"
                 render={({ match }) => {
                   const { params } = match;
                   const { raceId } = params;

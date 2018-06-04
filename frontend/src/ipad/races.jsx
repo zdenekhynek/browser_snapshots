@@ -7,6 +7,7 @@ import moment from 'moment';
 import { sendSocketMessage } from '../sockets/socket_service';
 import { NUM_STEPS } from '../races/reducer';
 
+import tutorialImage from '../assets/images/tutorial_2.png';
 import classes from './races.css';
 
 export function renderDot(index, dotsCompleted) {
@@ -85,6 +86,30 @@ class Races extends Component {
       <div className={classes.races}>
         <h1>&ldquo;{race.get('keyword')}&rdquo;</h1>
         {renderedCountDown}
+        <div className={classes.tutorial}>
+            <img className={classes.image} src={tutorialImage} />
+            <div className={classes.metrics}>
+              <div className={classes.metric}>
+                <h5>Noise</h5>
+                <p>
+                  How much popular the video was.
+                </p>
+              </div>
+              <div className={classes.metric}>
+                <h5>Pollution</h5>
+                <p>
+                  How much is video like to be fake news.
+                  Powered by FakeBox.
+                </p>
+              </div>
+              <div className={classes.metric}>
+                <h5>Emissions</h5>
+                <p>
+                  Amount of disagreement about the videos.
+                </p>
+              </div>
+            </div>
+        </div>
         {renderedDots}
       </div>
     );

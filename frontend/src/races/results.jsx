@@ -6,6 +6,18 @@ import { format } from 'd3-format';
 
 import COLORS from './colors';
 
+export const DURATION = [
+  '23,000',
+  '14,000',
+  '26,000',
+];
+
+export const MESSAGE = [
+  'Watched 23,000 hours of Fox News, hamburgers and himself.',
+  'Watched 14,000 hours of MSNBC, Oprah and seaweed.',
+  "Watched 16,000 hours of NSA, surveillance and ... we can't tell you.",
+];
+
 import classes from './results.css';
 
 export const formatter = format(',.2f');
@@ -26,6 +38,8 @@ export function renderLine(k, r) {
 
 export function displayResults(title, results, index) {
   const color = COLORS[index];
+  const duration = DURATION[index];
+  const message = MESSAGE[index];
   const style = { color };
 
   return (
@@ -41,7 +55,7 @@ export function displayResults(title, results, index) {
         </div>
         <div>
           <h4 className={classes.totalContent}>
-            Watched 23,000 hours of content over the last month.
+            {message}
           </h4>
         </div>
       </div>
