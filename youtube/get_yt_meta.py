@@ -67,12 +67,12 @@ def amend_video(yt_id, url, video, metadata):
       duration = 0
       try:
         iso_duration = contentDetails['duration']
-        duration = isodate.parse_duration(iso_duration)
+        duration = isodate.parse_duration(iso_duration).total_seconds()
       except:
         # couldn't pass duration
         pass
 
-      video.duration = duration
+      video.length = duration
 
   video.code = yt_id
   video.url = url
