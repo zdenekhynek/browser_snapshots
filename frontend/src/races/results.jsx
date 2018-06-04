@@ -105,6 +105,12 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
     return profile.merge(agent);
   });
 
+  console.log('races', races);
+  console.log('metrics', metrics);
+  console.log('agents', agents);
+  console.log('results', results);
+  console.log('profilesWithResults', profilesWithResults);
+
   return {
     keyword: activeRace.get('keyword'),
     results: results.set('profiles', profilesWithResults),

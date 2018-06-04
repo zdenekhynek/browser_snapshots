@@ -11,8 +11,8 @@ import classes from './form.css';
 export const AGENTS = {
   development: [
     { id: 1, name: 'Slavoj Krizala', email: 'slavoj.krizala@gmail.com' },
-    // { id: 7, name: 'Les Fauvy', email: '' },
-    // { id: 8, name: 'Catherine', email: '' },
+    { id: 7, name: 'Les Fauvy', email: 'les fauvy' },
+    { id: 8, name: 'Catherine', email: 'catherine' },
   ],
   staging: [
     { id: 4, name: 'Donald Trump', email: 'boy.from.queens@gmail.com' },

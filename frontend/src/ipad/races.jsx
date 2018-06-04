@@ -90,22 +90,30 @@ class Races extends Component {
             <img className={classes.image} src={tutorialImage} />
             <div className={classes.metrics}>
               <div className={classes.metric}>
-                <h5>Noise</h5>
+                <h5 className={classes.metricTitle}>Noise</h5>
                 <p>
-                  How much popular the video was.
+                  How engaging the video is.
+                  <span className={classes.metricValue}>
+                    number of interactions / number of views
+                  </span>
                 </p>
               </div>
               <div className={classes.metric}>
-                <h5>Pollution</h5>
+                <h5 className={classes.metricTitle}>Emissions</h5>
                 <p>
-                  How much is video like to be fake news.
-                  Powered by FakeBox.
+                  How outrageous the video is.
+                  <span className={classes.metricValue}>
+                    Proportion between likes and dislikes
+                  </span>
                 </p>
               </div>
               <div className={classes.metric}>
-                <h5>Emissions</h5>
+                <h5 className={classes.metricTitle}>Pollution</h5>
                 <p>
-                  Amount of disagreement about the videos.
+                  How much is video likely to be fake news.
+                  <span className={classes.metricValue}>
+                    Powered by FakeBox.
+                  </span>
                 </p>
               </div>
             </div>
