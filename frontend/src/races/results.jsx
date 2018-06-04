@@ -13,9 +13,9 @@ export const DURATION = [
 ];
 
 export const MESSAGE = [
-  'Watched 23,000 hours of Fox News, hamburgers and himself.',
-  'Watched 14,000 hours of MSNBC, Oprah and seaweed.',
-  "Watched 16,000 hours of NSA, surveillance and ... we can't tell you.",
+  'Watched in total 23,000 hours of Fox News, hamburgers and himself.',
+  'Watched in total 14,000 hours of MSNBC, Oprah and seaweed.',
+  "Watched in total 16,000 hours of NSA, surveillance and ... we can't tell you.",
 ];
 
 import classes from './results.css';

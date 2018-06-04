@@ -108,6 +108,16 @@ class Desktop extends Component {
               />
               <Route
                 exact
+                path="/viz/desktop/races/:raceId/summary"
+                render={({ match }) => {
+                  const { params } = match;
+                  const { raceId } = params;
+
+                  return (<Results raceId={+raceId} />);
+                }}
+              />
+              <Route
+                exact
                 path="/viz/desktop/highlights/"
                 component={Highlights}
               />
