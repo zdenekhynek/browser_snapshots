@@ -105,14 +105,14 @@ class Tree extends Component {
     let fill = 'none';
 
     if (metric === 'pollution') {
-      stroke = COLORS[index];
-      style = { stroke, fill };
-    } else if (metric === 'temperature') {
       fill = `url(#diagonalHatch-${index})`;
       style = { fill };
-    } else {
+    } else if (metric === 'temperature') {
       fill = COLORS[index];
       style = { fill };
+    } else {
+      stroke = COLORS[index];
+      style = { stroke, fill };
     }
 
     const flippedKey = (flipped) ? 'flipped' : 'not-flipped';

@@ -99,20 +99,20 @@ class Races extends Component {
                 </p>
               </div>
               <div className={classes.metric}>
-                <h5 className={classes.metricTitle}>Emissions</h5>
-                <p>
-                  How outrageous the video is.
-                  <span className={classes.metricValue}>
-                    Proportion between likes and dislikes
-                  </span>
-                </p>
-              </div>
-              <div className={classes.metric}>
                 <h5 className={classes.metricTitle}>Pollution</h5>
                 <p>
                   How much is video likely to be fake news.
                   <span className={classes.metricValue}>
                     Powered by FakeBox.
+                  </span>
+                </p>
+              </div>
+              <div className={classes.metric}>
+                <h5 className={classes.metricTitle}>Temperature</h5>
+                <p>
+                  How outrageous the video is.
+                  <span className={classes.metricValue}>
+                    Proportion between likes and dislikes
                   </span>
                 </p>
               </div>
