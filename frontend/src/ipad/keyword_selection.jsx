@@ -15,7 +15,7 @@ import classes from './landing.css';
 export const KEYWORDS = [
   'Fox News', 'surveillance', 'london knife crime', 'president trump',
   'crimea bridge', 'leave.eu', 'boris johnson', 'greenfell tower',
-  'irish referendum', "let's take back control",
+  'irish referendum', "let's take back control", 'biggest secret',
 ];
 
 export function getRandomKeyword() {

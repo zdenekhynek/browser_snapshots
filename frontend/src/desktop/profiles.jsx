@@ -68,9 +68,13 @@ class Profiles extends Component {
   renderSummary(index, data) {
     const color = COLORS[index];
     const style = { color };
+    const email = EMAILS[index].replace('@gmail.com', '');
+
+    console.log('data', data);
 
     return (
       <div className={classes.summary} style={style}>
+        <div className={classes.summaryEmail}>{email}</div>
         <div className={classes.summaryTitle}>{data.get('title')}</div>
         <div className={classes.summarySentence}>{data.get('sentence')}</div>
       </div>
@@ -202,7 +206,7 @@ class Profiles extends Component {
 }
 
 export const SENTENCES = {
-  noise: {
+  temperature: {
     highest: {
       title: 'Spicemaster',
       sentence: 'Watched videos with a high temperature',
@@ -212,7 +216,7 @@ export const SENTENCES = {
       sentence: 'Watched videos with a low temperature',
     },
   },
-  pollution: {
+  noise: {
     highest: {
       title: 'Where’s the party at?',
       sentence: 'Watched videos with a high noise level',
@@ -222,7 +226,7 @@ export const SENTENCES = {
       sentence: 'Watched videos with a low noise level',
     },
   },
-  temperature: {
+  pollution: {
     highest: {
       title: 'Toxic avenger',
       sentence: 'Watched videos with high pollution',
@@ -232,35 +236,93 @@ export const SENTENCES = {
       sentence: 'Watched videos with low pollution',
     },
   },
+  neutral: {
+    title: 'Runner-up',
+    sentence: 'This profile will try harder next time',
+  },
 }
 
 export function getSummarySentence(metric, isHighest = false) {
   const highestKey = (isHighest) ? 'highest' : 'lowest';
 
-  if (SENTENCES[metric] && SENTENCES[metric][highestKey]) {
-    return SENTENCES[metric][highestKey]
+  if (metric !== 'neutral') {
+    if (SENTENCES[metric] && SENTENCES[metric][highestKey]) {
+      return SENTENCES[metric][highestKey]
+    }
+  } else {
+    return SENTENCES['neutral'];
   }
 
   return { title: '', sentence: '' };
 }
 
-export function getSummary(profiles) {
-  return profiles.map((profile, i) => {
-    let metric = '';
-    let isHighest = false;
+export function getProfileMetrics(profile) {
+  let min = Infinity;
+  let max = -Infinity;
+  let minProp = '';
+  let maxProp = '';
 
-    if (i === 0) {
-      metric = 'temperature';
-      isHighest = true;
-    } else if (i === 1) {
-      metric = 'pollution';
-      isHighest = false;
-    } else if (i === 2) {
-      metric = 'noise';
-      isHighest = true;
+  const keys = ['noise', 'pollution', 'temperature'];
+
+  keys.forEach((key) => {
+    const value = profile.get(key, NaN);
+
+    if (!isNaN(value)) {
+      if (value < min) {
+        min = value;
+        minProp = key;
+      }
+      if (value > max) {
+        max = value;
+        maxProp = key;
+      }
+    }
+  });
+
+  return { min: minProp, max: maxProp };
+}
+
+export function getSummary(profiles) {
+  // sort profiles by metrics
+
+  //  get all the numbers for profiles
+  const minMax = profiles.map(getProfileMetrics);
+
+  //  go through profile and check whether the min and max are
+  //  taken already
+  const cache = {};
+  const profileMetrics = minMax.map((m) => {
+    //  try getting max
+    const maxKey = `max-${m.max}`;
+
+    //  can we use max key?
+    if (!cache[maxKey]) {
+      cache[maxKey] = true;
+      return Map({ metric: m.max, isHighest: true});
     }
 
-    const summary = getSummarySentence(metric, isHighest);
+    //  can we use min key?
+    //  try getting min
+    const minKey = `min-${m.min}`;
+
+    //  can we use max key?
+    if (!cache[minKey]) {
+      cache[minKey] = true;
+      return Map({ metric: m.min, isHighest: false});
+    }
+
+    //  just use neutral
+    return Map({ metric :'neutral' });
+  });
+
+  return profiles.map((profile, i) => {
+    const minMax = (profileMetrics.has(i)) ? profileMetrics.get(i) : Map();
+
+    const summary = getSummarySentence(
+      minMax.get('metric'),
+      minMax.get('isHighest')
+    );
+
     return profile
       .set('title', summary.title)
       .set('sentence', summary.sentence);
