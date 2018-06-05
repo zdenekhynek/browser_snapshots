@@ -16,6 +16,12 @@
   color: black;
 }
 
+.highlightsBlack {
+  composes: highlights;
+  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
+  color: white;
+}
+
 .highlights ul {
   padding: 0;
   margin: 0;
@@ -30,6 +36,12 @@
   color: inherit;
   text-decoration: none;
   border-bottom: 1px solid #555;
+}
+
+.highlightsBlack a {
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
 }
 
 .date {

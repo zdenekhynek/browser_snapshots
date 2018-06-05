@@ -82,8 +82,11 @@ export const Highlights = ({ races, showMetrics = false }) => {
   const renderButton = (showMetrics) ?
     renderBackToList() : renderBackToStart();
 
+  const className = (!showMetrics) ?
+    classes.highlights : classes.highlightsBlack;
+
   return (
-    <div className={classes.highlights}>
+    <div className={className}>
       <div>
         <h1 className={landingClasses.title}>Highlights</h1>
         {renderedList}
