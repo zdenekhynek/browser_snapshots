@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 
 import { sendSocketMessage } from '../sockets/socket_service';
+import Metrics from './metrics';
 
 import classes from './results.css';
 import landingClasses from './landing.css';
@@ -80,6 +81,8 @@ export class Results extends Component {
 
     const renderedBtn = (mode === 'summary') ?
       this.renderBackToResults() : this.renderBackToSummary();
+    const renderedMetrics = (mode === 'results') ?
+      <Metrics /> : <span />;
 
     return (
       <div className={classes.ipadResults}>
@@ -90,6 +93,9 @@ export class Results extends Component {
           <h2 className={classes.subtitle}>
             To find out, who you are.
           </h2>
+        </div>
+        <div className={classes.metrics}>
+          {renderedMetrics}
         </div>
         <div>
           {renderedBtn}

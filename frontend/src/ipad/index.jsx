@@ -109,6 +109,13 @@ class Ipad extends Component {
                   return (<IpadHighlights />);
                 }}
               />
+              <Route
+                exact
+                path="/viz/ipad/highlights/:raceId"
+                render={({ match }) => {
+                  return (<IpadHighlights showMetrics={true} />);
+                }}
+              />
             </Switch>
           </CSSTransition>
         </TransitionGroup>

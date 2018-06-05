@@ -5,60 +5,92 @@ import { connect } from 'react-redux';
 import { List } from 'immutable';
 
 import { sendSocketMessage } from '../sockets/socket_service';
+import Metrics from './metrics';
 
 import classes from './highlights.css';
 import landingClasses from './landing.css';
 
-const Highlights = ({ races }) => {
+export function renderList(races) {
+  return (
+    <ul>
+      {
+        races.map((race, i) => {
+          const raceId = race.get('id');
+          const link = `/viz/ipad/highlights/${raceId}`;
+
+          const raceKeyword = race.get('keyword');
+
+          const date = new Date(race.get('created_at'));
+          const raceDate = (raceId > -1) ?
+            `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}` : '';
+
+          let label = race.get('label');
+
+          if (raceId > -1) {
+            label = (race.get('description')) ?
+              race.get('description', '') : 'Race';
+          }
+
+          return (<li key={i}>
+            <Link
+              to={link}
+              onClick={(evt) => {
+                sendSocketMessage('display_highlight', { raceId });
+              }}
+            >
+              {label}
+            </Link>
+          </li>);
+        })
+      }
+    </ul>
+  );
+}
+
+export function renderBackToStart() {
+  return (
+    <a
+      className={landingClasses.link}
+      onClick={() => {
+        sendSocketMessage('restart');
+      }}
+    >
+        Back to start
+    </a>
+  );
+}
+
+export function renderBackToList() {
+  const link = '/viz/ipad/highlights/';
+
+  return (
+    <Link
+      to={link}
+      className={landingClasses.link}
+    >
+        Back to list
+    </Link>
+  );
+}
+
+export const Highlights = ({ races, showMetrics = false }) => {
   const latestRaces = races.reverse();
+  const renderedList = (!showMetrics) ?
+    renderList(latestRaces) : null;
+  const renderedMetrics = (showMetrics) ?
+    <Metrics /> : null;
+  const renderButton = (showMetrics) ?
+    renderBackToList() : renderBackToStart();
 
   return (
     <div className={classes.highlights}>
       <div>
         <h1 className={landingClasses.title}>Highlights</h1>
-        <ul>
-          {
-            latestRaces.map((race, i) => {
-              const raceId = race.get('id');
-              const link = `/viz/races/${raceId}`;
-
-              const raceKeyword = race.get('keyword');
-
-              const date = new Date(race.get('created_at'));
-              const raceDate = (raceId > -1) ?
-                `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}` : '';
-
-              let label = race.get('label');
-
-              if (raceId > -1) {
-                label = (race.get('description')) ?
-                  race.get('description', '') : 'Race';
-              }
-
-              return (<li key={i}>
-                <Link
-                  to={link}
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    sendSocketMessage('display_highlight', { raceId });
-                  }}
-                >
-                  {label}
-                </Link>
-              </li>);
-            })
-          }
-        </ul>
+        {renderedList}
       </div>
+      {renderedMetrics}
       <div>
-        <a
-          className={landingClasses.link}
-          onClick={() => {
-            sendSocketMessage('restart');
-          }}
-        >
-            Back
-        </a>
+        {renderButton}
       </div>
     </div>
   );
