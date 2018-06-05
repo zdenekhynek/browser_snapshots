@@ -1,0 +1,18 @@
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In  -->
+<svg version="1.1"
+   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+   x="0px" y="0px" viewBox="0 0 120 120" style="enable-background:new 0 0 120 120;"
+   xml:space="preserve">
+<style type="text/css">
+  .temperature_st0{opacity:0.2;fill:#FFFFFF;}
+  .temperature_st1{fill:#FFFFFF;}
+</style>
+<defs>
+</defs>
+<circle class="temperature_st0" cx="60" cy="60" r="60"/>
+<g>
+  <circle class="temperature_st1" cx="60" cy="60" r="31"/>
+  <path d="M60,30c16.6,0,30,13.4,30,30S76.6,90,60,90S30,76.6,30,60S43.4,30,60,30 M60,28c-17.6,0-32,14.4-32,32s14.4,32,32,32
+    s32-14.4,32-32S77.6,28,60,28L60,28z"/>
+</g>
+</svg>

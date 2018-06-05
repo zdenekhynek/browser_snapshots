@@ -1,13 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import noiseSvg from './noise.png';
+import pollutionSvg from './pollution.png';
+import temperatureSvg from './temperature.png';
+
 import classes from './metrics.css';
 
+export function renderIcon(icon) {
+  return (
+    <span className={classes.icon}>
+      <img src={icon} className={classes.svg} />
+    </span>
+  );
+}
+
 const Metrics = ({ className }) => {
+
+  const noiseIcon = renderIcon(noiseSvg);
+  const pollutionIcon = renderIcon(pollutionSvg);
+  const temperatureIcon = renderIcon(temperatureSvg);
+
   return (
     <div className={classes.metrics}>
       <div className={classes.metric}>
-        <div>
+        <div className={classes.metricWrapper}>
+          {noiseIcon}
           <h5 className={classes.metricTitle}>Noise</h5>
         </div>
         <p>
@@ -18,7 +36,8 @@ const Metrics = ({ className }) => {
         </p>
       </div>
       <div className={classes.metric}>
-        <div>
+        <div className={classes.metricWrapper}>
+          {pollutionIcon}
           <h5 className={classes.metricTitle}>Pollution</h5>
         </div>
         <p>
@@ -29,7 +48,8 @@ const Metrics = ({ className }) => {
         </p>
       </div>
       <div className={classes.metric}>
-        <div>
+        <div className={classes.metricWrapper}>
+          {temperatureIcon}
           <h5 className={classes.metricTitle}>Temperature</h5>
         </div>
         <p>
