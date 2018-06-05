@@ -49,21 +49,3 @@
 .tutorial {
   position: relative;
 }
-
-.metrics {}
-
-.tutorialMetric {
-  position: absolute;
-}
-
-.metricTitle {
-  margin-bottom: 15px;
-  font-size: 20px;
-  text-transform: uppercase;
-}
-
-.metricValue {
-  display: block;
-  font-style: italic;
-  font-size: 14px;
-}

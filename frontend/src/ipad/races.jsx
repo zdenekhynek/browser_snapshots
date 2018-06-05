@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import { sendSocketMessage } from '../sockets/socket_service';
 import { NUM_STEPS } from '../races/reducer';
+import Metrics from './metrics';
 
 import tutorialImage from '../assets/images/tutorial_2.png';
 import classes from './races.css';
@@ -88,35 +89,7 @@ class Races extends Component {
         {renderedCountDown}
         <div className={classes.tutorial}>
             <img className={classes.image} src={tutorialImage} />
-            <div className={classes.metrics}>
-              <div className={classes.metric}>
-                <h5 className={classes.metricTitle}>Noise</h5>
-                <p>
-                  How engaging the video is.
-                  <span className={classes.metricValue}>
-                    number of interactions / number of views
-                  </span>
-                </p>
-              </div>
-              <div className={classes.metric}>
-                <h5 className={classes.metricTitle}>Pollution</h5>
-                <p>
-                  How much is video likely to be fake news.
-                  <span className={classes.metricValue}>
-                    Powered by FakeBox.
-                  </span>
-                </p>
-              </div>
-              <div className={classes.metric}>
-                <h5 className={classes.metricTitle}>Temperature</h5>
-                <p>
-                  How outrageous the video is.
-                  <span className={classes.metricValue}>
-                    Proportion between likes and dislikes
-                  </span>
-                </p>
-              </div>
-            </div>
+            <Metrics />
         </div>
         {renderedDots}
       </div>

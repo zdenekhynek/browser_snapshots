@@ -1,6 +1,6 @@
 .about {
   position: absolute;
-  top: 0;
+  top: 20;
   bottom: 0;
   left: 0;
   right: 0;
@@ -17,10 +17,8 @@
 }
 
 .title {
-  max-width: 500px;
   text-align: center;
   text-transform: uppercase;
-  margin: 0 auto;
   margin-bottom: 50px;
 }
 

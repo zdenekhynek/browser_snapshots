@@ -62,6 +62,9 @@ class Ipad extends Component {
 
     return (
       <div className={classes.ipad}>
+        <div className={classes.header}>
+          <h1 className={classes.title}>Engaged and Outraged</h1>
+        </div>
         <TransitionGroup>
           <CSSTransition
             key={location.key}
