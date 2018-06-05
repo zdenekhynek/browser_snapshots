@@ -133,11 +133,6 @@ export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimatio
     return acc.push(t);
   }, List());
 
-  console.log('race', activeRace);
-  console.log('tasks', tasks);
-
-  console.log('flattenedTasks', flattenedTasks);
-
   return {
     activeRace,
     agents: raceAgents,

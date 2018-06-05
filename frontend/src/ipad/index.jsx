@@ -11,7 +11,7 @@ import IpadAbout from './about';
 import IpadRaces from './races';
 import IpadResults from './results';
 import IpadHighlights from './highlights';
-import { initSocket } from '../sockets/socket_service';
+import { initSocket, sendSocketMessage } from '../sockets/socket_service';
 import {
   getRaces,
   receiveCreateRace,
@@ -21,6 +21,7 @@ import {
 import classes from './ipad.css';
 
 //  5 minute timeout interval
+//  export const TIMEOUT = 5 * 60 * 1000;
 export const TIMEOUT = 5 * 60 * 1000;
 
 class Ipad extends Component {
@@ -64,6 +65,11 @@ class Ipad extends Component {
       const finishLink = `/viz/ipad/races/${socketData.id}/summary`;
       history.push(finishLink);
       this.props.receiveUpdateRace(socketData.id, socketData);
+
+      //  switch timeout so that it won't switch itself
+      this.restartTimeout = setTimeout(() => {
+        sendSocketMessage('restart');
+      }, TIMEOUT);
     }
   }
 

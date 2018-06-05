@@ -65,7 +65,19 @@ class Profiles extends Component {
     )
   }
 
-  renderChart(index) {
+  renderSummary(index, data) {
+    const color = COLORS[index];
+    const style = { color };
+
+    return (
+      <div className={classes.summary} style={style}>
+        <div className={classes.summaryTitle}>{data.get('title')}</div>
+        <div className={classes.summarySentence}>{data.get('sentence')}</div>
+      </div>
+    );
+  }
+
+  renderChart(index, data) {
     const { mode, size } = this.props;
     const { height } = size;
     const { isNewRace, shouldAnimateRace } = this.state;
@@ -73,7 +85,6 @@ class Profiles extends Component {
     let className = classes.chart;
 
     let transitionDuration = '1s';
-    let offset = 0;
 
     // if (mode === 'race' && !shouldAnimateRace) {
     //   offset = height / 2;
@@ -82,13 +93,19 @@ class Profiles extends Component {
     //   offset = -(height / 2 - 130);
     // }
 
-    if (mode === 'race' || mode === 'results' || mode === 'highlights') {
-      offset = -(height / 2 - 160);
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (mode === 'race' || mode === 'highlights') {
+      offsetY = -(height / 2 - 160);
+    } else if (mode === 'results') {
+      offsetX = -160;
+      offsetY = -(height / 2 - 160);
     } else if (mode === 'summary') {
-      offset = -50;
+      offsetY = -50;
     }
 
-    const transform = `translate(0, ${offset}px)`;
+    const transform = `translate(${offsetX}px, ${offsetY}px)`;
     const style = { transitionDuration, transform };
 
     const renderedRadialChart = (mode === 'landing' || mode === 'summary') ?
@@ -98,6 +115,10 @@ class Profiles extends Component {
     const renderedEmail = (mode === 'landing') ?
       this.renderEmail(index) : <span />;
     const emailAnimationKey = (mode === 'summary') ? 'email' : 'no-email';
+
+    const shouldRenderSummary = (mode === 'results')
+    const renderedSummary = (shouldRenderSummary) ?
+      this.renderSummary(index, data) : <span />;
 
     return (
       <div key={index} className={classes.col}>
@@ -119,6 +140,21 @@ class Profiles extends Component {
           </TransitionGroup>
           <div className={classes.profile}>
             <Profile index={index} />
+            <TransitionGroup className={classes.summaryTransition}>
+                <CSSTransition
+                    key={shouldRenderSummary}
+                    classNames={{
+                     enter: desktopClasses.exampleEnter,
+                     enterActive: desktopClasses.exampleEnterActive,
+                     exit: desktopClasses.exampleLeave,
+                     exitActive: desktopClasses.exampleLeaveActive,
+                    }}
+                    className={classes.summary}
+                    timeout={450}
+                >
+                  {renderedSummary}
+                </CSSTransition>
+            </TransitionGroup>
           </div>
           <TransitionGroup className={classes.radialChartTransition}>
             <CSSTransition
@@ -141,7 +177,7 @@ class Profiles extends Component {
   }
 
   render() {
-    const { mode } = this.props;
+    const { mode, results } = this.props;
     const { isNewRace } = this.state;
 
     //  do not render on ipad
@@ -149,14 +185,11 @@ class Profiles extends Component {
       return null;
     }
 
-    if (isNewRace) {
-      setTimeout(() => {
-        this.setState({ shouldAnimateRace: true });
-      }, 1000);
-    }
-
     const arr = Array(3).fill().map(() => 0);
-    const rendredCharts = arr.map((d, i) => this.renderChart(i));
+    const rendredCharts = arr.map((d, i) => {
+      const data = (results && results.has(i)) ? results.get(i) : Map();
+      return this.renderChart(i, data);
+    });
 
     return (
       <div className={classes.profiles}>
@@ -168,12 +201,86 @@ class Profiles extends Component {
   }
 }
 
+export const SENTENCES = {
+  noise: {
+    highest: {
+      title: 'Spicemaster',
+      sentence: 'Watched videos with a high temperature',
+    },
+    lowest: {
+      title: 'Weaksauce',
+      sentence: 'Watched videos with a low temperature',
+    },
+  },
+  pollution: {
+    highest: {
+      title: 'Where’s the party at?',
+      sentence: 'Watched videos with a high noise level',
+    },
+    lowest: {
+      title: 'Where’s my slippers?',
+      sentence: 'Watched videos with a low noise level',
+    },
+  },
+  temperature: {
+    highest: {
+      title: 'Toxic avenger',
+      sentence: 'Watched videos with high pollution',
+    },
+    lowest: {
+      title: 'Clean living',
+      sentence: 'Watched videos with low pollution',
+    },
+  },
+}
+
+export function getSummarySentence(metric, isHighest = false) {
+  const highestKey = (isHighest) ? 'highest' : 'lowest';
+
+  if (SENTENCES[metric] && SENTENCES[metric][highestKey]) {
+    return SENTENCES[metric][highestKey]
+  }
+
+  return { title: '', sentence: '' };
+}
+
+export function getSummary(profiles) {
+  return profiles.map((profile, i) => {
+    let metric = '';
+    let isHighest = false;
+
+    if (i === 0) {
+      metric = 'temperature';
+      isHighest = true;
+    } else if (i === 1) {
+      metric = 'pollution';
+      isHighest = false;
+    } else if (i === 2) {
+      metric = 'noise';
+      isHighest = true;
+    }
+
+    const summary = getSummarySentence(metric, isHighest);
+    return profile
+      .set('title', summary.title)
+      .set('sentence', summary.sentence);
+  });
+}
+
 export function mapStateToProps(state, ownProps) {
-  const { races } = state;
+  const { races, agents } = state;
   const { location } = ownProps;
   const { pathname } = location;
 
-  const activeRace = races.find((r) => r.get('isActive', false), null, Map());
+  //  get active race id
+  let raceIdFromPath = -1;
+  const pathnameArr = pathname.split('/');
+
+  if (pathnameArr.length > 3) {
+    raceIdFromPath = +pathnameArr[pathnameArr.length - 2];
+  }
+
+  const activeRace = races.find((r) => r.get('id') === raceIdFromPath, null, Map());
   const raceId = activeRace.get('id', '');
   const results = activeRace.get('results', Map());
 
@@ -185,6 +292,8 @@ export function mapStateToProps(state, ownProps) {
 
     return profile.merge(agent);
   });
+
+  const profilesWithSentence = getSummary(profilesWithResults);
 
   //  one of the mode: 'ipad', 'landing', 'race', 'results'
   let mode = 'race';
@@ -204,7 +313,7 @@ export function mapStateToProps(state, ownProps) {
   return {
     mode,
     raceId,
-    results: results.set('profiles', profilesWithResults),
+    results: profilesWithSentence,
   };
 }
 

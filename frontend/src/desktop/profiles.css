@@ -66,7 +66,35 @@
   height: 100%;
 }
 
+.summaryTransition {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .email {
   text-align: center;
   transform: translate(0, -80px);
+}
+
+.summaryWrapper {
+  position: relative;
+}
+
+.summary {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  min-width: 300px;
+  transform: translate(150px, 0);
+}
+
+.summaryTitle {
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.summarySentence {
+  margin-top: 10px;
+  font-size: 18px;
 }

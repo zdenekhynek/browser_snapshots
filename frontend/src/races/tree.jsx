@@ -215,7 +215,6 @@ class Tree extends Component {
   }
 
   render() {
-    console.log('tree render');
     const { tasks, index } = this.props;
 
     return (

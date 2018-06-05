@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import noiseSvg from './noise.png';
-import pollutionSvg from './pollution.png';
-import temperatureSvg from './temperature.png';
+import noiseSvg from './icon_noise.png';
+import pollutionSvg from './icon_pollution.png';
+import temperatureSvg from './icon_temperature.png';
 
 import classes from './metrics.css';
 
@@ -28,7 +28,7 @@ const Metrics = ({ className }) => {
           {noiseIcon}
           <h5 className={classes.metricTitle}>Noise</h5>
         </div>
-        <p>
+        <p className={classes.metricDescription}>
           The level of engagement
           <span className={classes.metricValue}>
             number of interactions / number of views
@@ -40,7 +40,7 @@ const Metrics = ({ className }) => {
           {pollutionIcon}
           <h5 className={classes.metricTitle}>Pollution</h5>
         </div>
-        <p>
+        <p className={classes.metricDescription}>
           The level of likelihood being a fake news
           <span className={classes.metricValue}>
             Powered by FakeBox.
@@ -52,7 +52,7 @@ const Metrics = ({ className }) => {
           {temperatureIcon}
           <h5 className={classes.metricTitle}>Temperature</h5>
         </div>
-        <p>
+        <p className={classes.metricDescription}>
           The level of outrage
           <span className={classes.metricValue}>
             Proportion between likes and dislikes
