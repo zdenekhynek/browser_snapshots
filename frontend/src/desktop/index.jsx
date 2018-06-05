@@ -45,17 +45,17 @@ class Desktop extends Component {
     } else if (message === 'race_update') {
       this.props.receiveUpdateRace(socketData.id, socketData);
     } else if (message === 'race_finished') {
-      const finishLink = `/viz/desktop/races/${socketData.id}/summary`;
-      history.push(finishLink);
-      this.props.receiveUpdateRace(socketData.id, socketData);
-    } else if (message === 'display_race_results') {
-      //  display race results
-      const resultsLink = `/viz/desktop/races/${this.lastSocketId}/results`;
+      const resultsLink = `/viz/desktop/races/${socketData.id}/results`;
       history.push(resultsLink);
-    } else if (message === 'display_race_summary') {
-      //  display race summary
-      const summaryLink = `/viz/desktop/races/${this.lastSocketId}/summary`;
-      history.push(summaryLink);
+      this.props.receiveUpdateRace(socketData.id, socketData);
+    //else if (message === 'display_race_results') {
+    //   //  display race results
+    //   const resultsLink = `/viz/desktop/races/${this.lastSocketId}/results`;
+    //   history.push(resultsLink);
+    // } else if (message === 'display_race_summary') {
+    //   //  display race summary
+    //   const summaryLink = `/viz/desktop/races/${this.lastSocketId}/summary`;
+    //   history.push(summaryLink);
     } else if (message === 'display_highlight') {
       const { raceId } = socketData;
       const highlightLink = `/viz/desktop/highlights/${raceId}/`;

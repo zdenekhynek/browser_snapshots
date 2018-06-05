@@ -10,3 +10,4 @@ chai.use(chaiImmutable);
 const noOp = () => { return null; };
 require.extensions['.css'] = noOp;
 require.extensions['.png'] = noOp;
+require.extensions['.jpg'] = noOp;

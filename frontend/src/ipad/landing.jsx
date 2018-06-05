@@ -54,7 +54,7 @@ class Landing extends Component {
       <div className={classes.landing}>
         <div>
           <h1 className={classes.title}>
-            Watch what YouTube serves to our volunteers
+            Watch what YouTube serves to our three volunteers
           </h1>
           <h2 className={classes.subtitle}>
             Over the last month, they’ve consumed hundreds hours of content

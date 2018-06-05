@@ -39,8 +39,8 @@ const About = ({ className }) => {
            See where they get to. And how different results they are served.
         </p>
         <p>
-          You can let us know what you think at @OutragedM or stay in touch
-          at outraged.me.
+          You can let us know what you think at @OutragedM on Twitter or stay
+          in touch at outraged.me.
         </p>
       </div>
       <button

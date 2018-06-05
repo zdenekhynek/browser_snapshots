@@ -14,8 +14,8 @@ export const DURATION = [
 
 export const MESSAGE = [
   'Watched in total 23,000 hours of Fox News, hamburgers and himself.',
-  'Watched in total 14,000 hours of MSNBC, Oprah and seaweed.',
-  "Watched in total 16,000 hours of NSA, surveillance and ... we can't tell you.",
+  'Watched in total 14,000 hours of MSNBC, Oprah and avocados.',
+  "Watched in total 16,000 hours of NSA, surveillance and... we can't tell you.",
 ];
 
 import classes from './results.css';
@@ -104,12 +104,6 @@ export function mapStateToProps({ agents, metrics, races }, { raceId }) {
 
     return profile.merge(agent);
   });
-
-  console.log('races', races);
-  console.log('metrics', metrics);
-  console.log('agents', agents);
-  console.log('results', results);
-  console.log('profilesWithResults', profilesWithResults);
 
   return {
     keyword: activeRace.get('keyword'),

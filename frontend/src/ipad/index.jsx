@@ -20,17 +20,27 @@ import {
 
 import classes from './ipad.css';
 
+//  5 minute timeout interval
+export const TIMEOUT = 5 * 60 * 1000;
+
 class Ipad extends Component {
   constructor(props) {
     super(props);
 
     //  subscribe to the ipad group
     initSocket(this.onSocketMessage.bind(this));
+
+    this.restartTimeout = null;
   }
 
   onSocketMessage(socketData) {
     const { history } = this.props;
     const { message } = socketData;
+
+    //  always make sure the timeout is cleared
+    if (this.restartTimeout) {
+      clearTimeout(this.restartTimeout);
+    }
 
     if (message === 'session_start') {
       // const racesLink = '/viz/ipad/races/';

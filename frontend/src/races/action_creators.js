@@ -116,3 +116,14 @@ export function changeActiveRace(raceId) {
     });
   };
 }
+
+export const FINISH_RACE = 'FINISH_RACE';
+
+export function finishRace(raceId) {
+  return {
+    type: FINISH_RACE,
+    raceId,
+  };
+}
+
+

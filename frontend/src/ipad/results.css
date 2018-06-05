@@ -11,8 +11,7 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  background-color: white;
-  color: black;
+  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
 }
 
 .title {
@@ -28,3 +27,18 @@
 }
 
 .metrics {}
+
+.btn {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #666;
+  text-align: center;
+  font: inherit;
+  text-decoration: none;
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+}

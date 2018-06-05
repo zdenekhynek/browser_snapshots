@@ -29,7 +29,7 @@ const Metrics = ({ className }) => {
           <h5 className={classes.metricTitle}>Noise</h5>
         </div>
         <p>
-          How engaging the video is.
+          The level of engagement
           <span className={classes.metricValue}>
             number of interactions / number of views
           </span>
@@ -41,7 +41,7 @@ const Metrics = ({ className }) => {
           <h5 className={classes.metricTitle}>Pollution</h5>
         </div>
         <p>
-          How much is video likely to be fake news.
+          The level of likelihood being a fake news
           <span className={classes.metricValue}>
             Powered by FakeBox.
           </span>
@@ -53,7 +53,7 @@ const Metrics = ({ className }) => {
           <h5 className={classes.metricTitle}>Temperature</h5>
         </div>
         <p>
-          How outrageous the video is.
+          The level of outrage
           <span className={classes.metricValue}>
             Proportion between likes and dislikes
           </span>

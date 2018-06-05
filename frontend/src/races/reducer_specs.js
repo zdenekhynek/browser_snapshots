@@ -7,6 +7,7 @@ import {
   calculateRaceProgress,
   reduceUpdateRace,
   reduceCreateRace,
+  finishRace,
   NUM_STEPS,
 } from './reducer';
 
@@ -108,6 +109,31 @@ describe('Races reducer', () => {
       const races = reduceUpdateRace(state, raceId, response);
       expect(races.getIn([0, 'results', 'profiles']).size).to.equal(2);
       expect(races.getIn([0, 'results', 'totals', 'temperature'])).to.exist;
+    });
+  });
+
+  describe('finishRace', () => {
+    it('should flip the flag', () => {
+      const state = List();
+      const raceId = 23;
+      const response = {
+        created_at: '2018-05-27 00:35:09.873226',
+        id: 23,
+        keyword: 'fox news',
+        message: 'race_update',
+        tasks: [
+          { agent_id: 4 },
+          { agent_id: 4 },
+          { agent_id: 2 },
+        ],
+        type: 'chat_message',
+      };
+      let races = reduceUpdateRace(state, raceId, response);
+
+      expect(races.getIn([0, 'isFinished'])).to.be.false;
+      races = finishRace(races, raceId);
+
+      expect(races.getIn([0, 'isFinished'])).to.be.true;
     });
   });
 

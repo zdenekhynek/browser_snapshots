@@ -77,9 +77,9 @@ class RaceChart extends Component {
 
     if (raceId > -1) {
       if (showResults) {
-        label = `Watched videos about "${raceKeyword}"`;
+        label = `Searched for "${raceKeyword}"`;
       } else {
-        label = `Watching videos about "${raceKeyword}"`;
+        label = `Searched for "${raceKeyword}"`;
       }
     }
 

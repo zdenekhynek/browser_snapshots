@@ -9,9 +9,6 @@ import Metrics from './metrics';
 import classes from './results.css';
 import landingClasses from './landing.css';
 
-//  5 minute timeout interval
-export const TIMEOUT = 5 * 60 * 1000;
-
 export class Results extends Component {
   constructor(props) {
     super(props);
@@ -21,18 +18,6 @@ export class Results extends Component {
     this.onRestartClick = this.onRestartClick.bind(this);
     this.onSessionClick = this.onSessionClick.bind(this);
     this.onSummaryClick = this.onSummaryClick.bind(this);
-
-    this.restartTimeout = null;
-  }
-
-  componentDidMount() {
-    this.restartTimeout = setTimeout(() => {
-      this.onRestartClick();
-    }, TIMEOUT);
-  }
-
-  componentDidUnmount() {
-    clearTimeout(restartTimeout);
   }
 
   onRestartClick() {
@@ -79,10 +64,10 @@ export class Results extends Component {
       race.get('keyword') : 'something';
     const label = `Try searching for "${keyword}" on your YouTube.`;
 
-    const renderedBtn = (mode === 'summary') ?
-      this.renderBackToResults() : this.renderBackToSummary();
-    const renderedMetrics = (mode === 'results') ?
-      <Metrics /> : <span />;
+    // const renderedBtn = (mode === 'summary') ?
+    //   this.renderBackToResults() : this.renderBackToSummary();
+    // const renderedMetrics = (mode === 'results') ?
+    //   <Metrics /> : <span />;
 
     return (
       <div className={classes.ipadResults}>
@@ -95,12 +80,11 @@ export class Results extends Component {
           </h2>
         </div>
         <div className={classes.metrics}>
-          {renderedMetrics}
+          <Metrics />
         </div>
         <div>
-          {renderedBtn}
           <button
-            className={landingClasses.link}
+            className={classes.btn}
             onClick={this.onRestartClick}
           >
             Start over

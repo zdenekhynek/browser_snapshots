@@ -6,6 +6,7 @@ import {
   RECEIVE_UPDATE_RACE,
   RECEIVE_RACES,
   CHANGE_ACTIVE_RACE,
+  FINISH_RACE,
 } from './action_creators';
 import {
   getTemperature,
@@ -53,6 +54,7 @@ export function reduceCreateRace(state, raceId, keyword) {
     id: raceId,
     keyword,
     isActive: false,
+    isFinished: false,
     tasks: getInitialTasks(),
   });
 
@@ -196,6 +198,15 @@ export function changeActiveRace(state, raceId) {
   });
 }
 
+export function finishRace(state, raceId) {
+  let raceIndex = state.findIndex((r) => r.get('id') === raceId);
+
+  if (raceIndex > -1) {
+    return state.setIn([raceIndex, 'isFinished'], true);
+  }
+  return state;
+}
+
 export default function(state = getInitialState(), action) {
   switch (action.type) {
     case RECEIVE_CREATE_RACE:
@@ -209,6 +220,8 @@ export default function(state = getInitialState(), action) {
       return reduceRaces(action.response);
     case CHANGE_ACTIVE_RACE:
       return changeActiveRace(state, action.raceId);
+    case FINISH_RACE:
+      return finishRace(state, action.raceId);
     default:
       return state;
   }

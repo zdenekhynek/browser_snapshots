@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import sizeMe from 'react-sizeme';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { Map } from 'immutable'
+import { Map, List } from 'immutable'
 
 import Profile from './profile';
 import RadialChart from '../races/radial_chart';
@@ -95,7 +95,7 @@ class Profiles extends Component {
       renderRadialChart(index) : <span />;
     const chartAnimationKey = (mode === 'landing') ? 'chart' : 'no-chart';
 
-    const renderedEmail = (mode === 'summary') ?
+    const renderedEmail = (mode === 'landing') ?
       this.renderEmail(index) : <span />;
     const emailAnimationKey = (mode === 'summary') ? 'email' : 'no-email';
 
@@ -175,6 +175,16 @@ export function mapStateToProps(state, ownProps) {
 
   const activeRace = races.find((r) => r.get('isActive', false), null, Map());
   const raceId = activeRace.get('id', '');
+  const results = activeRace.get('results', Map());
+
+  const profilesWithResults = results.get('profiles', List()).map((profile) => {
+    const id = profile.get('id');
+    const agent = agents
+      .get('available')
+      .find((a) => a.get('id') === id, null, Map());
+
+    return profile.merge(agent);
+  });
 
   //  one of the mode: 'ipad', 'landing', 'race', 'results'
   let mode = 'race';
@@ -191,7 +201,11 @@ export function mapStateToProps(state, ownProps) {
     mode = 'summary';
   }
 
-  return { mode, raceId };
+  return {
+    mode,
+    raceId,
+    results: results.set('profiles', profilesWithResults),
+  };
 }
 
 Profiles.propTypes = {};

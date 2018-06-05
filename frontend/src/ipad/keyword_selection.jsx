@@ -44,8 +44,12 @@ class KeywordSelection extends Component {
 
   onSubmit(keyword) {
     const { currentAgents } = this.state;
-    this.props.createRace(keyword, currentAgents);
-    sendSocketMessage('session_start');
+
+    //   do not allow for submitting an empty string
+    if (keyword) {
+      this.props.createRace(keyword, currentAgents);
+      sendSocketMessage('session_start');
+    }
   }
 
   onKeyword(keyword) {

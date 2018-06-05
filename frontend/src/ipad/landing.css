@@ -20,6 +20,7 @@
   max-width: 500px;
   text-align: center;
   text-transform: uppercase;
+  word-spacing: -5px;
 }
 
 .keywordTitle {
@@ -54,7 +55,7 @@
 }
 
 .form {
-  max-width: 300px;
+  max-width: 320px;
   margin: 50px auto;
   text-align: center;
   border-bottom: 1px solid #666;
