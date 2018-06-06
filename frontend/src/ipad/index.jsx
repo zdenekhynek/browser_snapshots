@@ -80,6 +80,14 @@ class Ipad extends Component {
       <div className={classes.ipad}>
         <div className={classes.header}>
           <h1 className={classes.title}>Engaged and Outraged</h1>
+          <button
+            className={classes.resetBtn}
+            onClick={() => {
+              sendSocketMessage('restart');
+            }}
+          >
+            R
+          </button>
         </div>
         <TransitionGroup>
           <CSSTransition

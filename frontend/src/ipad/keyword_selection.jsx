@@ -13,9 +13,11 @@ import icon from './search_icon.svg';
 import classes from './landing.css';
 
 export const KEYWORDS = [
-  'Fox News', 'surveillance', 'london knife crime', 'president trump',
-  'crimea bridge', 'leave.eu', 'boris johnson', 'greenfell tower',
-  'irish referendum', "let's take back control", 'biggest secret',
+  'Fox News', 'surveillance', 'london bike theft crime',
+  'president trump', 'fake news', 'alt-right explained',
+  'crimea bridge', 'boris johnson', 'jeremy corbyn', 'data visualisation',
+  'ugly puppies', 'alternative facts', 'life after death', 'bitcoin mining',
+  'irish referendum', "let's take back control", 'biggest secret', '#metoo'
 ];
 
 export function getRandomKeyword() {

@@ -70,8 +70,6 @@ class Profiles extends Component {
     const style = { color };
     const email = EMAILS[index].replace('@gmail.com', '');
 
-    console.log('data', data);
-
     return (
       <div className={classes.summary} style={style}>
         <div className={classes.summaryEmail}>{email}</div>
