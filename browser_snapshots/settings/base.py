@@ -204,6 +204,8 @@ CHANNEL_LAYERS = {
 }
 
 MB_KEY = os.environ.get('MB_KEY', '')
+MB_USERNAME = os.environ.get('MB_USERNAME', '')
+MB_PASSWORD = os.environ.get('MB_PASSWORD', '')
 MB_API_URL = os.environ.get('MB_API_URL', '')
 
 # SILKY_PYTHON_PROFILER = True

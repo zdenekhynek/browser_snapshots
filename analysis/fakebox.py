@@ -27,19 +27,22 @@
 import requests
 import json
 
+from requests.auth import HTTPBasicAuth
 from django.conf import settings
 
 from analysis.models import Sentiment
 
 mb_key = settings.MB_KEY
 mb_api_url = settings.MB_API_URL
+mb_username = settings.MB_USERNAME
+mb_password = settings.MB_PASSWORD
 fakebox_endpoint = 'fakebox/check'
 
 def fetch_results(title):
     payload = {'title': title}
 
     url = '%s/%s' % (mb_api_url, fakebox_endpoint)
-    response = requests.post(url, data=payload)
+    response = requests.post(url, data=payload, auth=HTTPBasicAuth(mb_username, mb_password))
 
     if response.status_code == requests.codes.ok:
         return response.json()
@@ -56,7 +59,7 @@ def parse_results(response_json):
 
     results['fakebox_raw'] = json.dumps(response_json)
 
-    if response_json['success']:
+    if response_json and 'success' in response_json:
         if 'title' in response_json:
             title = response_json['title']
 
