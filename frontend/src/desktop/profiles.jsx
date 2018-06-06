@@ -102,7 +102,7 @@ class Profiles extends Component {
 
     if (mode === 'race' || mode === 'highlights') {
       offsetY = -(height / 2 - 160);
-    } else if (mode === 'results') {
+    } else if (mode === 'results' || mode ==='highlights-detail') {
       offsetX = -160;
       offsetY = -(height / 2 - 160);
     } else if (mode === 'summary') {
@@ -120,9 +120,11 @@ class Profiles extends Component {
       this.renderEmail(index) : <span />;
     const emailAnimationKey = (mode === 'summary') ? 'email' : 'no-email';
 
-    const shouldRenderSummary = (mode === 'results')
+    const shouldRenderSummary = (mode === 'results' || mode ==='highlights-detail')
     const renderedSummary = (shouldRenderSummary) ?
       this.renderSummary(index, data) : <span />;
+
+    console.log('mode', mode);
 
     return (
       <div key={index} className={classes.col}>
@@ -338,6 +340,8 @@ export function mapStateToProps(state, ownProps) {
   let raceIdFromPath = -1;
   const pathnameArr = pathname.split('/');
 
+  console.log('pathnameArr', pathnameArr);
+
   if (pathnameArr.length > 3) {
     raceIdFromPath = +pathnameArr[pathnameArr.length - 2];
   }
@@ -367,7 +371,11 @@ export function mapStateToProps(state, ownProps) {
   } else if (pathname.indexOf('results') > -1) {
     mode = 'results';
   } else if (pathname.indexOf('highlights') > -1) {
-    mode = 'highlights';
+    if (raceIdFromPath) {
+      mode = 'highlights-detail';
+    } else {
+      mode = 'highlights';
+    }
   } else if (pathname.indexOf('summary') > -1) {
     mode = 'summary';
   }
