@@ -34,6 +34,7 @@ class KeywordSelection extends Component {
       keyword: '',
       customKeyword: '',
       currentAgents: list,
+      submitted: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -51,6 +52,7 @@ class KeywordSelection extends Component {
     if (keyword) {
       this.props.createRace(keyword, currentAgents);
       sendSocketMessage('session_start');
+      this.setState({ submitted: true });
     }
   }
 
@@ -126,6 +128,12 @@ class KeywordSelection extends Component {
     const { mode } = this.state;
 
     const renderedSection = this.renderExploreKeywords();
+
+    //  make sure when submitted that users cannot click again
+    const { submitted } = this.state;
+    if (submitted) {
+      return null;
+    }
 
     return (
       <div className={classes.landing}>

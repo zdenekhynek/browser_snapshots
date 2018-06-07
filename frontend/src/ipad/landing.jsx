@@ -30,6 +30,7 @@ class Landing extends Component {
       mode: 'random',
       keyword: '',
       currentAgents: list,
+      submitted: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -40,6 +41,7 @@ class Landing extends Component {
     const { currentAgents } = this.state;
     this.props.createRace(keyword, currentAgents);
     sendSocketMessage('session_start');
+    this.setState({ submitted: true });
   }
 
   onHighlightLink(evt) {
@@ -49,6 +51,12 @@ class Landing extends Component {
 
   render() {
     const { agents } = this.props;
+
+    //  make sure when submitted that users cannot click again
+    const { submitted } = this.state;
+    if (submitted) {
+      return null;
+    }
 
     return (
       <div className={classes.landing}>
