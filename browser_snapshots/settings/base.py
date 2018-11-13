@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
+
 """
 
 import os
@@ -169,9 +170,9 @@ MEDIA_URL = '/media/'
 DATA_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static')
-STATICFILES_DIRS = (
-    os.path.join(DATA_DIR, 'dist'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(DATA_DIR, 'dist'),
+# )
 
 CORS_ORIGIN_ALLOW_ALL = True
 
