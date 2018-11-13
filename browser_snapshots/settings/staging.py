@@ -3,7 +3,7 @@ import os
 from .base import *
 
 ALLOWED_HOSTS = [
-    'browser-snapshots.herokuapp.com'
+    'outraged-me.herokuapp.com'
 ]
 
 # Update database configuration with $DATABASE_URL.

@@ -20,7 +20,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new BundleTracker({ filename: './webpack-stats-staging.json' }),
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify('https://browser-snapshots.herokuapp.com/'),
+      API_URL: JSON.stringify('https://outraged-me.herokuapp.com/'),
       AGENTS_LIST: JSON.stringify('staging'),
     }),
     new CopyWebpackPlugin([
