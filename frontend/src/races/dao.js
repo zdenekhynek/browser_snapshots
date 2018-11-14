@@ -20,6 +20,7 @@ export function updateRace(raceId) {
   const method = 'GET';
   const options = { method };
 
+
   const url = formatUrl(endpointUrl, raceId);
 
   const completeUrl = `${url}detail`;
