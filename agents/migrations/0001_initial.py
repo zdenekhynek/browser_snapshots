@@ -25,5 +25,5 @@ class Migration(migrations.Migration):
                 ('email', models.CharField(blank=True, max_length=255)),
             ],
         ),
-        migrations.RunPython(load_anonymous_agent)
+        # migrations.RunPython(load_anonymous_agent)
     ]
