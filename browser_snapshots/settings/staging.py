@@ -75,7 +75,7 @@ DEBUG = True
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats-staging.json'),
+        'STATS_FILE': os.path.join(ROOT_DIR, 'webpack-stats-staging.json'),
     }
 }
 
