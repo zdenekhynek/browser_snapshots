@@ -80,6 +80,6 @@ DEBUG = True
 WEBPACK_LOADER = {
     'DEFAULT': {
         'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(DATA_DIR, 'webpack-stats-production.json'),
+        'STATS_FILE': os.path.join(ROOT_DIR, 'webpack-stats-production.json'),
     }
 }

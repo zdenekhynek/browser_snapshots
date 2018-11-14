@@ -167,22 +167,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-DATA_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
-STATIC_ROOT = os.path.join(DATA_DIR, 'static')
+MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
+STATIC_ROOT = os.path.join(ROOT_DIR, 'static')
 # STATICFILES_DIRS = (
-#     os.path.join(DATA_DIR, 'dist'),
+#     os.path.join(ROOT_DIR, 'dist'),
 # )
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-NLTK_DATA_DIR = os.path.join(DATA_DIR, 'nltk_data')
+NLTK_DATA_DIR = os.path.join(ROOT_DIR, 'nltk_data')
 
 WATSON_USERNAME = os.environ.get('WATSON_USERNAME', '')
 WATSON_PASSWORD = os.environ.get('WATSON_PASSWORD', '')
 
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', '')
-GOOGLE_APPLICATION_CREDENTIALS = os.environ.get('GOOGLE_APPLICATION_CREDENTIALS', '')
 
 FACE_API_KEY = os.environ.get('FACE_API_KEY', '')
 FACE_API_ENDPOINT = os.environ.get('FACE_API_ENDPOINT', '')
@@ -190,7 +188,7 @@ FACE_API_ENDPOINT = os.environ.get('FACE_API_ENDPOINT', '')
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': DEBUG,
-        'STATS_FILE': os.path.join(DATA_DIR, 'webpack-stats.json'),
+        'STATS_FILE': os.path.join(ROOT_DIR, 'webpack-stats.json'),
     }
 }
 
