@@ -1,11 +1,8 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
-
 [packages]
-
 django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
@@ -29,14 +26,11 @@ django-webpack-loader = "*"
 newrelic = "*"
 raven = "*"
 "django-sentry-400-middleware" = "*"
-google-cloud-language = "*"
 pytest = "*"
 pytest-watch = "*"
 channels = "*"
 channels-redis = "*"
 isodate = "*"
 
-
 [dev-packages]
-
 pytest-django = "*"
