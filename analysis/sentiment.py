@@ -21,7 +21,7 @@ def create_word_features(words):
 
 class SentimentClassifier():
     CACHE_FILE_NAME = 'naive_bayes_classifier_movie_reviews.pickle'
-    CACHE_FILE_URL = os.path.join(settings.DATA_DIR, CACHE_FILE_NAME)
+    CACHE_FILE_URL = os.path.join(settings.BASE_DIR, CACHE_FILE_NAME)
 
     def __init__(self):
         pass
