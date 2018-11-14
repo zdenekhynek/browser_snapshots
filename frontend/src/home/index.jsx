@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import Form from '../races/form';
 import { createRace } from '../races/action_creators';
@@ -14,8 +14,7 @@ const Home = (props) => {
 
   return (
     <div className={classes.home}>
-      <Link className={classes.link} to={'/viz/archive'}>See the archive</Link>
-      <Form agents={agents} onSubmit={props.createRace} />
+      <NavLink to="/highlights/2">Highlight</NavLink>
     </div>
   );
 };

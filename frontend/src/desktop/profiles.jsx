@@ -54,6 +54,8 @@ class Profiles extends Component {
   }
 
   renderEmail(index) {
+    return <div />;
+
     const email = EMAILS[index].replace('@gmail.com', '');
     const color = COLORS[index];
     const style = { color };
@@ -121,8 +123,6 @@ class Profiles extends Component {
     const shouldRenderSummary = (mode === 'results' || mode ==='highlights-detail')
     const renderedSummary = (shouldRenderSummary) ?
       this.renderSummary(index, data) : <span />;
-
-    console.log('mode', mode);
 
     return (
       <div key={index} className={classes.col}>
@@ -377,6 +377,14 @@ export function mapStateToProps(state, ownProps) {
   } else if (pathname.indexOf('summary') > -1) {
     mode = 'summary';
   }
+
+  if (pathnameArr[1] === 'about') {
+    mode = 'race';
+  } else if (pathnameArr[1] === '') {
+    mode = 'landing';
+  } 
+
+  
 
   return {
     mode,

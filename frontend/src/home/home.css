@@ -1,7 +1,30 @@
 .home {
-  margin: 40px;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
 }
 
-.link {
-  color: #666;
+.profileCol {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex: 33.3333% 0 0;
+  width: 33.3333%;
+}
+
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  transform: translate(0, 200px);
+}
+
+.totalContent {
+  max-width: 400px;
+  font-size: 24px;
+  text-align: center;
 }

@@ -5,12 +5,15 @@ import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
 
 import Home from '../home';
+import Menu from '../menu';
 import Races from '../races';
 import Profiles from '../desktop/profiles';
 import Results from '../races/results';
 import Archive from '../archive';
 import Desktop from '../desktop/';
 import Ipad from '../ipad/';
+import About from '../ipad/about';
+import Workout from '../workout';
 
 import {
   createRace,
@@ -33,8 +36,22 @@ export function App(props, { store }) {
     <div className={classes.app}>
       <Router>
         <div className={classes.inner}>
+          <Menu />
           <Profiles />
-          <Route exact path="/viz" component={Home} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/workout" component={Workout} />
+          <Route
+            exact
+            path="/highlights/:raceId"
+            render={({ match }) => {
+              const { params } = match;
+              const { raceId } = params;
+
+              return (<Races raceId={+raceId} showResults={true}/>);
+            }}
+          />
+
           <Route exact path="/viz/races/:raceId" render={({ match }) => {
             const { params } = match;
             const { raceId } = params;
