@@ -1,10 +1,8 @@
 .chart {
   display: flex;
   width: 100%;
-  height: 90vh;
-  overflow: hidden;
+  height: 1200px;
   transition: 60s;
-  transform: translatate(0, 86vh);
   transition-timing-function: linear;
 }
 
@@ -16,6 +14,7 @@
 .innerCol {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   padding: 0 15%;
   box-sizing: border-box;
 }

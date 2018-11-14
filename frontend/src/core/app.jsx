@@ -29,9 +29,6 @@ import classes from './app.css';
 export function App(props, { store }) {
   const { agents, races, activeRace } = props;
 
-  //  temp
-  //  store.dispatch(updateRace(124));
-
   return (
     <div className={classes.app}>
       <Router>
@@ -48,7 +45,10 @@ export function App(props, { store }) {
               const { params } = match;
               const { raceId } = params;
 
-              return (<Races raceId={+raceId} showResults={true}/>);
+              //  display race
+              store.dispatch(updateRace(raceId));
+
+              return (<Races raceId={+raceId} />);
             }}
           />
 

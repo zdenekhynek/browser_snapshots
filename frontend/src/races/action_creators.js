@@ -50,6 +50,7 @@ export function requestUpdateRace() {
 }
 
 export function receiveUpdateRace(raceId, response) {
+  console.log('receiveupdate race');
   return {
     type: RECEIVE_UPDATE_RACE,
     raceId,
@@ -58,13 +59,13 @@ export function receiveUpdateRace(raceId, response) {
 }
 
 export function updateRace(raceId, limit = 0) {
+  console.log('updateRace');
   return (dispatch, getState) => {
     dispatch(requestUpdateRace());
     dao.updateRace(raceId)
       .then((response) => {
         //  TEMP
         //  response.tasks = response.tasks.slice(0, limit);
-
         dispatch(receiveUpdateRace(raceId, response || {}));
       })
       .catch((error) => {

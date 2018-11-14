@@ -382,6 +382,8 @@ export function mapStateToProps(state, ownProps) {
     mode = 'race';
   } else if (pathnameArr[1] === '') {
     mode = 'landing';
+  } else if (pathnameArr[1] === 'highlights') {
+    mode = 'race';
   } 
 
   

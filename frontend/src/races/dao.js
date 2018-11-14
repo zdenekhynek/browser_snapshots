@@ -1,5 +1,7 @@
 import { daoFetch, formatUrl } from '../utils/dao_helpers';
 
+import data from '../fake_data';
+
 export function createRace(keyword, agents) {
   const endpointUrl = 'races/';
 
