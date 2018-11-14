@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^thumbs/(?P<agent_id>[0-9]+)/$', views.thumbs, name='thumbs'),
     url(r'^titles/(?P<agent_id>[0-9]+)/$', views.titles, name='titles'),
     url(r'^sessions/(?P<agent_id>[0-9]+)/$', views.sessions, name='sessions'),
-    url(r'index', views.index, name='index'),
+    # url(r'', views.index, name='index'),
 ]
