@@ -3,7 +3,7 @@ import { daoFetch, formatUrl } from '../utils/dao_helpers';
 import data from '../fake_data';
 
 export function createRace(keyword, agents) {
-  const endpointUrl = 'races/';
+  const endpointUrl = 'api/races/';
 
   const method = 'POST';
   const body = { keyword, agents };
@@ -17,7 +17,7 @@ export function createRace(keyword, agents) {
 export function updateRace(raceId) {
   //  return Promise.resolve(data);
   
-  const endpointUrl = 'races/';
+  const endpointUrl = 'api/races/';
 
   const method = 'GET';
   const options = { method };
@@ -30,7 +30,7 @@ export function updateRace(raceId) {
 }
 
 export function getRace(highlightedOnly = false) {
-  const endpointUrl = 'races/';
+  const endpointUrl = 'api/races/';
 
   const method = 'GET';
   const options = { method };
