@@ -38,6 +38,7 @@ export function App(props, { store }) {
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/workout" component={Workout} />
+          <Route exact path="/workout2" component={Workout} />
           <Route
             exact
             path="/highlights/:raceId"
