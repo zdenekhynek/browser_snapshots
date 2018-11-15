@@ -14,8 +14,8 @@ const Home = (props) => {
 
   return (
     <div className={classes.home}>
-      <NavLink to="/highlights/2">Highlight 2</NavLink>
-      <NavLink to="/highlights/2">Highlight 3</NavLink>
+      <NavLink to="/highlights/613">Highlight 613</NavLink>
+      <NavLink to="/highlights/576">Highlight 576</NavLink>
       <NavLink to="/highlights/2">Highlight 4</NavLink>
       <NavLink to="/highlights/2">Highlight 5</NavLink>
       <NavLink to="/highlights/2">Highlight 6</NavLink>
