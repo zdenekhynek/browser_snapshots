@@ -15,6 +15,8 @@ export function createRace(keyword, agents) {
 
 //  http://127.0.0.1:8000/races/26/detail
 export function updateRace(raceId) {
+  return Promise.resolve(data);
+  
   const endpointUrl = 'races/';
 
   const method = 'GET';
