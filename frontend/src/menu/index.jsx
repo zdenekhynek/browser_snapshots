@@ -15,9 +15,9 @@ class Menu extends Component {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/workout" className={classes.link}
+					<NavLink to="/highlights" className={classes.link}
 						activeClassName={classes.activeLink}>
-						Your Workout
+						Highlights
 					</NavLink>
 				</li>
 				<li>

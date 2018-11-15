@@ -58,7 +58,7 @@ class RaceChart extends Component {
   renderBackButton() {
     return (
       <div className={backButtonClasses.backButtonWrapper}>
-        <NavLink className={backButtonClasses.backButton} to="/">&lt; Back</NavLink>
+        <NavLink className={backButtonClasses.backButton} to="/highlights">&lt; Back</NavLink>
       </div>
     );
   }

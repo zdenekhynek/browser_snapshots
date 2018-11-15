@@ -6,7 +6,6 @@
   left: 0;
   right: 0;
   overflow: hidden;
-  pointer-events: none;
 }
 
 .charts {
@@ -24,6 +23,7 @@
 }
 
 .chart {
+  cursor: pointer;
   position: relative;
   width: 240px;
   height: 240px;
@@ -31,6 +31,11 @@
   /*transition-timing-function: cubic-bezier(0.305, -0.350, 0.655, 1.395);*/
   transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
+
+.chart:hover {
+  transform: scale(1.15) !important;
+}
+
 
 .col:nth-child(2) .chart {
   transition-delay: .1s;

@@ -13,7 +13,7 @@ import Archive from '../archive';
 import Desktop from '../desktop/';
 import Ipad from '../ipad/';
 import About from '../ipad/about';
-import Workout from '../workout';
+import Highlights from '../highlights';
 
 import {
   createRace,
@@ -40,8 +40,7 @@ export function App(props, { store }) {
           <Profiles />
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/workout" component={Workout} />
-          <Route exact path="/workout2" component={Workout} />
+          <Route exact path="/highlights" component={Highlights} />
           <Route
             exact
             path="/highlights/:raceId"

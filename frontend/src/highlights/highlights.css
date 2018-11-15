@@ -1,4 +1,4 @@
-.workout {
+.highlights {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -26,8 +26,28 @@
   text-align: center;
 }
 
+.content {
+  max-width: 620px;
+  margin: 0px auto 60px;
+  font-size: 16px;
+}
+
+.content h3 {
+  font-weight: normal;
+}
+
+.links {
+  margin-top: 40px;
+}
+
+.links a {
+  margin-bottom: 5px;
+  display: block;
+  color: white;
+}
+
 @media only screen and (min-width: 1024px) {
-  .workout {
+  .highlights {
     padding-top: 220px;
     align-items: center; 
   }
