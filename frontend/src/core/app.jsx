@@ -31,6 +31,7 @@ export function App(props, { store }) {
 
   return (
     <div className={classes.app}>
+      <span className={classes.background} />
       <Router>
         <div className={classes.inner}>
           <Menu />

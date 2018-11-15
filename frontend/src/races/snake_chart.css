@@ -1,5 +1,6 @@
 .chart {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 1200px;
   transition: 60s;
@@ -7,15 +8,15 @@
 }
 
 .col {
-  flex: 33.333333333% 0 0;
-  width: 33.33333333%;
+  flex: 100% 0 0;
+  width: 100%;
 }
 
 .innerCol {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding: 0 15%;
+  padding: 0 5%;
   box-sizing: border-box;
 }
 
@@ -57,3 +58,19 @@
   transform: translate(-50%, -50%);
   border: 2px solid red;
 }
+
+@media only screen and (min-width: 1024px) {
+  .chart {
+    flex-direction: row;
+  }
+
+  .col {
+    flex: 33.333333333% 0 0;
+    width: 33.33333333%;
+  }
+
+  .innerCol {
+    padding: 0 15%;
+  }
+}
+

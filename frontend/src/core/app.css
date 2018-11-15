@@ -7,9 +7,17 @@
   width: 100%;
   min-height: 100%;
   font-family: "decima mono",monospace;
-  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
   color: #fff;
   -webkit-font-smoothing: antialiased;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
 }
 
 .inner {

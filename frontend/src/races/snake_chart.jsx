@@ -149,12 +149,12 @@ class Chart extends Component {
   }
 
   onMouseOver(t, i, index) {
-    const tooltip = t.set('index', i).set('offset', index);
-    this.setState({ tooltip });
+    // const tooltip = t.set('index', i).set('offset', index);
+    // this.setState({ tooltip });
   }
 
   onMouseOut() {
-    this.setState({ tooltip: null });
+    // this.setState({ tooltip: null });
   }
 
   renderTooltip() {

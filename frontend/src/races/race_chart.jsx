@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import sizeMe from 'react-sizeme';
+import { NavLink } from 'react-router-dom';
 import { List, Map } from 'immutable';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ import SnakeChart from './snake_chart';
 import { setActiveMetric } from '../metrics/action_creators';
 
 import classes from './race_chart.css';
+import backButtonClasses from './back_button.css';
 
 export const formatter = format(',');
 export const ratioFormatter = format('.3f');
@@ -53,6 +55,14 @@ class RaceChart extends Component {
     );
   }
 
+  renderBackButton() {
+    return (
+      <div className={backButtonClasses.backButtonWrapper}>
+        <NavLink className={backButtonClasses.backButton} to="/">&lt; Back</NavLink>
+      </div>
+    );
+  }
+
   render() {
     const {
       activeRace,
@@ -74,14 +84,13 @@ class RaceChart extends Component {
       `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}` : '';
 
     let label = activeRace.get('label');
-
     if (raceId > -1) {
-      if (showResults) {
-        label = `Searched for "${raceKeyword}"`;
-      } else {
-        label = `Searched for "${raceKeyword}"`;
-      }
+      label = `Profiles searched for "${raceKeyword}", clicked 
+        first search result and then watch 10 videos which were recommended 
+        for them by YouTube as the "Up Next" video.`;
     }
+
+    const appendix = "Here's what they saw.";
 
     //  get active metric
     const activeMetric = data.metric;
@@ -93,7 +102,12 @@ class RaceChart extends Component {
 
     return (
       <div className={classes.raceChart}>
-        <h2 className={classes.label}>{label}</h2>
+        <div className={classes.label}>
+          <h2>
+            {label}
+          </h2>
+          <h3>{appendix}</h3>
+        </div>
         <div className={vizClassName}>
           <SnakeChart
             raceId={raceId}
@@ -103,6 +117,7 @@ class RaceChart extends Component {
             noAnimation={noAnimation}
           />
         </div>
+        {this.renderBackButton()}
       </div>
     );
   }
