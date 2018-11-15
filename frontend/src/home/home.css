@@ -1,12 +1,20 @@
 .home {
   position: absolute;
-  top: 50%;
-  display: flex;
   width: 100%;
-  padding-top: 200px;
+  box-sizing: border-box;
+  min-height: 800px;
+  padding: 20px;
   align-items: center;
   justify-content: center;
   font-size: 30px;
+}
+
+.titleWrapper {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 24px;
 }
 
 .profileCol {
@@ -31,13 +39,34 @@
   text-align: center;
 }
 
-.links {
-  margin-bottom: 100px;
+.content {
+  max-width: 800px;
+  margin: 120px auto 100px;
   font-size: 16px;
+}
+
+.links {
+  text-anchor: left;
 }
 
 .links a {
   margin-bottom: 5px;
   display: block;
   color: white;
+}
+
+@media only screen and (min-width: 1024px) {
+  .home {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    transform: translateY(100px);
+  }
+
+  .content {
+    margin-top: 300px;
+  }
 }

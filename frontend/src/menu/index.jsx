@@ -11,7 +11,7 @@ class Menu extends Component {
 				<li>
 					<NavLink to="/" className={classes.link}
 						activeClassName={classes.activeLink}>
-						Highlights
+						Intro
 					</NavLink>
 				</li>
 				<li>

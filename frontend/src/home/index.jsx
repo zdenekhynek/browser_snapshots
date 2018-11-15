@@ -25,19 +25,34 @@ const HIGHLIGHTS = [
   { id: 202, name: 'The one with the Judge Jeanine, Obama and AR-15' },
 ];
 
+const renderTitle = () => {
+  return (
+    <div className={classes.titleWrapper}>
+      <h2>In May 2018, we had three fake profiles watch hundreds of hours of YouTube. And monitored everything they saw.</h2>
+    </div>
+  );
+};
+
 const Home = (props) => {
   const { agents } = props;
 
   return (
     <div className={classes.home}>
-      <div className={classes.links}>
+      {renderTitle()}
+      <div className={classes.content}>
+        <h3 className={classes.subtitle}>
+          During an exhbition, we've allowed people to search for a keyword to see how
+          different results profiles will watch. Here's what they saw.
+        </h3>
+        <ul className={classes.links}>
         {
           HIGHLIGHTS.map((highlight) => {
             return (
-              <NavLink to={`/highlights/${highlight.id}`}>{highlight.name}</NavLink>
+              <li><NavLink to={`/highlights/${highlight.id}`}>{highlight.name}</NavLink></li>
             );
           })
         }
+        </ul>
       </div>
     </div>
   );

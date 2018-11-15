@@ -90,7 +90,7 @@ class RaceChart extends Component {
         for them by YouTube as the "Up Next" video.`;
     }
 
-    const appendix = "Here's what they saw.";
+    const appendix = "These are the videos each profile saw.";
 
     //  get active metric
     const activeMetric = data.metric;
