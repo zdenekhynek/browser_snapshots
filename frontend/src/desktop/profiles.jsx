@@ -107,6 +107,8 @@ class Profiles extends Component {
       offsetY = -(height / 2 - 160);
     } else if (mode === 'summary') {
       offsetY = -50;
+    } else if (mode === 'about' || mode === 'workout') {
+       offsetY = -(height / 2 - 160);
     }
 
     const transform = `translate(${offsetX}px, ${offsetY}px)`;
@@ -379,14 +381,14 @@ export function mapStateToProps(state, ownProps) {
   }
 
   if (pathnameArr[1] === 'about') {
-    mode = 'race';
+    mode = 'about';
   } else if (pathnameArr[1] === '') {
     mode = 'landing';
   } else if (pathnameArr[1] === 'highlights') {
     mode = 'race';
-  } 
-
-  
+  } else if (pathnameArr[1] === 'workout') {
+    mode = 'workout';
+  }  
 
   return {
     mode,

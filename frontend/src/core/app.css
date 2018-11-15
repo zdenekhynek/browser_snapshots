@@ -17,7 +17,20 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
+  background: black;
+  overflow: hidden;
+}
+
+.backgroundInner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10000px;
+  background: radial-gradient(black, rgba(0, 0, 0, 0)), url('./background.png');
+  background-size: contain;
+  opacity: .2;
+  transition: transform 200s linear;
 }
 
 .inner {

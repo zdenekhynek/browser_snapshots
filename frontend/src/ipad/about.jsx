@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import { sendSocketMessage } from '../sockets/socket_service';
 
 import landingClasses from './landing.css';
+import backButtonClasses from '../races/back_button.css';
 import classes from './about.css';
+
+const renderBackButton = () => {
+  return (
+    <div className={classes.backButtonWrapper}>
+      <NavLink className={backButtonClasses.backButton} to="/">&lt; Back</NavLink>
+    </div>
+  );
+}
 
 const About = ({ className }) => {
   return (
@@ -43,14 +53,7 @@ const About = ({ className }) => {
           in touch at outraged.me.
         </p>
       </div>
-      <button
-        className={landingClasses.link}
-        onClick={() => {
-          sendSocketMessage('restart');
-        }}
-      >
-        Back
-      </button>
+      {renderBackButton()}
     </div>
   );
 };
