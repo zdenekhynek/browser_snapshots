@@ -1,0 +1,32 @@
+.profile {
+	position: relative;
+	overflow: hidden;
+}
+
+.titleWrapper {
+	max-width: 620px;
+  margin: 220px auto 50px;
+	text-align: center;
+  font-size: 24px;
+}
+
+.thumbsWrapper {
+	padding: 0 50px;
+}
+
+.thumbs {
+	width: 100%;
+	margin: -5px 0;
+}
+
+.image {
+	width: 100%;
+	height: auto;
+}
+
+.backButtonWrapper {
+  position: relative;
+  width: 100%;
+  margin: 80px auto 80px;
+  text-align: center;
+}

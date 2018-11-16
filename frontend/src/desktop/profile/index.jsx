@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 import COLORS from '../../races/colors';
 
@@ -18,9 +19,9 @@ const Profile = ({ index }) => {
   const imageStyle = { backgroundImage };
 
   return (
-    <div className={classes.profile} style={style}>
+    <NavLink to={`/profile/${index}`} className={classes.profile} style={style}>
       <div className={classes.image} style={imageStyle} />
-    </div>
+    </NavLink>
   );
 };
 

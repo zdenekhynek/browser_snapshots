@@ -7,6 +7,11 @@
   position: relative;
 }
 
+.content {
+  position: relative;
+  z-index: 3;
+}
+
 .title {
   text-align: center;
   text-transform: uppercase;
@@ -32,8 +37,13 @@
   font-size: 16px;
 }
 
-.content h3 {
+.subtitle {
   font-weight: normal;
+  font-size: 16px;
+}
+
+.subtitle a {
+  color: white;
 }
 
 .links {

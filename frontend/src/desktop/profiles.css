@@ -71,6 +71,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .summaryTransition {
@@ -110,5 +111,6 @@
 @media only screen and (min-width: 1024px) {
   .profiles {
     display: block;
+    z-index: 1;
   }
 }

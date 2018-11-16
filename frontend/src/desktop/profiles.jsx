@@ -14,9 +14,9 @@ import classes from './profiles.css';
 import desktopClasses from './desktop.css';
 
 export const EMAILS = [
-  'boy.from.queens@gmail.com',
-  'healthy.bunny.guru@gmail.com',
-  'transparency.hacker.pirate@gmail.com',
+  'boy.from.queens',
+  'healthy.bunny.guru',
+  'transparency.hacker.pirate',
 ];
 
 export function renderRadialChart(index) {
@@ -107,9 +107,11 @@ class Profiles extends Component {
       offsetY = -(height / 2 - 160);
     } else if (mode === 'summary') {
       offsetY = -50;
-    } else if (mode === 'about' || mode === 'highlights') {
+    } else if (mode === 'about' || mode === 'highlights' || mode === 'profile') {
        offsetY = -(height / 2 - 160);
     }
+
+    const pointerEvents = (mode === 'landing')? 'auto': 'none';
 
     const transform = `translate(${offsetX}px, ${offsetY}px)`;
     const style = { transitionDuration, transform };
@@ -127,7 +129,7 @@ class Profiles extends Component {
       this.renderSummary(index, data) : <span />;
 
     return (
-      <div key={index} className={classes.col}>
+      <div key={index} className={classes.col} style={{ pointerEvents }}>
         <div className={classes.chart} style={style}>
           <TransitionGroup className={classes.radialChartTransition}>
             <CSSTransition
@@ -183,7 +185,7 @@ class Profiles extends Component {
   }
 
   render() {
-    const { mode, results } = this.props;
+    const { mode, results, profileId } = this.props;
     const { isNewRace } = this.state;
 
     //  do not render on ipad
@@ -192,9 +194,12 @@ class Profiles extends Component {
     }
 
     const arr = Array(3).fill().map(() => 0);
+
     const rendredCharts = arr.map((d, i) => {
       const data = (results && results.has(i)) ? results.get(i) : Map();
-      return this.renderChart(i, data);
+
+      const shouldDisplay = (profileId > -1)? +profileId === i: true;
+      return (shouldDisplay) ? this.renderChart(i, data) : null;
     });
 
     return (
@@ -340,8 +345,6 @@ export function mapStateToProps(state, ownProps) {
   let raceIdFromPath = -1;
   const pathnameArr = pathname.split('/');
 
-  console.log('pathnameArr', pathnameArr);
-
   if (pathnameArr.length > 3) {
     raceIdFromPath = +pathnameArr[pathnameArr.length - 2];
   }
@@ -380,6 +383,7 @@ export function mapStateToProps(state, ownProps) {
     mode = 'summary';
   }
 
+  let profileId = -1;
   if (pathnameArr[1] === 'about') {
     mode = 'about';
   } else if (pathnameArr[1] === '') {
@@ -388,11 +392,15 @@ export function mapStateToProps(state, ownProps) {
     mode = 'highlights';
   } else if (pathnameArr[1] === 'workout') {
     mode = 'workout';
+  }  else if (pathnameArr[1] === 'profile') {
+    mode = 'profile';
+    profileId = pathnameArr[2];
   }  
 
   return {
     mode,
     raceId,
+    profileId,
     results: profilesWithSentence,
   };
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 
 import Form from '../races/form';
+import Background from '../core/background';
 import { createRace } from '../races/action_creators';
 
 import classes from './home.css';
@@ -22,6 +23,7 @@ const Home = (props) => {
 
   return (
     <div className={classes.home}>
+      <Background />
       {renderTitle()}
     </div>
   );

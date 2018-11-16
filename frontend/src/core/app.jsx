@@ -14,6 +14,7 @@ import Desktop from '../desktop/';
 import Ipad from '../ipad/';
 import About from '../ipad/about';
 import Highlights from '../highlights';
+import Profile from '../profile';
 
 import {
   createRace,
@@ -31,9 +32,6 @@ export function App(props, { store }) {
 
   return (
     <div className={classes.app}>
-      <div className={classes.background}>
-        <span className={classes.backgroundInner} />
-      </div>
       <Router>
         <div className={classes.inner}>
           <Menu />
@@ -41,6 +39,16 @@ export function App(props, { store }) {
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/highlights" component={Highlights} />
+          <Route 
+            exact
+            path="/profile/:profileId"
+            render={({ match }) => {
+              const { params } = match;
+              const { profileId } = params;
+
+              return (<Profile profileId={+profileId} />);
+            }}
+          />
           <Route
             exact
             path="/highlights/:raceId"

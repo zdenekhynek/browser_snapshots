@@ -9,6 +9,7 @@
   font-family: "decima mono",monospace;
   color: #fff;
   -webkit-font-smoothing: antialiased;
+  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
 }
 
 .background {
@@ -27,7 +28,7 @@
   left: 0;
   right: 0;
   height: 10000px;
-  background: radial-gradient(black, rgba(0, 0, 0, 0)), url('./background.jpg');
+  background: radial-gradient(black, rgba(0, 0, 0, 0)), url('../assets/images/background.jpg');
   background-size: contain;
   opacity: .15;
   transition: transform 200s linear;
