@@ -389,7 +389,11 @@ export function mapStateToProps(state, ownProps) {
   } else if (pathnameArr[1] === '') {
     mode = 'landing';
   } else if (pathnameArr[1] === 'highlights') {
-    mode = 'highlights';
+    if (pathnameArr.length === 2) {
+      mode = 'highlights';  
+    } else {
+      mode = 'race';
+    }
   } else if (pathnameArr[1] === 'workout') {
     mode = 'workout';
   }  else if (pathnameArr[1] === 'profile') {
