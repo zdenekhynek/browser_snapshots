@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
 
+import Intro from '../intro';
 import Home from '../home';
 import Menu from '../menu';
 import Races from '../races';
@@ -30,13 +31,16 @@ import classes from './app.css';
 export function App(props, { store }) {
   const { agents, races, activeRace } = props;
 
+  //<Profiles />
+
   return (
     <div className={classes.app}>
       <Router>
         <div className={classes.inner}>
           <Menu />
-          <Profiles />
+          
           <Route exact path="/" component={Home} />
+          <Route exact path="/intro" component={Intro} />
           <Route exact path="/about" component={About} />
           <Route exact path="/highlights" component={Highlights} />
           <Route 

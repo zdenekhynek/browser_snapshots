@@ -1,15 +1,20 @@
 @font-face {
   font-family: "decima mono";
+  /*font-family: 'neusa next';*/
   src: url("../assets/fonts/DecimaMono.d96cd353.otf");
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .app {
   width: 100%;
   min-height: 100%;
-  font-family: "decima mono",monospace;
+  font-family: 'Roboto', sans-serif;
   color: #fff;
   -webkit-font-smoothing: antialiased;
-  background: radial-gradient(ellipse at center, #323232 0%,#111111 61%);
+  background: #333333;
 }
 
 .background {
