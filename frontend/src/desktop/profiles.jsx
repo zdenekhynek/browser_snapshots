@@ -101,7 +101,7 @@ class Profiles extends Component {
     let offsetY = 0;
 
     if (mode === 'race') {
-      offsetY = -(height / 2 - 350);
+      offsetY = -(height / 2 - 310);
     } else if (mode === 'results' || mode ==='highlights-detail') {
       offsetX = -160;
       offsetY = -(height / 2 - 160);

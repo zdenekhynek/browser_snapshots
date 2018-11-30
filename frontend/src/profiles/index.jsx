@@ -18,7 +18,7 @@ import gwynethComputerImage from '../assets/images/computer-2.png';
 import julianImage from '../assets/images/julian.png';
 import julianComputerImage from '../assets/images/computer-3.png';
 
-const PROFILES = [
+export const PROFILES = [
   {
     email: 'boy.from.queens',
     text: 'Watched in total over 800 hours of Fox News, hamburgers and himself.',
@@ -54,6 +54,10 @@ const renderProfile = (index) => {
   const profile = PROFILES[index];
   const { email, text, image, computer } = profile;
 
+  const colors = ['rgb(255, 88, 34)', 'rgb(5, 172, 180)', 'rgb(217, 226, 218)'];
+  const color = colors[index];
+  const emailStyle = { color };
+
   //  const borderColor = COLORS[index];
   //  const style = { borderColor };
   
@@ -65,12 +69,14 @@ const renderProfile = (index) => {
 
   return (
     <li className={profileClasses.profileWrapper}>
-      <div className={profileClasses.profile}>
-        <div className={profileClasses.image} style={imageStyle} />
-        <h3 className={profileClasses.email}>{email}</h3>
-        <div className={profileClasses.computer} style={computerStyle} />
-        <h4 className={profileClasses.text}>{text}</h4>
-      </div>
+      <NavLink className={profileClasses.link} to={`./profile/${index}`}>
+        <div className={profileClasses.profile}>
+          <div className={profileClasses.image} style={imageStyle} />
+          <h3 className={profileClasses.email} style={emailStyle}>{email}</h3>
+          <div className={profileClasses.computer} style={computerStyle} />
+          <h4 className={profileClasses.text}>{text}</h4>
+        </div>
+      </NavLink>
     </li>
   )
 };

@@ -6,23 +6,17 @@ import { Map } from 'immutable';
 
 import Form from '../races/form';
 import { createRace } from '../races/action_creators';
-import { EMAILS } from '../desktop/profiles';
+import { PROFILES } from '../profiles';
 
 import classes from './profile.css';
 import backButtonClasses from '../races/back_button.css';
-
-const INTERESTS = [
-  'Watched in total over 800 hours of Fox News, hamburgers and himself.',
-  'Watched in total over 400 hours of MSNBC, Oprah and avocados.',
-  'Watched in total over 600 hours of NSA, surveillance and... we can\'t tell you',
-];
 
 const pathToSlices = require.context('../assets/images/slices', true);
 
 const renderBackButton = () => {
   return (
     <div className={classes.backButtonWrapper}>
-      <NavLink className={backButtonClasses.backButton} to="/">&lt; Back</NavLink>
+      <NavLink className={backButtonClasses.backButton} to="/profiles">&lt; Back</NavLink>
     </div>
   );
 }
@@ -30,18 +24,28 @@ const renderBackButton = () => {
 const renderTitle = (index) => {
   const colors = ['rgb(255, 88, 34)', 'rgb(5, 172, 180)', 'rgb(217, 226, 218)'];
   const color = colors[index];
+  const emailStyle = { color };
 
+  const profile = PROFILES[index];
+  const { email, text, image, computer } = profile;
+
+  const backgroundImage = `url(${image})`;
+  const imageStyle = { backgroundImage };
+  
   return (
-    <div className={classes.titleWrapper} style={{ color }}>
-      <h2>{EMAILS[index]}</h2>
-      <h3>{INTERESTS[index]}</h3>
+    <div className={classes.titleWrapper}>
+      <div className={classes.header}>
+        <div className={classes.profileImage} style={imageStyle} />
+        <h2 style={emailStyle}>{email}</h2>
+      </div>
+      <h3>{text} <NavLink to="/highlights" className={classes.link}>See</NavLink> how it compared to the others.</h3>
       <h4>These are all the videos it has seen: </h4>
     </div>
   );
 };
 
 const renderThumbs = (profileId, thumbId) => {
-  const backgroundUrl = pathToSlices(`./${profileId}/image_${thumbId}.jpg`);
+  const backgroundUrl = pathToSlices(`./${profileId}/image_slice_${profileId}_${thumbId}.jpg`);
   const key = `${profileId}-${thumbId}`;
 
   return (

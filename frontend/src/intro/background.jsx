@@ -24,8 +24,8 @@ export const renderTile = (index, progress) => {
 	const isActiveTile = (progress > 0) && CENTER_INDICES.includes(index);
 	const className = (isActiveTile)? classes.activeTile : classes.tile;
 	
-	const animationDelay = `${Math.random() * 5}s`;
-	const imageIndex = index % 7;
+	const animationDelay = `${1 + Math.random() * 4}s`;
+	const imageIndex = index % 38;
 	const thumbName = `./image_${imageIndex}.jpg`;
 	const thumbUrl = thumbReq(thumbName);
 	

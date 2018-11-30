@@ -19,7 +19,7 @@
   grid-template-rows: repeat(15, 312px);
 
   flex-shrink: 0;
-  transition: .5s opacity, 20s transform;
+  transition: .5s opacity, 15s transform;
 }
 
 .tile {
@@ -33,7 +33,6 @@
 
 .activeTile {
 	composes: tile;
-	/*animation: zoomBounceIn 5s;*/
 }
 
 .tileImage {
@@ -44,6 +43,7 @@
 	right: 0;
 	width: 100%;
 	height: 100%;
+	filter: grayscale(100%);
 }
 
 .activeTile .tileImage {

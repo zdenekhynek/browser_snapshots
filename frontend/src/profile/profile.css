@@ -1,17 +1,31 @@
 .profile {
 	position: relative;
 	overflow: hidden;
+	padding: 20px;
 }
 
 .titleWrapper {
 	max-width: 620px;
-  margin: 220px auto 50px;
-	text-align: center;
-  font-size: 24px;
+  font-size: 16px;
+}
+
+.titleWrapper h2 {
+	font-family: 'decima mono', monospace;
+	font-size: 24px;
+}
+
+.titleWrapper h3,
+.titleWrapper h4 {
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.titleWrapper h4 {
+	margin: 40px 0 -30px;
 }
 
 .thumbsWrapper {
-	padding: 0 50px;
+	padding: 50px 0;
 }
 
 .thumbs {
@@ -29,4 +43,37 @@
   width: 100%;
   margin: 80px auto 80px;
   text-align: center;
+}
+
+.header {
+	display: flex;
+	flex-direction: column;
+}
+
+.profileImage {
+	margin-right: 20px;
+  width: 67px;
+  height: 67px;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.link {
+	color: inherit;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.link:hover {
+	text-decoration: underline;
+}
+
+@media only screen and (min-width: 1024px) {
+	.profile {
+		padding: 20px;
+	}
+	
+	.header {
+		flex-direction: row;
+	}
 }

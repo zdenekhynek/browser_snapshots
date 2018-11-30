@@ -3,21 +3,42 @@
   flex-direction: column;
   box-sizing: border-box;
   width: 100%;
-  padding: 40px;
+  padding: 20px;
   position: relative;
 }
 
 .title {
   font-family: "decima mono", monospace;
+  font-weight: normal;
   margin-bottom: 20px;
 }
 
 .about p {
   width: 100%;
-  max-width: 620px;
+  max-width: 600px;
   line-height: 1.4;
 }
 
 .about a {
   color: white;
+}
+
+.list {
+  margin: 40px 0;
+  padding: 0;
+  list-style-type: none;
+  font-family: "decima mono", monospace;
+  font-style: italic;
+}
+
+.list li {
+  max-width: 440px;
+  margin-bottom: 30px;
+}
+
+
+@media only screen and (min-width: 1024px) {
+  .about {
+    padding: 40px;
+  }
 }

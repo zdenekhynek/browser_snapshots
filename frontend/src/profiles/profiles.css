@@ -1,6 +1,6 @@
 .profiles {
   width: 100%;
-  padding: 20px 40px 80px;
+  padding: 20px 20px 80px;
 }
 
 .title {
@@ -34,6 +34,10 @@
 }
 
 @media only screen and (min-width: 1024px) {
+  .profiles {
+    padding: 20px 40px 80px;
+  }
+
   .list {
     flex-direction: row;
     justify-content: space-between;
