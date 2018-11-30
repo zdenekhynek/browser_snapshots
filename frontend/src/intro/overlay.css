@@ -19,3 +19,7 @@
 	flex-direction: column;
 	background-color: #090909;
 }
+
+.overlay > div:first-child {
+	margin-bottom: 40px;
+}

@@ -13,6 +13,7 @@ import { axisLeft, axisBottom } from 'd3-axis';
 import { min, max } from 'd3-array';
 import DatGui, { DatSelect } from 'react-dat-gui';
 
+import Profiles from '../desktop/profiles';
 import SnakeChart from './snake_chart';
 import { setActiveMetric } from '../metrics/action_creators';
 
@@ -102,6 +103,7 @@ class RaceChart extends Component {
 
     return (
       <div className={classes.raceChart}>
+        <Profiles />
         <div className={classes.label}>
           <h2>
             {label}

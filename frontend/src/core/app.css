@@ -1,7 +1,7 @@
 @font-face {
   font-family: "decima mono";
   /*font-family: 'neusa next';*/
-  src: url("../assets/fonts/DecimaMono.d96cd353.otf");
+  src: url("../assets/fonts/DecimaMono.d96cd353.otf") format("opentype");
 }
 
 * {

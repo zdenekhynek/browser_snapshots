@@ -55,8 +55,12 @@ class Overlay extends Component {
 		return (
 			<div className={classes.overlayWrapper}>
 				<div className={classes.overlay}>
-					<OverlayButton progress={progress} onClick={this.nextAutoplay} />
-					<OverlayText progress={progress} />
+					<div>
+						<OverlayButton progress={progress} onClick={this.nextAutoplay} />
+					</div>
+					<div>
+						<OverlayText progress={progress} />
+					</div>
 				</div>
 			</div>
 		);

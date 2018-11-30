@@ -7,15 +7,9 @@
   position: relative;
 }
 
-.content {
-  position: relative;
-  z-index: 3;
-}
-
 .title {
-  text-align: center;
-  text-transform: uppercase;
-  margin-bottom: 50px;
+  font-family: "decima mono", monospace;
+  margin-bottom: 20px;
 }
 
 .about p {
@@ -26,18 +20,4 @@
 
 .about a {
   color: white;
-}
-
-.backButtonWrapper {
-  position: relative;
-  width: 100%;
-  margin: 20px auto 20px;
-  text-align: center;
-}
-
-@media only screen and (min-width: 1024px) {
-  .about {
-    padding-top: 220px;
-    align-items: center; 
-  }
 }

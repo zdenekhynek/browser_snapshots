@@ -5,5 +5,6 @@ from .base import *
 # DATABASES['default'].update(db_from_env)
 
 ALLOWED_HOSTS = [
-	'127.0.0.1'
+	'127.0.0.1',
+	'localhost'
 ]

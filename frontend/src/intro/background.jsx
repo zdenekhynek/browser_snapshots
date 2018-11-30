@@ -11,8 +11,7 @@ export const getOpacityForProgress = (progress) => {
 };
 
 export const getScaleForProgress = (progress) => {
-	console.log('progress scale => ',progress);
-	return (progress > 1)? .1: 1;
+	return (progress > 1)? .35: 1;
 };
 
 export const getStyleForProgress = (progress) => {

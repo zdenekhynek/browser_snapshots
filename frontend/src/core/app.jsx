@@ -8,13 +8,13 @@ import Intro from '../intro';
 import Home from '../home';
 import Menu from '../menu';
 import Races from '../races';
-import Profiles from '../desktop/profiles';
 import Results from '../races/results';
 import Archive from '../archive';
 import Desktop from '../desktop/';
 import Ipad from '../ipad/';
 import About from '../ipad/about';
 import Highlights from '../highlights';
+import Profiles from '../profiles';
 import Profile from '../profile';
 
 import {
@@ -41,6 +41,7 @@ export function App(props, { store }) {
           
           <Route exact path="/" component={Home} />
           <Route exact path="/intro" component={Intro} />
+          <Route exact path="/profiles" component={Profiles} />
           <Route exact path="/about" component={About} />
           <Route exact path="/highlights" component={Highlights} />
           <Route 

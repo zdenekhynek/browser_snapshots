@@ -1,6 +1,34 @@
-.menu {
+.menuWrapper {
+	display: flex;
+	justify-content: space-between;
+}
+
+.logo {
 	position: relative;
-	z-index: 2;
+	font-family: 'decima mono', monospace;
+	font-size: 21px;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.logo:after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid white;
+	transform: translate(-68%, -15%);
+}
+
+.logo span {
+	margin: 0 10px;
+}
+
+.menu {
 	display: flex;
 	margin: 0;
 	padding: 10px 20px;
@@ -16,4 +44,10 @@
 .activeLink {
 	composes: link;
 	text-decoration: underline;
+}
+
+@media only screen and (min-width: 1024px) {
+	.menuWrapper {
+		padding: 20px 40px;
+	}
 }

@@ -5,7 +5,8 @@
 	left: 0;
 	right: 0;
 	overflow: hidden;
-
+	background-color: #333;
+	
 	display: flex;
 	justify-content: center;
 	align-items: center;
