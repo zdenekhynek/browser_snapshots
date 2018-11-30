@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
 
 import Overlay from './overlay';
 import Background from './background';
@@ -12,10 +13,15 @@ class Intro extends Component {
 		this.state = { progress: 0 };
 
 		this.onProgressUpdate = this.onProgressUpdate.bind(this);
+		this.onCloseClick = this.onCloseClick.bind(this);
 	}
 
 	onProgressUpdate(progress) {
 		this.setState({ progress });
+	}
+
+	onCloseClick() {
+		this.props.history.push('/profiles');
 	}
 
 	render() {
@@ -24,10 +30,17 @@ class Intro extends Component {
 		return (
 			<div className={classes.intro}>
 				<Background progress={progress} />
-				<Overlay onProgressUpdate={this.onProgressUpdate} />
+				<Overlay
+					onClose={this.onCloseClick}
+					onProgressUpdate={this.onProgressUpdate}
+				/>
 			</div>
 		);
 	}
 }
 
-export default Intro;
+Intro.propTypes = {
+
+};
+
+export default withRouter(Intro);

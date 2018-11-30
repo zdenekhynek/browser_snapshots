@@ -39,8 +39,7 @@ export function App(props, { store }) {
         <div className={classes.inner}>
           <Menu />
           
-          <Route exact path="/" component={Home} />
-          <Route exact path="/intro" component={Intro} />
+          <Route exact path="/" component={Intro} />
           <Route exact path="/profiles" component={Profiles} />
           <Route exact path="/about" component={About} />
           <Route exact path="/highlights" component={Highlights} />

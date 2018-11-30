@@ -3,6 +3,11 @@
 	justify-content: space-between;
 }
 
+.logoLink {
+	text-decoration: none;
+	color: inherit;
+}
+
 .logo {
 	position: relative;
 	font-family: 'decima mono', monospace;

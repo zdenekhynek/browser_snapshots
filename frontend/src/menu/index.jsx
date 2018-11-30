@@ -8,7 +8,7 @@ class Menu extends Component {
 	render() {
 		return (
 			<div className={classes.menuWrapper}>
-				<h1 className={classes.logo}>Engaged <span>&</span> <strong>Outraged</strong></h1>
+				<NavLink to ="/" className={classes.logoLink}><h1 className={classes.logo}>Engaged <span>&</span> <strong>Outraged</strong></h1></NavLink>
 				<ul className={classes.menu}>
 					<li>
 						<NavLink to="/profiles" className={classes.link}

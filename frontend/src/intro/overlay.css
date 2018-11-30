@@ -10,6 +10,7 @@
 }
 
 .overlay {
+	position: relative;
 	display: flex;
 	width: 556px;
   height: 312px;
@@ -20,6 +21,18 @@
 	background-color: #090909;
 }
 
-.overlay > div:first-child {
+.overlay > div:nth-child(2) {
 	margin-bottom: 40px;
+}
+
+.closeIcon {
+	position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.svg {
+	width: 15px;
+	height: 15px;
 }
