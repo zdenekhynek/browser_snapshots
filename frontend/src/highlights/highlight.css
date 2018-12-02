@@ -16,6 +16,10 @@
   }
 }
 
+.label h2 {
+  font-family: 'decima mono', monospace;
+}
+
 .label h2,
 .label h3,
 .label h4 {

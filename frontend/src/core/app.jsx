@@ -14,6 +14,7 @@ import Desktop from '../desktop/';
 import Ipad from '../ipad/';
 import About from '../ipad/about';
 import Highlights from '../highlights';
+import Highlight from '../highlights/highlight';
 import Profiles from '../profiles';
 import Profile from '../profile';
 
@@ -63,7 +64,7 @@ export function App(props, { store }) {
               //  display race
               store.dispatch(updateRace(raceId));
 
-              return (<Races raceId={+raceId} />);
+              return (<Highlight raceId={+raceId} />);
             }}
           />
 

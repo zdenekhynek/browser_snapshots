@@ -26,7 +26,7 @@ export const PROFILES = [
     computer: donaldComputerImage,
   },
   { 
-    email: 'healthy.guru.bunny',
+    email: 'healthy.bunny.guru',
     text: 'Watched in total over 400 hours of MSNBC, Oprah and avocados.',
     image: gwynethImage,
     computer: gwynethComputerImage,
