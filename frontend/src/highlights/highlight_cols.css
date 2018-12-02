@@ -17,6 +17,13 @@
 	align-items: center;
 	margin-bottom: 15px;
 	background: linear-gradient(45deg, #050505, #221f20);
+	color: inherit;
+	text-decoration: none;
+	transition: .2s transform;
+}
+
+.task:hover {
+	transform: scale(1.05);
 }
 
 .title {
@@ -42,12 +49,26 @@
   box-sizing: content-box;
 }
 
+.thumbWrapper {
+	width: 130px;
+	height: 73px;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
 .thumb {
 	width: 130px;
   height: 97px;
+  margin: -12px 0;
 	flex-shrink: 0;
 	filter: grayscale(100%);
+	transition: .2s filter;
 }
+
+.task:hover .thumb {
+	filter: grayscale(0);
+}
+
 
 @media only screen and (min-width: 1024px) {
 	.highlightCols {

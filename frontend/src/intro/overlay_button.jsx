@@ -40,7 +40,7 @@ class OverlayButton extends Component {
 
 	startAnimation() {
 		setTimeout(() => {
-			this.setState({ strokeDashoffset: 0, transitionDuration: '5.6s' });
+			this.setState({ strokeDashoffset: 0, transitionDuration: '7.6s' });
 		}, 17);
 	}
 

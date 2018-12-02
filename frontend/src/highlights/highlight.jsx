@@ -133,16 +133,14 @@ export function sum(collection, key) {
   }, 0);
 }
 
-//  const fakeRace = require('../fake_data.json');
+const fakeRace = require('../fake_data.json');
 
 export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimation = true }) {
-  let activeRace = races.find((r) => +r.get('id', '') === +raceId, null, Map());
+  let activeRace = races.find((r) => +r.get('id', '') === +raceId, null, Map()); // fromJS(fakeRace);
 
   // add race name from highlight
-  const highlight = HIGHLIGHTS.find((highlight) => highlight.id === 613, Map());
+  const highlight = HIGHLIGHTS.find((highlight) => highlight.id === +raceId, Map());
   activeRace = activeRace.set('name', highlight.name);
-
-  console.log('activeRace', JSON.stringify(activeRace.toJS()));
 
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();

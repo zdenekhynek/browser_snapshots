@@ -19,9 +19,9 @@
 .label h2 {
   font-family: 'decima mono', monospace;
   font-size: 24px;
+  font-weight: normal;
 }
 
-.label h2,
 .label h3,
 .label h4 {
   font-size: 16px;

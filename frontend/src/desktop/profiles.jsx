@@ -88,7 +88,7 @@ class Profiles extends Component {
 
     let className = classes.chart;
 
-    let transitionDuration = '1s';
+    let transitionDuration = '0s';
 
     // if (mode === 'race' && !shouldAnimateRace) {
     //   offset = height / 2;

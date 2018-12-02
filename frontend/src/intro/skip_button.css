@@ -1,0 +1,10 @@
+.skipButton {
+	position: absolute;
+	right: 0;
+	bottom: 15px;
+	cursor: pointer;
+	padding: 10px 20px;
+	border: 1px solid #333;
+	border-right: 0;
+	font-size: 12px;
+}

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import OverlayButton from './overlay_button';
 import OverlayText, { TEXTS } from './overlay_text';
+import SkipButton from './skip_button';
 
-export const AUTOPLAY_INTERVAL = 5000;
+export const AUTOPLAY_INTERVAL = 7000;
 export const TEXT_LEN = TEXTS.length;
 
 import classes from './overlay.css';
@@ -18,14 +19,22 @@ class Overlay extends Component {
 
 		this.nextAutoplay = this.nextAutoplay.bind(this);
 		this.onCloseClick = this.onCloseClick.bind(this);
+		this.onResetClick = this.onResetClick.bind(this);
+		this.startPlayTime;
 	}
 
 	onCloseClick() {
 		this.props.onClose();
 	}
 
+	onResetClick() {
+		resetInterval();
+		this.setState({ progress: 0 });
+	}
+
 	componentDidMount() {
 		this.resetInterval();
+		this.startPlayTime = new Date();
 	}
 
 	componentWillUnmount() {
@@ -86,6 +95,7 @@ class Overlay extends Component {
 					<div>
 						<OverlayText progress={progress} />
 					</div>
+					<SkipButton onClick={this.onCloseClick} />
 				</div>
 			</div>
 		);

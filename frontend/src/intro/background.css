@@ -19,7 +19,7 @@
   grid-template-rows: repeat(15, 312px);
 
   flex-shrink: 0;
-  transition: .5s opacity, 15s transform;
+  transition: .5s opacity, 25s transform;
 }
 
 .tile {

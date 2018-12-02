@@ -5,22 +5,24 @@ import { getVideoThumbnail } from '../races/utils';
 import classes from './highlight_cols.css';
 
 export const renderTask = (task, i) => {
-	console.log('task', task);
 	const title = task.get('title');
 	const thumbUrl = getVideoThumbnail(task.get('url'));
+	const videoUrl = task.get('url', '');
 
 	return (
-		<div className={classes.task}>
-			<img className={classes.thumb} src={thumbUrl} />
+		<a href={videoUrl} target="_blank" className={classes.task}>
+			<div className={classes.thumbWrapper}>
+				<img className={classes.thumb} src={thumbUrl} />
+			</div>
 			<div className={classes.index}>{i + 1}</div>
 			<div className={classes.title}>{title}</div>
-		</div>
+		</a>
 	);
 }
 
 export const renderCol = (tasks) => {
 	let newTasks = tasks.shift();
-	newTasks = tasks.pop();
+	newTasks = newTasks.pop();
 
 	return (
 		<div className={classes.col}>
