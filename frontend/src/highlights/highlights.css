@@ -55,6 +55,7 @@
   margin-right: -80px;
   opacity: .3;
   filter: grayscale(100%);
+  flex-shrink: 0;
 }
 
 .thumbName {

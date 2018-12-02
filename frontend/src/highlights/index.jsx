@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import classes from './highlights.css';
 
-const HIGHLIGHTS = [
+export const HIGHLIGHTS = [
   { id: 613, name: 'The one with no gluten and no moon' },
   { id: 576, name: 'The one with the annexation, reptilians and the Queen of England' },
   { id: 317, name: 'The naughty one' },

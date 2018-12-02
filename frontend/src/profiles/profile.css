@@ -27,14 +27,6 @@
   text-decoration: none;
 }
 
-.profileWrapper:first-child .profile {
-	margin-left: 0;
-}
-
-.profileWrapper:last-child .profile {
-	margin-right: 0;
-}
-
 .text {
   font-size: 16px;
   font-weight: normal;
@@ -55,27 +47,24 @@
 }
 
 .computer {
-	width: 190px;
-	height: 160px;
-	margin: 30px 30px 40px;
+	width: 100%;
+	height: auto;
+	margin: 30px 0 40px;
 	background-size: contain;
 	background-repeat: no-repeat;
 }
 
 
 @media only screen and (min-width: 1024px) {
-  .computer {
-    width: 235px;
-    height: 209px;
+  .profileWrapper:first-child .profile {
+    margin-left: 0;
+  }
+
+  .profileWrapper:last-child .profile {
+    margin-right: 0;
   }
 
   .email { 
     font-size: 16px;
-  }
-
-  .profileWrapper:first-child .computer {
-    width: 262px;
-    height: 204px;
-    margin: 14px 30px 61px;
   }
 }

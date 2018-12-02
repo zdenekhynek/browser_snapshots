@@ -16,6 +16,7 @@ import DatGui, { DatSelect } from 'react-dat-gui';
 import Profiles from '../desktop/profiles';
 import SnakeChart from '../races/snake_chart';
 import { setActiveMetric } from '../metrics/action_creators';
+import { HIGHLIGHTS } from './index.jsx';
 
 import classes from './highlight.css';
 import backButtonClasses from '../races/back_button.css';
@@ -136,9 +137,13 @@ export function sum(collection, key) {
 }
 
 export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimation = true }) {
-  const activeRace = races.find((r) => +r.get('id', '') === +raceId, null, Map());
+  let activeRace = races.find((r) => +r.get('id', '') === +raceId, null, Map());
 
-  console.log('activeRace', activeRace);
+  // add race name from highlight
+  const highlight = HIGHLIGHTS.find((highlight) => highlight.id === 613, Map());
+  activeRace = activeRace.set('name', highlight.name);
+
+  console.log('activeRace', JSON.stringify(activeRace.toJS()));
 
   const tasks = activeRace.get('tasks', List());
   const agentsIds = tasks.reduce((acc, d, i) => acc.push(i), List()).toJS();

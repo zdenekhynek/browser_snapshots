@@ -64,19 +64,17 @@ const renderProfile = (index) => {
   const backgroundImage = `url(${image})`;
   const imageStyle = { backgroundImage };
   
-  const computerImage = `url(${computer})`;
-  const computerStyle = { backgroundImage: computerImage };
+  // const computerImage = `url(${computer})`;
+  // const computerStyle = { backgroundImage: computerImage };
 
   return (
     <li className={profileClasses.profileWrapper}>
-      <NavLink className={profileClasses.link} to={`./profile/${index}`}>
-        <div className={profileClasses.profile}>
-          <div className={profileClasses.image} style={imageStyle} />
-          <h3 className={profileClasses.email} style={emailStyle}>{email}</h3>
-          <div className={profileClasses.computer} style={computerStyle} />
-          <h4 className={profileClasses.text}>{text}</h4>
-        </div>
-      </NavLink>
+      <div className={profileClasses.profile}>
+        <div className={profileClasses.image} style={imageStyle} />
+        <h3 className={profileClasses.email} style={emailStyle}>{email}</h3>
+        <img src={computer} className={profileClasses.computer} />
+        <h4 className={profileClasses.text}>{text}</h4>
+      </div>
     </li>
   )
 };
