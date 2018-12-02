@@ -18,6 +18,7 @@
 
 .label h2 {
   font-family: 'decima mono', monospace;
+  font-size: 24px;
 }
 
 .label h2,
@@ -62,6 +63,26 @@
 .link {
   margin-right: 20px;
   color: #666;
+}
+
+.backButtonWrapper {
+  position: relative;
+  width: 100%;
+  margin: 40px auto 40px;
+  text-align: center;
+}
+
+.backButton {
+  padding: 10px 40px 10px 30px;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .3s, background-color .3s;
+}
+
+.backButton:hover {
+  color: black;
+  background-color: white;
 }
 
 @media only screen and (min-width: 1024px) {

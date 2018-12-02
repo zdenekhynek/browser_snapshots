@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import sizeMe from 'react-sizeme';
 import { NavLink } from 'react-router-dom';
-import { List, Map } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { select, event } from 'd3-selection';
@@ -14,7 +14,7 @@ import { min, max } from 'd3-array';
 import DatGui, { DatSelect } from 'react-dat-gui';
 
 import Profiles from '../desktop/profiles';
-import SnakeChart from '../races/snake_chart';
+import HighlightCols from './highlight_cols';
 import { setActiveMetric } from '../metrics/action_creators';
 import { HIGHLIGHTS } from './index.jsx';
 
@@ -59,8 +59,8 @@ class Highlight extends Component {
 
   renderBackButton() {
     return (
-      <div className={backButtonClasses.backButtonWrapper}>
-        <NavLink className={backButtonClasses.backButton} to="/highlights">&lt; Back</NavLink>
+      <div className={classes.backButtonWrapper}>
+        <NavLink className={classes.backButton} to="/highlights">&lt; Back</NavLink>
       </div>
     );
   }
@@ -112,12 +112,9 @@ class Highlight extends Component {
           <h4>{appendix}</h4>
         </div>
         <div className={vizClassName}>
-          <SnakeChart
+          <HighlightCols
             raceId={raceId}
-            type="tree"
             tasks={tasks}
-            metric={activeMetric}
-            noAnimation={noAnimation}
           />
         </div>
         {this.renderBackButton()}
@@ -135,6 +132,8 @@ export function sum(collection, key) {
     return sum;
   }, 0);
 }
+
+//  const fakeRace = require('../fake_data.json');
 
 export function mapStateToProps({ agents, metrics, races }, { raceId, noAnimation = true }) {
   let activeRace = races.find((r) => +r.get('id', '') === +raceId, null, Map());
