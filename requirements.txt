@@ -50,7 +50,7 @@ nltk==3.3
 pathtools==0.1.2
 Pillow==5.1.0
 pluggy==0.6.0
-protobuf==3.5.2.post1
+protobuf==3.15.0
 psycopg2==2.7.4
 py==1.5.3
 pyasn1==0.4.3
